@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Let\'s Drink!</string>
+    <string name="title_home">Home</string>
+    <string name="title_categories">Categorie</string>
+    <string name="title_shaker">Shaker</string>
+    <string name="title_favorites">Preferiti</string>
+    <string name="title_profile">Profilo</string>
+    <string name="title_search">Cerca</string>
+    <string name="title_setting">Impostazioni</string>
+    <string name="title_filter">Filtri</string>
 </resources>
