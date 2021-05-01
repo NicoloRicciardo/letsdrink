@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "193135347413",
+    "firebase_url": "https://let-s-drink-5630b-default-rtdb.firebaseio.com",
+    "project_id": "let-s-drink-5630b",
+    "storage_bucket": "let-s-drink-5630b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:193135347413:android:f20adade09d8d43d43845c",
+        "android_client_info": {
+          "package_name": "com.example.firestorefirebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "193135347413-cjgilkrnscgsdsn9n9j92sq6of8kr3av.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVE_Nakze-X6ox6TK41IwRk9PZTOCgmLo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "193135347413-cjgilkrnscgsdsn9n9j92sq6of8kr3av.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:193135347413:android:ccee7bbae19fb42e43845c",
+        "android_client_info": {
+          "package_name": "com.hfad.eserciziofirebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "193135347413-cjgilkrnscgsdsn9n9j92sq6of8kr3av.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVE_Nakze-X6ox6TK41IwRk9PZTOCgmLo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "193135347413-cjgilkrnscgsdsn9n9j92sq6of8kr3av.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:193135347413:android:fd1e1ff96605f06543845c",
+        "android_client_info": {
+          "package_name": "it.unimib.letsdrink"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "193135347413-cjgilkrnscgsdsn9n9j92sq6of8kr3av.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVE_Nakze-X6ox6TK41IwRk9PZTOCgmLo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "193135347413-cjgilkrnscgsdsn9n9j92sq6of8kr3av.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

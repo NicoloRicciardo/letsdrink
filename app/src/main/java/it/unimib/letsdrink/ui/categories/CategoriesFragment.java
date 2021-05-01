@@ -1,5 +1,6 @@
 package it.unimib.letsdrink.ui.categories;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -7,34 +8,59 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 
 import it.unimib.letsdrink.R;
 
 public class CategoriesFragment extends Fragment {
 
     private CategoriesViewModel categoriesViewModel;
+    FirebaseFirestore db;
+    ArrayList<String> nomiCategorie = new ArrayList<String>();
+    ArrayList<String> immaginiCategorie = new ArrayList<String>();
+    ArrayList<ArrayList<DocumentReference>> drinksCategoria = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        categoriesViewModel =
-                new ViewModelProvider(this).get(CategoriesViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_categories, container, false);
-        final TextView textView = root.findViewById(R.id.text_categories);
-        categoriesViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        //categoriesViewModel = new ViewModelProvider(this).get(CategoriesViewModel.class);
+        //View root = inflater.inflate(R.layout.fragment_categories, container, false);
+        //final TextView textView = root.findViewById(R.id.text_categories);
+        /*categoriesViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
             }
-        });
+        }); */
+        db = FirebaseFirestore.getInstance();
         setHasOptionsMenu(true);
-        return root;
+
+        RecyclerView categoryRecycler = (RecyclerView)inflater.inflate( R.layout.fragment_categories, container, false);
+        readDatawithArrayOfReference();
+        //GESTIRE DATI DB E AGGIUNGERLI A GESTIONE ADAPTER
+        CategoryCardAdapter adapter = new CategoryCardAdapter();
+        categoryRecycler.setAdapter(adapter);
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
+        categoryRecycler.setLayoutManager(layoutManager);
+
+        adapter.setListener(new CategoryCardAdapter.Listener() {
+            public void onClick(int position) {
+            }
+        });
+
+        return categoryRecycler;
     }
 
     @Override
@@ -45,6 +71,24 @@ public class CategoriesFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         return super.onOptionsItemSelected(item);
+    }
+
+    private void readDatawithArrayOfReference(){
+        db.collection("Categorie").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void  onComplete(@NonNull Task<QuerySnapshot> task)  {
+                        if(task.isSuccessful()){
+                            for(DocumentSnapshot document : task.getResult()){
+                                nomiCategorie.add(document.getId());
+                                immaginiCategorie.add((String) document.get("ImageUrl"));
+                                ArrayList<DocumentReference> drinks = (ArrayList<DocumentReference>) document.get("Drinks");
+                                drinksCategoria.add(drinks);
+                            }
+                        }
+                    }
+                });
+
     }
 
 }
