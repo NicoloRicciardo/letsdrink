@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -22,6 +23,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import it.unimib.letsdrink.R;
 
@@ -29,9 +31,10 @@ public class CategoriesFragment extends Fragment {
 
     private CategoriesViewModel categoriesViewModel;
     FirebaseFirestore db;
-    ArrayList<String> nomiCategorie = new ArrayList<String>();
-    ArrayList<String> immaginiCategorie = new ArrayList<String>();
+    ArrayList<String> nomiCategorie = new ArrayList<>();
+    ArrayList<String> immaginiCategorie = new ArrayList<>();
     ArrayList<ArrayList<DocumentReference>> drinksCategoria = new ArrayList<>();
+    ArrayList<Category> categorie;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -48,9 +51,24 @@ public class CategoriesFragment extends Fragment {
         setHasOptionsMenu(true);
 
         RecyclerView categoryRecycler = (RecyclerView)inflater.inflate( R.layout.fragment_categories, container, false);
-        readDatawithArrayOfReference();
+        CategoryCardAdapter adapter = new CategoryCardAdapter(getContext(), categorie);
+
+        db.collection("Categorie").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                if(!queryDocumentSnapshots.isEmpty()) {
+                    List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                    for(DocumentSnapshot d : list) {
+                        Category categoria = d.toObject(Category.class);
+                        categorie.add(categoria);
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
+
+        //readDatawithArrayOfReference();
         //GESTIRE DATI DB E AGGIUNGERLI A GESTIONE ADAPTER
-        CategoryCardAdapter adapter = new CategoryCardAdapter();
         categoryRecycler.setAdapter(adapter);
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         categoryRecycler.setLayoutManager(layoutManager);
@@ -80,15 +98,34 @@ public class CategoriesFragment extends Fragment {
                     public void  onComplete(@NonNull Task<QuerySnapshot> task)  {
                         if(task.isSuccessful()){
                             for(DocumentSnapshot document : task.getResult()){
+                                /*
                                 nomiCategorie.add(document.getId());
                                 immaginiCategorie.add((String) document.get("ImageUrl"));
                                 ArrayList<DocumentReference> drinks = (ArrayList<DocumentReference>) document.get("Drinks");
                                 drinksCategoria.add(drinks);
+
+                                 */
                             }
                         }
                     }
                 });
 
+    }
+
+    private void leggiCategorie() {
+        db.collection("Categorie").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                if(!queryDocumentSnapshots.isEmpty()) {
+                    List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                    for(DocumentSnapshot d : list) {
+                        Category categoria = d.toObject(Category.class);
+                        categorie.add(categoria);
+                    }
+
+                }
+            }
+        });
     }
 
 }
