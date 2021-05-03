@@ -7,4 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="ebony_clay">#2F3543</color> <!-- background -->
+    <color name="curious_blue">#2D9CDB</color> <!-- button_crea_account -->
+    <color name="alto">#DCDCDC</color> <!-- ripple grigio -->
 </resources>
