@@ -8,4 +8,6 @@
     <string name="title_search">Cerca</string>
     <string name="title_setting">Impostazioni</string>
     <string name="title_filter">Filtri</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

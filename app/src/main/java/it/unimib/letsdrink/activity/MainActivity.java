@@ -1,4 +1,4 @@
-package it.unimib.letsdrink;
+package it.unimib.letsdrink.activity;
 
 import android.os.Bundle;
 
@@ -9,6 +9,8 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import it.unimib.letsdrink.R;
 
 public class MainActivity extends AppCompatActivity {
 
