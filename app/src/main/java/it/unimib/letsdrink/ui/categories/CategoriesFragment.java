@@ -1,6 +1,7 @@
 package it.unimib.letsdrink.ui.categories;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -65,7 +67,9 @@ public class CategoriesFragment extends Fragment {
 
         adapter.setListener(new CategoryCardAdapter.Listener() {
             public void onClick(int position) {
-
+            //Log.d("prova", s);
+                ArrayList<DocumentReference> drinks = drinksCategoria.get(position);
+                Navigation.findNavController(categoryRecycler).navigate(R.id.action_navigation_categories_to_cocktailsFragment);
             }
         });
 
