@@ -4,88 +4,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.profile.AccessProfileActivity"
-    android:background="@color/ebony_clay">
+    android:background="@color/ebony_clay"
+    tools:context=".ui.profile.AccessProfileActivity">
 
     <ImageView
-        android:id="@+id/image_logo"
+        android:id="@+id/top_waved_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_logo_svg"
-        android:outlineProvider="paddedBounds"/>
+        app:srcCompat="@drawable/gfx_top_waved_bar" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:orientation="vertical"
+    <ImageView
+        android:id="@+id/gfx_logo"
+        android:layout_width="115dp"
+        android:layout_height="115dp"
+        android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/image_logo">
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/gfx_logo" />
 
-        <TextView
-            android:id="@+id/text_nome_app"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/app_name"
-            android:textColor="@color/white"
-            android:textSize="35sp"
-            android:textStyle="bold" />
+    <ImageButton
+        android:id="@+id/button_close"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
+        android:adjustViewBounds="true"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:scaleType="fitStart"
+        android:src="@drawable/image_button_close_colors"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/text_benvenuto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:text="Goditi un buon Cocktail!"
-            android:textColor="@color/white"
-            android:textSize="25sp" />
+    <FrameLayout
+        android:id="@+id/access_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toBottomOf="@+id/gfx_logo"
+        android:layout_marginTop="165dp"/>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="35dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <Button
-            android:id="@+id/button_registrazione"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/curious_blue"
-            android:text="Crea un Account"
-            android:textSize="20sp"
-            android:textAllCaps="false"
-            android:height="65dp"
-            android:width="285dp"
-            android:layout_gravity="center"
-            />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_accedi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
-            android:text="Accedi"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textAllCaps="false"
-            android:height="65dp"
-            android:width="285dp"
-            android:layout_marginTop="5dp"
-            app:rippleColor="@color/alto"
-            />
-
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
