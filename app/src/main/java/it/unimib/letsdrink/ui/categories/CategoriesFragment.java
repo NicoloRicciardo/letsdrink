@@ -26,13 +26,12 @@ import java.util.ArrayList;
 
 import it.unimib.letsdrink.R;
 import it.unimib.letsdrink.adapter.CategoryCardAdapter;
+import it.unimib.letsdrink.domain.Category;
 
 public class CategoriesFragment extends Fragment {
 
     FirebaseFirestore db;
-    ArrayList<String> nomiCategorie = new ArrayList<>();
-    ArrayList<String> immaginiCategorie = new ArrayList<>();
-    ArrayList<ArrayList<DocumentReference>> drinksCategoria = new ArrayList<>();
+    ArrayList<Category> categorie = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         db = FirebaseFirestore.getInstance();
@@ -48,18 +47,19 @@ public class CategoriesFragment extends Fragment {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (DocumentSnapshot document : task.getResult()) {
-                                nomiCategorie.add(document.getId());
-                                immaginiCategorie.add((String) document.get("ImageUrl"));
+                                Category categoria = new Category();
+                                categoria.setNome(document.getId());
+                                categoria.setImageUrl((String) document.get("ImageUrl"));
                                 ArrayList<DocumentReference> drinks = (ArrayList<DocumentReference>) document.get("Drinks");
-                                drinksCategoria.add(drinks);
+                                categoria.setDrinks(drinks);
+                                categorie.add(categoria);
                             }
                             adapter.notifyDataSetChanged();
                         }
                     }
                 });
 
-        adapter.setDati(getContext(), nomiCategorie, immaginiCategorie);
-
+        adapter.setDati(getContext(), categorie);
 
 
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
@@ -67,9 +67,10 @@ public class CategoriesFragment extends Fragment {
 
         adapter.setListener(new CategoryCardAdapter.Listener() {
             public void onClick(int position) {
-            //Log.d("prova", s);
-                ArrayList<DocumentReference> drinks = drinksCategoria.get(position);
-                Navigation.findNavController(categoryRecycler).navigate(R.id.action_navigation_categories_to_cocktailsFragment);
+                Category categoria = categorie.get(position);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("categoria", categoria);
+                Navigation.findNavController(categoryRecycler).navigate(R.id.action_navigation_categories_to_cocktailsFragment, bundle);
             }
         });
 

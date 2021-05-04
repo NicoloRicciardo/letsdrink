@@ -16,13 +16,13 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import it.unimib.letsdrink.R;
+import it.unimib.letsdrink.domain.Category;
 
 public class CategoryCardAdapter extends RecyclerView.Adapter<CategoryCardAdapter.ViewHolder> {
 
     private Listener listener;
     private Context context;
-    private ArrayList<String> nomiCategorie;
-    private ArrayList<String> immaginiCategorie;
+    private ArrayList<Category> categorie = new ArrayList<Category>();
 
     public interface Listener {
         void onClick(int position);
@@ -38,7 +38,7 @@ public class CategoryCardAdapter extends RecyclerView.Adapter<CategoryCardAdapte
 
     @Override
     public int getItemCount() {
-        return nomiCategorie.size();
+        return categorie.size();
     }
 
     public void setListener(Listener listener) {
@@ -48,10 +48,10 @@ public class CategoryCardAdapter extends RecyclerView.Adapter<CategoryCardAdapte
     public CategoryCardAdapter() {
     }
 
-    public void setDati(Context context, ArrayList<String> nomiCategorie, ArrayList<String> immaginiCategorie) {
+    public void setDati(Context context, ArrayList<Category> categorie) {
         this.context = context;
-        this.nomiCategorie = nomiCategorie;
-        this.immaginiCategorie = immaginiCategorie;
+        this.categorie = categorie;
+
     }
 
     @Override
@@ -64,9 +64,9 @@ public class CategoryCardAdapter extends RecyclerView.Adapter<CategoryCardAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         CardView cardView = holder.cardView;
         ImageView imageView = cardView.findViewById(R.id.image_category);
-        Glide.with(context).load(immaginiCategorie.get(position)).into(imageView);
+        Glide.with(context).load(categorie.get(position).getImageUrl()).into(imageView);
         TextView textView = cardView.findViewById(R.id.text_category);
-        textView.setText(nomiCategorie.get(position));
+        textView.setText(categorie.get(position).getNome());
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

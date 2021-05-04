@@ -16,13 +16,13 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import it.unimib.letsdrink.R;
+import it.unimib.letsdrink.domain.Cocktail;
 
 public class CocktailCardAdapter extends RecyclerView.Adapter<CocktailCardAdapter.ViewHolder>{
 
     private Listener listener;
     private Context context;
-    private ArrayList<String>  nomiCocktail;
-    private ArrayList<String>   immaginiCocktail;
+    private ArrayList<Cocktail> bevande;
 
     public interface Listener {
         void onClick(int position);
@@ -38,7 +38,7 @@ public class CocktailCardAdapter extends RecyclerView.Adapter<CocktailCardAdapte
 
     @Override
     public int getItemCount(){
-        return nomiCocktail.size();
+        return bevande.size();
     }
 
     public void setListener(CocktailCardAdapter.Listener listener){
@@ -48,10 +48,9 @@ public class CocktailCardAdapter extends RecyclerView.Adapter<CocktailCardAdapte
     public CocktailCardAdapter(){
     }
 
-    public void setDati(Context context, ArrayList<String>  nomiCocktail, ArrayList<String>   immaginiCocktail){
+    public void setDati(Context context, ArrayList<Cocktail>  bevande){
         this.context = context;
-        this.nomiCocktail = nomiCocktail;
-        this.immaginiCocktail = immaginiCocktail;
+        this.bevande = bevande;
     }
 
     @Override
@@ -64,9 +63,9 @@ public class CocktailCardAdapter extends RecyclerView.Adapter<CocktailCardAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         CardView cardView = holder.cardView;
         ImageView imageView = cardView.findViewById(R.id.image_cocktail);
-        Glide.with(context).load(immaginiCocktail.get(position)).into(imageView);
+        Glide.with(context).load(bevande.get(position).getImageUrl()).into(imageView);
         TextView textView = cardView.findViewById(R.id.text_cocktail);
-        textView.setText(nomiCocktail.get(position));
+        textView.setText(bevande.get(position).getNome());
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
