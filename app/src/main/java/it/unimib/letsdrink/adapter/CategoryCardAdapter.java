@@ -66,7 +66,7 @@ public class CategoryCardAdapter extends RecyclerView.Adapter<CategoryCardAdapte
         ImageView imageView = cardView.findViewById(R.id.image_category);
         Glide.with(context).load(categorie.get(position).getImageUrl()).into(imageView);
         TextView textView = cardView.findViewById(R.id.text_category);
-        textView.setText(categorie.get(position).getNome());
+        textView.setText(categorie.get(position).getName());
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

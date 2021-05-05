@@ -40,8 +40,7 @@
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/cocktailsFragment"
-        android:name="it.unimib.letsdrink.ui.categories.CocktailsFragment"
-        android:label="CocktailsFragment" >
+        android:name="it.unimib.letsdrink.ui.categories.CocktailsFragment">
         <argument android:name="categoria"
             app:argType="it.unimib.letsdrink.domain.Category"/>
     </fragment>

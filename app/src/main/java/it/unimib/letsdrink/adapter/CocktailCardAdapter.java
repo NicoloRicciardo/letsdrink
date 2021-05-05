@@ -65,7 +65,7 @@ public class CocktailCardAdapter extends RecyclerView.Adapter<CocktailCardAdapte
         ImageView imageView = cardView.findViewById(R.id.image_cocktail);
         Glide.with(context).load(bevande.get(position).getImageUrl()).into(imageView);
         TextView textView = cardView.findViewById(R.id.text_cocktail);
-        textView.setText(bevande.get(position).getNome());
+        textView.setText(bevande.get(position).getName());
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

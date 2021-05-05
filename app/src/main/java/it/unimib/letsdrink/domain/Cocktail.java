@@ -6,35 +6,35 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 
 public class Cocktail implements Parcelable {
-    private String procedimento;
-    private String nome;
+    private String method;
+    private String name;
     private String imageUrl;
-    private ArrayList<String> ingredienti;
+    private ArrayList<String> ingredients;
 
-    public Cocktail(String procedimento, String nome, String imageUrl, ArrayList<String> ingredienti) {
-        this.procedimento = procedimento;
-        this.nome = nome;
+    public Cocktail(String method, String name, String imageUrl, ArrayList<String> ingredients) {
+        this.method = method;
+        this.name = name;
         this.imageUrl = imageUrl;
-        this.ingredienti = ingredienti;
+        this.ingredients = ingredients;
     }
 
     public Cocktail() {
     }
 
-    public String getProcedimento() {
-        return procedimento;
+    public String getMethod() {
+        return method;
     }
 
-    public void setProcedimento(String procedimento) {
-        this.procedimento = procedimento;
+    public void setMethod(String method) {
+        this.method = method;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getImageUrl() {
@@ -45,12 +45,12 @@ public class Cocktail implements Parcelable {
         this.imageUrl = imageUrl;
     }
 
-    public ArrayList<String> getIngredienti() {
-        return ingredienti;
+    public ArrayList<String> getIngredients() {
+        return ingredients;
     }
 
-    public void setIngredienti(ArrayList<String> ingredienti) {
-        this.ingredienti = ingredienti;
+    public void setIngredients(ArrayList<String> ingredients) {
+        this.ingredients = ingredients;
     }
 
 
@@ -61,24 +61,24 @@ public class Cocktail implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.procedimento);
-        dest.writeString(this.nome);
+        dest.writeString(this.method);
+        dest.writeString(this.name);
         dest.writeString(this.imageUrl);
-        dest.writeStringList(this.ingredienti);
+        dest.writeStringList(this.ingredients);
     }
 
     public void readFromParcel(Parcel source) {
-        this.procedimento = source.readString();
-        this.nome = source.readString();
+        this.method = source.readString();
+        this.name = source.readString();
         this.imageUrl = source.readString();
-        this.ingredienti = source.createStringArrayList();
+        this.ingredients = source.createStringArrayList();
     }
 
     protected Cocktail(Parcel in) {
-        this.procedimento = in.readString();
-        this.nome = in.readString();
+        this.method = in.readString();
+        this.name = in.readString();
         this.imageUrl = in.readString();
-        this.ingredienti = in.createStringArrayList();
+        this.ingredients = in.createStringArrayList();
     }
 
     public static final Parcelable.Creator<Cocktail> CREATOR = new Parcelable.Creator<Cocktail>() {

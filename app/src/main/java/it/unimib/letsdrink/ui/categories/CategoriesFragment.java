@@ -47,11 +47,7 @@ public class CategoriesFragment extends Fragment {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (DocumentSnapshot document : task.getResult()) {
-                                Category categoria = new Category();
-                                categoria.setNome(document.getId());
-                                categoria.setImageUrl((String) document.get("ImageUrl"));
-                                ArrayList<DocumentReference> drinks = (ArrayList<DocumentReference>) document.get("Drinks");
-                                categoria.setDrinks(drinks);
+                                Category categoria = document.toObject(Category.class);
                                 categorie.add(categoria);
                             }
                             adapter.notifyDataSetChanged();

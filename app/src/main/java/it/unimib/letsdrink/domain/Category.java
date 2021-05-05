@@ -8,12 +8,12 @@ import com.google.firebase.firestore.DocumentReference;
 import java.util.ArrayList;
 
 public class Category implements Parcelable {
-    private String nome;
+    private String name;
     private String imageUrl;
     private ArrayList<DocumentReference> drinks;
 
-    public Category(String nome, String imageUrl, ArrayList<DocumentReference> drinks) {
-        this.nome = nome;
+    public Category(String name, String imageUrl, ArrayList<DocumentReference> drinks) {
+        this.name = name;
         this.imageUrl = imageUrl;
         this.drinks= drinks;
     }
@@ -22,12 +22,12 @@ public class Category implements Parcelable {
 
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getImageUrl() {
@@ -53,20 +53,20 @@ public class Category implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.nome);
+        dest.writeString(this.name);
         dest.writeString(this.imageUrl);
         dest.writeList(this.drinks);
     }
 
     public void readFromParcel(Parcel source) {
-        this.nome = source.readString();
+        this.name = source.readString();
         this.imageUrl = source.readString();
         this.drinks = new ArrayList<DocumentReference>();
         source.readList(this.drinks, DocumentReference.class.getClassLoader());
     }
 
     protected Category(Parcel in) {
-        this.nome = in.readString();
+        this.name = in.readString();
         this.imageUrl = in.readString();
         this.drinks = new ArrayList<DocumentReference>();
         in.readList(this.drinks, DocumentReference.class.getClassLoader());

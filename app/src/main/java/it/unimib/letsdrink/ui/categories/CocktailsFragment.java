@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,9 +20,11 @@ import android.view.ViewGroup;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -34,7 +37,7 @@ import it.unimib.letsdrink.domain.Cocktail;
 public class CocktailsFragment extends Fragment {
 
     FirebaseFirestore db;
-    ArrayList<Cocktail> cocktails= new ArrayList<>();
+    ArrayList<Cocktail> cocktails = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,42 +49,44 @@ public class CocktailsFragment extends Fragment {
         CocktailCardAdapter adapter = new CocktailCardAdapter();
         cocktailsRecycler.setAdapter(adapter);
 
-        Bundle bundle= getArguments();
+        Bundle bundle = getArguments();
         Category categoria = bundle.getParcelable("categoria");
-        String nomeCategoria = categoria.getNome();
-        Log.d("nome", nomeCategoria);
+        String nomeCategoria = categoria.getName();
 
-        DocumentReference docCategoria=db.collection("Categorie").document(nomeCategoria);
+        //Navigation.findNavController(cocktailsRecycler).getCurrentDestination().setLabel(nomeCategoria);
 
 
-        docCategoria.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document=task.getResult();
-                            ArrayList<DocumentReference> cocktails = (ArrayList<DocumentReference>) document.get("Drinks");
-                            for(int i=0; i<cocktails.size(); i++){
-                                DocumentReference doc=cocktails.get(i);
-                                doc.get()
-                                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                            if(task.isSuccessful()){
-                                                DocumentSnapshot d= task.getResult();
-                                                Cocktail c= new Cocktail();
-                                                //c.setImageUrl(d.ge);
+        db.collection("Categorie")
+                .whereEqualTo("name", nomeCategoria)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (DocumentSnapshot document : task.getResult()) {
+                        Category categoriaDb = document.toObject(Category.class);
+                        ArrayList<DocumentReference> cocktailsDb = categoriaDb.getDrinks();
+                        for (int i = 0; i < cocktailsDb.size(); i++) {
+                            DocumentReference ref = cocktailsDb.get(i);
+                            ref.get()
+                                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                            if (task.isSuccessful()) {
+                                                DocumentSnapshot doc = task.getResult();
+                                                if (doc != null && doc.exists()) {
+                                                    Cocktail cocktail = doc.toObject(Cocktail.class);
+                                                    cocktails.add(cocktail);
+                                                }
+                                                adapter.notifyDataSetChanged();
                                             }
-
-                                            }
-
-                                        });
-                            }
-
-
-                            adapter.notifyDataSetChanged();
+                                        }
+                                    });
                         }
                     }
-                });
+                }
+            }
+        });
+
 
 
         adapter.setDati(getContext(), cocktails);
@@ -92,7 +97,6 @@ public class CocktailsFragment extends Fragment {
             public void onClick(int position) {
             }
         });
-
 
 
         return cocktailsRecycler;
