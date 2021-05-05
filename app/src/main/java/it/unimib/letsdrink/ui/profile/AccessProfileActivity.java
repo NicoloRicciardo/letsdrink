@@ -1,6 +1,8 @@
 package it.unimib.letsdrink.ui.profile;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
@@ -11,11 +13,11 @@ import android.widget.ImageButton;
 
 import it.unimib.letsdrink.R;
 
-public class AccessProfileActivity extends AppCompatActivity {
+public class AccessProfileActivity extends AppCompatActivity implements FragmentChangeListener{
 
-    private Button btn_registrazione;
     private com.google.android.material.button.MaterialButton btn_accedi;
     UserAccessFragment accessFragment;
+    RegistrationFragment registrationFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +29,16 @@ public class AccessProfileActivity extends AppCompatActivity {
         //setBtn_registrazione();
     }
 
+    void showRegistrationFragment() {
+        getSupportFragmentManager().beginTransaction().hide(accessFragment).commit();
+        getSupportFragmentManager().beginTransaction().show(registrationFragment).commit();
+    }
+
     private void setAccessFragment() {
         accessFragment = new UserAccessFragment();
         final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.access_frame, accessFragment);
-        transaction.addToBackStack(null);
+        //transaction.addToBackStack(null);
         transaction.commit();
     }
 
@@ -45,19 +52,16 @@ public class AccessProfileActivity extends AppCompatActivity {
         });
     }
 
-    private void setBtn_registrazione() {
-        btn_registrazione = findViewById(R.id.button_registrazione);
-        btn_registrazione.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(AccessProfileActivity.this, RegistrationActivity.class));
-                //uso le transizioni definite da me
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            }
-        });
-    }
-
     private void setBtn_accedi() {
 
+    }
+
+    @Override
+    public void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();;
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.access_frame, fragment);
+        //fragmentTransaction.addToBackStack(fragment.toString());
+        fragmentTransaction.commit();
     }
 }
