@@ -42,14 +42,17 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColorHint="@color/white"
+                    app:hintTextColor="@color/white"
                     app:boxStrokeColor="@color/white"
                     app:boxStrokeWidthFocused="3dp"
                     android:layout_marginTop="20dp">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/email_frag_step2"
+                        android:id="@+id/text_field_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textCursorDrawable="@null"
                         android:hint="Nome"
                         android:inputType="textEmailAddress"
                         android:textColor="@color/white"
@@ -60,14 +63,17 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColorHint="@color/white"
+                    app:hintTextColor="@color/white"
                     app:boxStrokeColor="@color/white"
                     app:boxStrokeWidthFocused="3dp"
                     android:layout_marginTop="10dp">
 
                     <com.google.android.material.textfield.TextInputEditText
-
+                        android:id="@+id/text_field_surname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textCursorDrawable="@null"
                         android:hint="Cognome"
                         android:inputType="textEmailAddress"
                         android:textColor="@color/white"
@@ -78,14 +84,17 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColorHint="@color/white"
+                    app:hintTextColor="@color/white"
                     app:boxStrokeColor="@color/white"
                     app:boxStrokeWidthFocused="3dp"
                     android:layout_marginTop="10dp">
 
                     <com.google.android.material.textfield.TextInputEditText
-
+                        android:id="@+id/text_field_age"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textCursorDrawable="@null"
                         android:hint="Età"
                         android:inputType="textEmailAddress"
                         android:textColor="@color/white"
@@ -96,14 +105,17 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColorHint="@color/white"
+                    app:hintTextColor="@color/white"
                     app:boxStrokeColor="@color/white"
                     app:boxStrokeWidthFocused="3dp"
                     android:layout_marginTop="10dp">
 
                     <com.google.android.material.textfield.TextInputEditText
-
+                        android:id="@+id/text_field_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textCursorDrawable="@null"
                         android:hint="Email"
                         android:inputType="textEmailAddress"
                         android:textColor="@color/white"
@@ -114,14 +126,17 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColorHint="@color/white"
+                    app:hintTextColor="@color/white"
                     app:boxStrokeColor="@color/white"
                     app:boxStrokeWidthFocused="3dp"
                     android:layout_marginTop="10dp">
 
                     <com.google.android.material.textfield.TextInputEditText
-
+                        android:id="@+id/text_field_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textCursorDrawable="@null"
                         android:hint="Password"
                         android:inputType="textEmailAddress"
                         android:textColor="@color/white"
@@ -132,14 +147,17 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColorHint="@color/white"
+                    app:hintTextColor="@color/white"
                     app:boxStrokeColor="@color/white"
                     app:boxStrokeWidthFocused="3dp"
                     android:layout_marginTop="10dp">
 
                     <com.google.android.material.textfield.TextInputEditText
-
+                        android:id="@+id/text_field_confirm_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textCursorDrawable="@null"
                         android:hint="Conferma password"
                         android:inputType="textEmailAddress"
                         android:textColor="@color/white"
