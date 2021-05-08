@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import it.unimib.letsdrink.R;
 import it.unimib.letsdrink.domain.Cocktail;
@@ -22,7 +23,7 @@ public class CocktailCardAdapter extends RecyclerView.Adapter<CocktailCardAdapte
 
     private Listener listener;
     private Context context;
-    private ArrayList<Cocktail> bevande;
+    private List<Cocktail> bevande;
 
     public interface Listener {
         void onClick(int position);
@@ -46,6 +47,7 @@ public class CocktailCardAdapter extends RecyclerView.Adapter<CocktailCardAdapte
     }
 
     public CocktailCardAdapter(){
+
     }
 
     public void setDati(Context context, ArrayList<Cocktail>  bevande){
@@ -55,7 +57,7 @@ public class CocktailCardAdapter extends RecyclerView.Adapter<CocktailCardAdapte
 
     @Override
     public CocktailCardAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
-        CardView cv = (CardView) LayoutInflater.from(context).inflate(R.layout.card_view_cocktail, parent, false);
+        CardView cv = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_cocktail, parent, false);
         return new ViewHolder(cv);
     }
 

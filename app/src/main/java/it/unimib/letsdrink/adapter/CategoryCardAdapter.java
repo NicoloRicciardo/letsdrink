@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import it.unimib.letsdrink.R;
 import it.unimib.letsdrink.domain.Category;
@@ -22,7 +23,7 @@ public class CategoryCardAdapter extends RecyclerView.Adapter<CategoryCardAdapte
 
     private Listener listener;
     private Context context;
-    private ArrayList<Category> categorie = new ArrayList<Category>();
+    private List<Category> categorie;
 
     public interface Listener {
         void onClick(int position);
@@ -48,7 +49,7 @@ public class CategoryCardAdapter extends RecyclerView.Adapter<CategoryCardAdapte
     public CategoryCardAdapter() {
     }
 
-    public void setDati(Context context, ArrayList<Category> categorie) {
+    public void setDati(Context context, List<Category> categorie) {
         this.context = context;
         this.categorie = categorie;
 
@@ -56,7 +57,7 @@ public class CategoryCardAdapter extends RecyclerView.Adapter<CategoryCardAdapte
 
     @Override
     public CategoryCardAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        CardView cv = (CardView) LayoutInflater.from(context).inflate(R.layout.card_view_category, parent, false);
+        CardView cv = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_category, parent, false);
         return new ViewHolder(cv);
     }
 

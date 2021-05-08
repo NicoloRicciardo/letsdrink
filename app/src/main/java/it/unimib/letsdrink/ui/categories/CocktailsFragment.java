@@ -1,15 +1,15 @@
 package it.unimib.letsdrink.ui.categories;
 
-import android.app.ActionBar;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,11 +20,9 @@ import android.view.ViewGroup;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -37,24 +35,34 @@ import it.unimib.letsdrink.domain.Cocktail;
 public class CocktailsFragment extends Fragment {
 
     FirebaseFirestore db;
-    ArrayList<Cocktail> cocktails = new ArrayList<>();
+    ArrayList<Cocktail> cocktails;
+    //CocktailsViewModel cocktailsViewModel;
+    //CategoriesViewModel categoryViewModel;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        //Navigation.findNavController(cocktailsRecycler).getCurrentDestination().setLabel(nomeCategoria);
+        View root = inflater.inflate(R.layout.fragment_cocktails, container, false);
         db = FirebaseFirestore.getInstance();
         setHasOptionsMenu(true);
 
-        RecyclerView cocktailsRecycler = (RecyclerView) inflater.inflate(R.layout.fragment_cocktails, container, false);
+        return root;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        cocktails = new ArrayList<>();
+        RecyclerView cocktailsRecycler = view.findViewById(R.id.cocktails_recycler);
         CocktailCardAdapter adapter = new CocktailCardAdapter();
         cocktailsRecycler.setAdapter(adapter);
+
 
         Bundle bundle = getArguments();
         Category categoria = bundle.getParcelable("categoria");
         String nomeCategoria = categoria.getName();
-
-        //Navigation.findNavController(cocktailsRecycler).getCurrentDestination().setLabel(nomeCategoria);
-
 
         db.collection("Categorie")
                 .whereEqualTo("name", nomeCategoria)
@@ -87,8 +95,6 @@ public class CocktailsFragment extends Fragment {
             }
         });
 
-
-
         adapter.setDati(getContext(), cocktails);
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         cocktailsRecycler.setLayoutManager(layoutManager);
@@ -99,7 +105,6 @@ public class CocktailsFragment extends Fragment {
         });
 
 
-        return cocktailsRecycler;
     }
 
     @Override
@@ -112,5 +117,27 @@ public class CocktailsFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
+
+
+
+    /* Bundle bundle = getArguments();
+        int position = bundle.getInt("position");
+
+       categoryViewModel = new ViewModelProvider(this).get(CategoriesViewModel.class);
+        cocktailsViewModel = new ViewModelProvider(this).get(CocktailsViewModel.class);
+        categoryViewModel.getCocktailsCategories().observe(getViewLifecycleOwner(), new Observer<ArrayList<Category>>() {
+            @Override
+            public void onChanged(@Nullable ArrayList<Category> categories) {
+
+            }
+        });
+
+        cocktailsRecycler.setAdapter(adapter);
+        cocktailsViewModel.getCocktails(adapter, "After Dinner").observe(getViewLifecycleOwner(), new Observer<ArrayList<Cocktail>>() {
+            @Override
+            public void onChanged(@Nullable ArrayList<Cocktail> cocktails) {
+                adapter.setDati(getContext(), cocktails);
+            }
+        });*/
 
 }
