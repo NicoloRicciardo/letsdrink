@@ -1,4 +1,4 @@
-package it.unimib.letsdrink.adapter;
+package it.unimib.letsdrink.ui.categories;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,15 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import it.unimib.letsdrink.R;
 import it.unimib.letsdrink.domain.Category;
 
-public class CategoryCardAdapter extends RecyclerView.Adapter<CategoryCardAdapter.ViewHolder> {
+public class CategoryItemView extends RecyclerView.ViewHolder {
 
-    private Listener listener;
+    /*private Listener listener;
     private Context context;
     private List<Category> categorie;
 
@@ -46,7 +45,7 @@ public class CategoryCardAdapter extends RecyclerView.Adapter<CategoryCardAdapte
         this.listener = listener;
     }
 
-    public CategoryCardAdapter() {
+    public CategoryItemView() {
     }
 
     public void setDati(Context context, List<Category> categorie) {
@@ -56,7 +55,7 @@ public class CategoryCardAdapter extends RecyclerView.Adapter<CategoryCardAdapte
     }
 
     @Override
-    public CategoryCardAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CategoryItemView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         CardView cv = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_category, parent, false);
         return new ViewHolder(cv);
     }
@@ -76,8 +75,37 @@ public class CategoryCardAdapter extends RecyclerView.Adapter<CategoryCardAdapte
                 }
             }
         });
-    }
+    } */
 
+    private TextView name;
+    private ImageView image;
+    private Context context;
+
+    CategoryItemView (ViewGroup parent, final CategoryAdapter.OnItemClickListener listener, Context context) {
+        super(LayoutInflater.from(context).inflate(R.layout.card_view_category, parent, false));
+
+        this.context=context;
+        name = itemView.findViewById(R.id.text_category);
+        image = itemView.findViewById(R.id.image_category);
+
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(position, v);
+                    }
+                }
+            }
+        });
+    }
+    void bind(Category category){
+        name.setText(category.getName());
+       // String imageUrl = category.getImageUrl();
+        Glide.with(context).load(category.getImageUrl()).into(image);
+        // category.setImageUrl();
+    }
 
 }
 

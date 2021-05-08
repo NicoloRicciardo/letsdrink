@@ -1,4 +1,4 @@
-package it.unimib.letsdrink.adapter;
+package it.unimib.letsdrink.ui.categories;
 
 import android.content.Context;
 import android.view.LayoutInflater;

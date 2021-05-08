@@ -5,12 +5,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,7 +25,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 import it.unimib.letsdrink.R;
-import it.unimib.letsdrink.adapter.CocktailCardAdapter;
 import it.unimib.letsdrink.domain.Category;
 import it.unimib.letsdrink.domain.Cocktail;
 
@@ -54,7 +50,7 @@ public class CocktailsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        cocktails = new ArrayList<>();
+        /*cocktails = new ArrayList<>();
         RecyclerView cocktailsRecycler = view.findViewById(R.id.cocktails_recycler);
         CocktailCardAdapter adapter = new CocktailCardAdapter();
         cocktailsRecycler.setAdapter(adapter);
@@ -102,7 +98,7 @@ public class CocktailsFragment extends Fragment {
         adapter.setListener(new CocktailCardAdapter.Listener() {
             public void onClick(int position) {
             }
-        });
+        }); */
 
 
     }

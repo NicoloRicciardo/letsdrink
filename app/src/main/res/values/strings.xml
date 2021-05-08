@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Let\'s Drink!</string>
     <string name="title_home">Home</string>
-    <string name="title_categories">Categorie</string>
+    <string name="title_categories">Drink</string>
     <string name="title_shaker">Shaker</string>
     <string name="title_favorites">Preferiti</string>
     <string name="title_profile">Profilo</string>
