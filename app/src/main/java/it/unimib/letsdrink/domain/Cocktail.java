@@ -2,20 +2,23 @@ package it.unimib.letsdrink.domain;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 
-public class Cocktail implements Parcelable {
+public class Cocktail {
     private String method;
     private String name;
     private String imageUrl;
     private ArrayList<String> ingredients;
+    private ImageView image;
 
-    public Cocktail(String method, String name, String imageUrl, ArrayList<String> ingredients) {
+    public Cocktail(String method, String name, String imageUrl, ArrayList<String> ingredients, ImageView image) {
         this.method = method;
         this.name = name;
         this.imageUrl = imageUrl;
         this.ingredients = ingredients;
+        this.image=image;
     }
 
     public Cocktail() {
@@ -53,43 +56,13 @@ public class Cocktail implements Parcelable {
         this.ingredients = ingredients;
     }
 
-
-    @Override
-    public int describeContents() {
-        return 0;
+    public ImageView getImage() {
+        return image;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.method);
-        dest.writeString(this.name);
-        dest.writeString(this.imageUrl);
-        dest.writeStringList(this.ingredients);
+    public void setImage(ImageView image) {
+        this.image = image;
     }
 
-    public void readFromParcel(Parcel source) {
-        this.method = source.readString();
-        this.name = source.readString();
-        this.imageUrl = source.readString();
-        this.ingredients = source.createStringArrayList();
-    }
 
-    protected Cocktail(Parcel in) {
-        this.method = in.readString();
-        this.name = in.readString();
-        this.imageUrl = in.readString();
-        this.ingredients = in.createStringArrayList();
-    }
-
-    public static final Parcelable.Creator<Cocktail> CREATOR = new Parcelable.Creator<Cocktail>() {
-        @Override
-        public Cocktail createFromParcel(Parcel source) {
-            return new Cocktail(source);
-        }
-
-        @Override
-        public Cocktail[] newArray(int size) {
-            return new Cocktail[size];
-        }
-    };
 }

@@ -3,6 +3,7 @@ package it.unimib.letsdrink.ui.categories;
 import android.content.Context;
 import android.view.View;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,10 +22,9 @@ public class RecyclerCocktails {
         cocktailAdapter.setOnItemClickListener(new CocktailAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position, View v) {
-                /* DialogFragment fragment = ExpandedEvent.newInstance(listOfEvent.get(position).getTitle(), listOfEvent.get(position).getDescription(),
-                        listOfEvent.get(position).getImg(), listOfEvent.get(position).getDateString(), listOfEvent.get(position).getOpeningHours(),
-                        listOfEvent.get(position).getStreet(), listOfEvent.get(position).getTag(), listOfEvent.get(position).getEventType());
-                fragment.show(fm, "ExpandedEvent"); */
+                 DialogFragment fragment = CocktailDetail.newInstance(listOfCocktails.get(position).getName(), listOfCocktails.get(position).getMethod(),
+                          listOfCocktails.get(position).getIngredients(), listOfCocktails.get(position).getImage());
+                fragment.show(fm, "ExpandedEvent");
 
 
             }

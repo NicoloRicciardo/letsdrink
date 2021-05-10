@@ -48,6 +48,7 @@ public class CocktailItemView extends RecyclerView.ViewHolder{
     void bind(Cocktail cocktail){
         name.setText(cocktail.getName());
         Glide.with(context).load(cocktail.getImageUrl()).into(image);
+        cocktail.setImage(image);
     }
 
 }
