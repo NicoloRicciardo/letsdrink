@@ -1,6 +1,7 @@
 package it.unimib.letsdrink.ui.categories;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -51,6 +52,7 @@ public class FirebaseDBCategories {
 
                             dataStatus.dataIsLoaded(listOfCategories);
                         }
+
                     }
                 });
     }

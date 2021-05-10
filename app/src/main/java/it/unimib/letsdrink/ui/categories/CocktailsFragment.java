@@ -5,8 +5,11 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,6 +47,23 @@ public class CocktailsFragment extends Fragment {
             @Override
             public void dataIsLoaded(List<Cocktail> listOfCocktails) {
                 new RecyclerCocktails().setConfiguration(recyclerView, getContext(), listOfCocktails, fm);
+                /*CocktailAdapter cocktailAdapter = new CocktailAdapter(listOfCocktails, getContext());
+                recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+                recyclerView.setAdapter(cocktailAdapter);
+
+                cocktailAdapter.setOnItemClickListener(new CocktailAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(int position, View v) {
+                        Log.d("prova", "caio");
+                        Fragment cocktailDetail = CocktailDetailFragment.newInstance(listOfCocktails.get(position).getName(), listOfCocktails.get(position).getMethod(),
+                                listOfCocktails.get(position).getIngredients(), listOfCocktails.get(position).getImageUrl());
+                        FragmentTransaction ft = fm.beginTransaction();
+                        ft.hide(getParentFragment()).add(R.id.nav_host_fragment,cocktailDetail);
+                        ft.commit();
+                        ft.addToBackStack(String.valueOf(cocktailDetail));
+
+                    }
+                });*/
             }
         });
         return root;

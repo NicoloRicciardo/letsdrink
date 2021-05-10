@@ -11,14 +11,14 @@ public class Cocktail {
     private String name;
     private String imageUrl;
     private ArrayList<String> ingredients;
-    private ImageView image;
+    //private ImageView image;
 
-    public Cocktail(String method, String name, String imageUrl, ArrayList<String> ingredients, ImageView image) {
+    public Cocktail(String method, String name, String imageUrl, ArrayList<String> ingredients) {
         this.method = method;
         this.name = name;
         this.imageUrl = imageUrl;
         this.ingredients = ingredients;
-        this.image=image;
+        // this.image=image;
     }
 
     public Cocktail() {
@@ -56,13 +56,9 @@ public class Cocktail {
         this.ingredients = ingredients;
     }
 
-    public ImageView getImage() {
-        return image;
-    }
+    //public ImageView getImage() {return image;}
 
-    public void setImage(ImageView image) {
-        this.image = image;
-    }
+    //public void setImage(ImageView image) {this.image = image;}
 
 
 }
