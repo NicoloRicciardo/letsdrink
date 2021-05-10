@@ -20,6 +20,35 @@ import it.unimib.letsdrink.domain.Category;
 
 public class CategoryItemView extends RecyclerView.ViewHolder {
 
+
+    private TextView name;
+    private ImageView image;
+    private Context context;
+
+    CategoryItemView (ViewGroup parent, final CategoryAdapter.OnItemClickListener listener, Context context) {
+        super(LayoutInflater.from(context).inflate(R.layout.card_view_category, parent, false));
+
+        this.context=context;
+        name = itemView.findViewById(R.id.text_category);
+        image = itemView.findViewById(R.id.image_category);
+
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(position, v);
+                    }
+                }
+            }
+        });
+    }
+    void bind(Category category){
+        name.setText(category.getName());
+        Glide.with(context).load(category.getImageUrl()).into(image);
+    }
+
     /*private Listener listener;
     private Context context;
     private List<Category> categorie;
@@ -77,35 +106,7 @@ public class CategoryItemView extends RecyclerView.ViewHolder {
         });
     } */
 
-    private TextView name;
-    private ImageView image;
-    private Context context;
 
-    CategoryItemView (ViewGroup parent, final CategoryAdapter.OnItemClickListener listener, Context context) {
-        super(LayoutInflater.from(context).inflate(R.layout.card_view_category, parent, false));
-
-        this.context=context;
-        name = itemView.findViewById(R.id.text_category);
-        image = itemView.findViewById(R.id.image_category);
-
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null) {
-                    int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION) {
-                        listener.onItemClick(position, v);
-                    }
-                }
-            }
-        });
-    }
-    void bind(Category category){
-        name.setText(category.getName());
-       // String imageUrl = category.getImageUrl();
-        Glide.with(context).load(category.getImageUrl()).into(image);
-        // category.setImageUrl();
-    }
 
 }
 

@@ -1,7 +1,6 @@
 package it.unimib.letsdrink.ui.categories;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -10,20 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import it.unimib.letsdrink.R;
@@ -31,9 +20,8 @@ import it.unimib.letsdrink.domain.Category;
 
 public class CategoriesFragment extends Fragment {
 
-    FirebaseFirestore db;
-    ArrayList<Category> categorie;
-    //CategoriesViewModel categoriesViewModel;
+    //FirebaseFirestore db;
+    //ArrayList<Category> categorie;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
