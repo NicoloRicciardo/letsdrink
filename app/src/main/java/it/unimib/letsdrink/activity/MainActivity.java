@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import it.unimib.letsdrink.R;
+import it.unimib.letsdrink.ui.drinks.drinks_with_login.DrinksFragment_With_Login;
 import it.unimib.letsdrink.ui.drinks.drinks_without_login.DrinksFragment;
 import it.unimib.letsdrink.ui.favorites.FavoritesFragment;
 import it.unimib.letsdrink.ui.profile.ProfileFragment;
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        fragment1 = new DrinksFragment();
+        fragment1 = new DrinksFragment_With_Login();
         active = fragment1;
 
         BottomNavigationView navView = findViewById(R.id.nav_view);

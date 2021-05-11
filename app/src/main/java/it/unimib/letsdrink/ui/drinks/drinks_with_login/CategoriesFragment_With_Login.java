@@ -2,65 +2,71 @@ package it.unimib.letsdrink.ui.drinks.drinks_with_login;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import it.unimib.letsdrink.R;
+import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CategoriesFragment_With_Login#newInstance} factory method to
- * create an instance of this fragment.
- */
+import it.unimib.letsdrink.R;
+import it.unimib.letsdrink.domain.Category;
+import it.unimib.letsdrink.ui.drinks.CategoryAdapter;
+import it.unimib.letsdrink.ui.drinks.FirebaseDBCategories;
+import it.unimib.letsdrink.ui.drinks.drinks_without_login.CocktailsCategoryFragment;
+
+
 public class CategoriesFragment_With_Login extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+        View root = inflater.inflate(R.layout.fragment_categories, container, false);
+        RecyclerView recyclerView = root.findViewById(R.id.categories_recycler);
+        final FragmentManager fm = requireActivity().getSupportFragmentManager();
+        new FirebaseDBCategories().readCategories(new FirebaseDBCategories.DataStatus() {
+            @Override
+            public void dataIsLoaded(List<Category> listOfCategories) {
+                CategoryAdapter categoryAdapter = new CategoryAdapter(listOfCategories, getContext());
+                recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+                recyclerView.setAdapter(categoryAdapter);
 
-    public CategoriesFragment_With_Login() {
-        // Required empty public constructor
-    }
+                categoryAdapter.setOnItemClickListener(new CategoryAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(int position, View v) {
+                        Fragment cocktailsCategoryFragment_With_Login = CocktailsCategoryFragment_With_Login.newInstance(listOfCategories.get(position).getName(), listOfCategories.get(position).getImageUrl(),
+                                listOfCategories.get(position).getDrinks());
+                        Bundle bundle = new Bundle();
+                        bundle.putString("name", listOfCategories.get(position).getName());
+                        cocktailsCategoryFragment_With_Login.setArguments(bundle);
+                        FragmentTransaction ft = fm.beginTransaction();
+                        ft.hide(getParentFragment()).add(R.id.nav_host_fragment,cocktailsCategoryFragment_With_Login);
+                        ft.commit();
+                        ft.addToBackStack(String.valueOf(cocktailsCategoryFragment_With_Login));
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CategoriesFragment_With_Login.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CategoriesFragment_With_Login newInstance(String param1, String param2) {
-        CategoriesFragment_With_Login fragment = new CategoriesFragment_With_Login();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+                    }
+                });
+            }
+        });
+        return root;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_categories__with__login, container, false);
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.top_menu, menu);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
+
 }

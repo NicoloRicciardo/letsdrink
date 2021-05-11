@@ -26,11 +26,6 @@ public class CategoriesFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        /* View root = inflater.inflate(R.layout.fragment_categories, container, false);
-        db = FirebaseFirestore.getInstance();
-        setHasOptionsMenu(true);
-        return root; */
-
         View root = inflater.inflate(R.layout.fragment_categories, container, false);
         RecyclerView recyclerView = root.findViewById(R.id.categories_recycler);
         final  FragmentManager fm = requireActivity().getSupportFragmentManager();

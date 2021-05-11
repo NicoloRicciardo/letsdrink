@@ -1,6 +1,7 @@
 package it.unimib.letsdrink.ui.drinks.drinks_without_login;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,7 @@ public class CocktailDetailFragment extends Fragment {
     private static String name;
     private static String method;
     private static String imageUrl;
-    private static String ingredienti = "";
+    private static String ingredienti;
     private static ArrayList<String> ingredients;
 
     public CocktailDetailFragment(){
@@ -33,8 +34,11 @@ public class CocktailDetailFragment extends Fragment {
         CocktailDetailFragment.method = method;
         CocktailDetailFragment.imageUrl = imageUrl;
         CocktailDetailFragment.ingredients = ingredients;
+        ingredienti="";
+
         for (int i = 0; i < ingredients.size(); i++)
             ingredienti += ingredients.get(i) + "\n";
+
 
         return fragment;
 
