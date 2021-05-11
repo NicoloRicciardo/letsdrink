@@ -15,10 +15,7 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.LetsDrink">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            
 
 
         </activity>
@@ -27,6 +24,10 @@
             android:name=".ui.profile.AccessProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.LetsDrinkProfilo">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
 

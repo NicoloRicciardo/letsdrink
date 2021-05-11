@@ -17,6 +17,7 @@ import it.unimib.letsdrink.R;
 public class UserAccessFragment extends Fragment {
 
     Button btn_registrazione;
+    Button btn_accedi;
 
     public UserAccessFragment() {
         // Required empty public constructor
@@ -32,11 +33,21 @@ public class UserAccessFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         btn_registrazione = view.findViewById(R.id.button_registrazione);
+        btn_accedi = view.findViewById(R.id.button_accedi);
 
         btn_registrazione.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Fragment fr = new RegistrationFragment();
+                FragmentChangeListener fc = (FragmentChangeListener)getActivity();
+                fc.replaceFragment(fr);
+            }
+        });
+
+        btn_accedi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fr = new LoginFragment();
                 FragmentChangeListener fc = (FragmentChangeListener)getActivity();
                 fc.replaceFragment(fr);
             }

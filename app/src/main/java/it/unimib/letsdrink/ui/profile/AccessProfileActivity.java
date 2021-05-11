@@ -15,9 +15,7 @@ import it.unimib.letsdrink.R;
 
 public class AccessProfileActivity extends AppCompatActivity implements FragmentChangeListener{
 
-    private com.google.android.material.button.MaterialButton btn_accedi;
     UserAccessFragment accessFragment;
-    RegistrationFragment registrationFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,12 +24,6 @@ public class AccessProfileActivity extends AppCompatActivity implements Fragment
 
         setAccessFragment();
         onCloseActivity();
-        //setBtn_registrazione();
-    }
-
-    void showRegistrationFragment() {
-        getSupportFragmentManager().beginTransaction().hide(accessFragment).commit();
-        getSupportFragmentManager().beginTransaction().show(registrationFragment).commit();
     }
 
     private void setAccessFragment() {
@@ -50,10 +42,6 @@ public class AccessProfileActivity extends AppCompatActivity implements Fragment
                 finish();
             }
         });
-    }
-
-    private void setBtn_accedi() {
-
     }
 
     @Override
