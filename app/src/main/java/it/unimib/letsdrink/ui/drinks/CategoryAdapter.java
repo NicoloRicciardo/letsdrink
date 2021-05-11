@@ -1,4 +1,4 @@
-package it.unimib.letsdrink.ui.categories;
+package it.unimib.letsdrink.ui.drinks;
 
 import android.content.Context;
 import android.view.View;
@@ -16,7 +16,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryItemView> {
     private OnItemClickListener listener;
     private Context context;
 
-    CategoryAdapter (List<Category> listOfCategories, Context context) {
+    public CategoryAdapter (List<Category> listOfCategories, Context context) {
         this.listOfCategories = listOfCategories;
         this.context=context;
     }
@@ -25,7 +25,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryItemView> {
         void onItemClick(int position, View v);
     }
 
-    void setOnItemClickListener(OnItemClickListener listener) {
+    public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }
 

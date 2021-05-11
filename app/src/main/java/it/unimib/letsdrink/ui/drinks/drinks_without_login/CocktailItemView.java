@@ -1,4 +1,4 @@
-package it.unimib.letsdrink.ui.categories;
+package it.unimib.letsdrink.ui.drinks.drinks_without_login;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,18 +7,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import it.unimib.letsdrink.R;
-import it.unimib.letsdrink.domain.Category;
 import it.unimib.letsdrink.domain.Cocktail;
+import it.unimib.letsdrink.ui.drinks.drinks_without_login.CocktailAdapter;
 
 public class CocktailItemView extends RecyclerView.ViewHolder{
 

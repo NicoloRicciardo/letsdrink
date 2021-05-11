@@ -1,4 +1,4 @@
-package it.unimib.letsdrink.ui.categories;
+package it.unimib.letsdrink.ui.drinks;
 
 import androidx.annotation.NonNull;
 
@@ -12,37 +12,41 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.unimib.letsdrink.domain.Cocktail;
+import it.unimib.letsdrink.domain.Category;
 
-public class FirebaseDBCocktails {
+
+public class FirebaseDBCategories {
+
     private FirebaseFirestore db;
     private CollectionReference collezione;
-    private List<Cocktail> listOfCocktails = new ArrayList<>();
+    private List<Category> listOfCategories = new ArrayList<>();
 
-    public interface DataStatus {
-        void dataIsLoaded(List<Cocktail> cocktailList);
+    public interface DataStatus{
+        void dataIsLoaded(List<Category> listOfCategories);
     }
 
-    public FirebaseDBCocktails() {
+    public FirebaseDBCategories() {
         db = FirebaseFirestore.getInstance();
-        collezione = db.collection("Cocktails");
+        collezione = db.collection("Categorie");
     }
 
-    public void readCocktails(final FirebaseDBCocktails.DataStatus dataStatus) {
+    public void readCategories(final DataStatus dataStatus){
 
-        collezione.get()
+       collezione.get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (DocumentSnapshot document : task.getResult()) {
-                                Cocktail cocktail = document.toObject(Cocktail.class);
-                                listOfCocktails.add(cocktail);
+                                Category categoria = document.toObject(Category.class);
+                                listOfCategories.add(categoria);
                             }
 
-                            dataStatus.dataIsLoaded(listOfCocktails);
+                            dataStatus.dataIsLoaded(listOfCategories);
                         }
+
                     }
                 });
     }
+
 }

@@ -1,4 +1,4 @@
-package it.unimib.letsdrink.ui.categories;
+package it.unimib.letsdrink.ui.drinks.drinks_without_login;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -38,8 +38,6 @@ public class CocktailDetailFragment extends Fragment {
 
         return fragment;
 
-        //Bundle args = new Bundle();
-        //fragment.setArguments(args);
     }
 
     @Nullable

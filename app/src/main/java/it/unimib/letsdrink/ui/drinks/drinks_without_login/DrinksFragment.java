@@ -1,4 +1,4 @@
-package it.unimib.letsdrink.ui.categories;
+package it.unimib.letsdrink.ui.drinks.drinks_without_login;
 
 import android.os.Bundle;
 
@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.google.android.material.tabs.TabLayout;
 
 import it.unimib.letsdrink.R;
+import it.unimib.letsdrink.ui.drinks.TabLayoutAdapter;
 
 
 public class DrinksFragment extends Fragment {

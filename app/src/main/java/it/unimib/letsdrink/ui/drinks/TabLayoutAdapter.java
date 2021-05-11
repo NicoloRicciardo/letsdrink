@@ -1,4 +1,4 @@
-package it.unimib.letsdrink.ui.categories;
+package it.unimib.letsdrink.ui.drinks;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

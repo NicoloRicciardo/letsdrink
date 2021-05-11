@@ -1,4 +1,4 @@
-package it.unimib.letsdrink.ui.categories;
+package it.unimib.letsdrink.ui.drinks.drinks_without_login;
 
 import android.content.Context;
 import android.view.View;
@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import it.unimib.letsdrink.domain.Category;
 import it.unimib.letsdrink.domain.Cocktail;
 
 public class CocktailAdapter extends RecyclerView.Adapter<CocktailItemView> {
