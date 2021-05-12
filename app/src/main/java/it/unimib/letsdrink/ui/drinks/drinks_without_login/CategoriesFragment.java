@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,7 +29,7 @@ public class CategoriesFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_categories, container, false);
         RecyclerView recyclerView = root.findViewById(R.id.categories_recycler);
-        final  FragmentManager fm = requireActivity().getSupportFragmentManager();
+        setHasOptionsMenu(true);
         new FirebaseDBCategories().readCategories(new FirebaseDBCategories.DataStatus() {
             @Override
             public void dataIsLoaded(List<Category> listOfCategories) {
@@ -43,11 +44,7 @@ public class CategoriesFragment extends Fragment {
                                 listOfCategories.get(position).getDrinks());
                         Bundle bundle = new Bundle();
                         bundle.putString("name", listOfCategories.get(position).getName());
-                        cocktailsCategoryFragment.setArguments(bundle);
-                        FragmentTransaction ft = fm.beginTransaction();
-                        ft.hide(getParentFragment()).add(R.id.nav_host_fragment,cocktailsCategoryFragment);
-                        ft.commit();
-                        ft.addToBackStack(String.valueOf(cocktailsCategoryFragment));
+                        Navigation.findNavController(getView()).navigate(R.id.action_navigation_categories_to_cocktailsCategoryFragment, bundle);
 
                     }
                 });
@@ -58,12 +55,11 @@ public class CategoriesFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.top_menu, menu);
+        inflater.inflate(R.menu.top_menu,menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         return super.onOptionsItemSelected(item);
     }
-
 }

@@ -9,6 +9,9 @@ import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -30,7 +33,7 @@ public class CocktailDetailFragment_With_Login extends Fragment {
     private static String ingredienti;
     private static ArrayList<String> ingredients;
 
-    public CocktailDetailFragment_With_Login(){
+    public CocktailDetailFragment_With_Login() {
     }
 
     public static CocktailDetailFragment_With_Login newInstance(String name, String method, ArrayList<String> ingredients, String imageUrl) {
@@ -39,10 +42,10 @@ public class CocktailDetailFragment_With_Login extends Fragment {
         CocktailDetailFragment_With_Login.method = method;
         CocktailDetailFragment_With_Login.imageUrl = imageUrl;
         CocktailDetailFragment_With_Login.ingredients = ingredients;
-        ingredienti="";
+        CocktailDetailFragment_With_Login.ingredienti = "";
 
         for (int i = 0; i < ingredients.size(); i++)
-            ingredienti += ingredients.get(i) + "\n";
+            ingredienti += CocktailDetailFragment_With_Login.ingredients.get(i) + "\n";
 
 
         return fragment;
@@ -53,24 +56,34 @@ public class CocktailDetailFragment_With_Login extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_cocktail_detail__with__login, container, false);
-
+        setHasOptionsMenu(true);
         TextView txtName = root.findViewById(R.id.cocktail_detail_name_with_login);
         TextView txtIngredients = root.findViewById(R.id.cocktail_detail_ingredients_with_login);
         TextView txtMethod = root.findViewById((R.id.cocktail_detail_method_with_login));
         ImageView img = root.findViewById(R.id.cocktail_detail_image_with_login);
-        ImageButton imgBtn= root.findViewById(R.id.love_cocktail_detail);
+        ImageButton imgBtn = root.findViewById(R.id.love_cocktail_detail);
         txtName.setText(name);
         txtIngredients.setText(ingredienti);
         txtMethod.setText(method);
         Glide.with(getContext()).load(imageUrl).into(img);
-        imgBtn.setOnClickListener(new View.OnClickListener(){
+        imgBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
                 imgBtn.setColorFilter(Color.RED);
                 Log.d("cuore", "cuore premuto");
             }
         });
 
         return root;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.top_menu,menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 }

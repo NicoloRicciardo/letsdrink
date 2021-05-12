@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -46,7 +47,7 @@ public class CocktailsCategoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_cocktails, container, false);
         RecyclerView recyclerView = root.findViewById(R.id.cocktails_recycler);
-        final FragmentManager fm = requireActivity().getSupportFragmentManager();
+        setHasOptionsMenu(true);
         Bundle bundle = this.getArguments();
         String categoryName = bundle.getString("name");
         new FirebaseDBCocktails().readCocktailsCategory(categoryName, new FirebaseDBCocktails.DataStatus() {
@@ -59,14 +60,9 @@ public class CocktailsCategoryFragment extends Fragment {
                 cocktailAdapter.setOnItemClickListener(new CocktailAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(int position, View v) {
-                        //Log.d("prova", "caio");
                         Fragment cocktailDetail = CocktailDetailFragment.newInstance(listOfCocktails.get(position).getName(), listOfCocktails.get(position).getMethod(),
                                 listOfCocktails.get(position).getIngredients(), listOfCocktails.get(position).getImageUrl());
-                        FragmentTransaction ft = fm.beginTransaction();
-                        //ft.hide(getParentFragment());
-                        ft.add(R.id.nav_host_fragment,cocktailDetail);
-                        ft.commit();
-                        ft.addToBackStack(String.valueOf(cocktailDetail));
+                        Navigation.findNavController(getView()).navigate(R.id.action_cocktailsCategoryFragment_to_cocktailDetailFragment);
 
                     }
                 });
@@ -77,7 +73,7 @@ public class CocktailsCategoryFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.top_menu, menu);
+        inflater.inflate(R.menu.top_menu,menu);
     }
 
     @Override

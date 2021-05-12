@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation_with_login"
+    app:startDestination="@+id/navigation_drinks">
+
+    <fragment
+        android:id="@+id/navigation_drinks"
+        android:name="it.unimib.letsdrink.ui.drinks.drinks_with_login.CocktailsFragment_With_Login"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_drinks">
+        <action
+            android:id="@+id/action_navigation_drinks_to_cocktailDetailFragment_With_Login"
+            app:destination="@id/cocktailDetailFragment_With_Login" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_categories"
+        android:name="it.unimib.letsdrink.ui.drinks.drinks_with_login.CategoriesFragment_With_Login"
+        android:label="@string/title_categories"
+        tools:layout="@layout/fragment_categories">
+        <action
+            android:id="@+id/action_navigation_categories_to_cocktailsCategoryFragment_With_Login"
+            app:destination="@id/cocktailsCategoryFragment_With_Login">
+            <argument
+                android:name="name"
+                app:argType="string" />
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_shaker"
+        android:name="it.unimib.letsdrink.ui.shaker.ShakerFragment"
+        android:label="@string/title_shaker"
+        tools:layout="@layout/fragment_shaker" />
+
+    <fragment
+        android:id="@+id/navigation_favorites"
+        android:name="it.unimib.letsdrink.ui.favorites.FavoritesFragment"
+        android:label="@string/title_favorites"
+        tools:layout="@layout/fragment_favorites" />
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="it.unimib.letsdrink.ui.profile.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/cocktailDetailFragment_With_Login"
+        android:name="it.unimib.letsdrink.ui.drinks.drinks_with_login.CocktailDetailFragment_With_Login"
+        android:label="CocktailDetailFragment_With_Login" />
+    <fragment
+        android:id="@+id/cocktailsCategoryFragment_With_Login"
+        android:name="it.unimib.letsdrink.ui.drinks.drinks_with_login.CocktailsCategoryFragment_With_Login"
+        android:label="CocktailsCategoryFragment_With_Login" >
+        <action
+            android:id="@+id/action_cocktailsCategoryFragment_With_Login_to_cocktailDetailFragment_With_Login"
+            app:destination="@id/cocktailDetailFragment_With_Login" />
+        <argument
+            android:name="name"
+            app:argType="string" />
+    </fragment>
+
+
+</navigation>
