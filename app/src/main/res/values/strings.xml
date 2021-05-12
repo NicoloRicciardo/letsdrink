@@ -1,14 +1,12 @@
 <resources>
     <string name="app_name">Let\'s Drink!</string>
     <string name="title_home">Home</string>
-    <string name="title_categories">Drink</string>
+    <string name="title_categories">Categorie</string>
     <string name="title_shaker">Shaker</string>
     <string name="title_favorites">Preferiti</string>
     <string name="title_profile">Profilo</string>
     <string name="title_search">Cerca</string>
     <string name="title_setting">Impostazioni</string>
     <string name="title_filter">Filtri</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="registrazione">REGISTRAZIONE</string>
 </resources>

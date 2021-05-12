@@ -3,6 +3,9 @@ package it.unimib.letsdrink.ui.drinks.drinks_without_login;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -25,7 +28,7 @@ public class CocktailDetailFragment extends Fragment {
     private static String ingredienti;
     private static ArrayList<String> ingredients;
 
-    public CocktailDetailFragment(){
+    public CocktailDetailFragment() {
     }
 
     public static CocktailDetailFragment newInstance(String name, String method, ArrayList<String> ingredients, String imageUrl) {
@@ -34,10 +37,10 @@ public class CocktailDetailFragment extends Fragment {
         CocktailDetailFragment.method = method;
         CocktailDetailFragment.imageUrl = imageUrl;
         CocktailDetailFragment.ingredients = ingredients;
-        ingredienti="";
+        CocktailDetailFragment.ingredienti = "";
 
         for (int i = 0; i < ingredients.size(); i++)
-            ingredienti += ingredients.get(i) + "\n";
+            ingredienti += CocktailDetailFragment.ingredients.get(i) + "\n";
 
 
         return fragment;
@@ -48,7 +51,7 @@ public class CocktailDetailFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_cocktail_detail, container, false);
-
+        setHasOptionsMenu(true);
         TextView txtName = root.findViewById(R.id.cocktail_detail_name);
         TextView txtIngredients = root.findViewById(R.id.cocktail_detail_ingredients);
         TextView txtMethod = root.findViewById((R.id.cocktail_detail_method));
@@ -59,5 +62,15 @@ public class CocktailDetailFragment extends Fragment {
         Glide.with(getContext()).load(imageUrl).into(img);
 
         return root;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.top_menu,menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 }
