@@ -4,29 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ebony_clay"
+    android:background="@color/background_black"
     tools:context=".ui.profile.AccessProfileActivity">
 
-    <ImageView
-        android:id="@+id/top_waved_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/gfx_top_waved_bar" />
-
-    <ImageView
-        android:id="@+id/gfx_logo"
-        android:layout_width="115dp"
-        android:layout_height="115dp"
-        android:layout_marginTop="50dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/gfx_logo" />
-
-    <ImageButton
+    <!--<ImageButton
         android:id="@+id/button_close"
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="40dp"
@@ -38,14 +19,13 @@
         android:scaleType="fitStart"
         android:src="@drawable/image_button_close_colors"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />-->
 
     <FrameLayout
         android:id="@+id/access_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toBottomOf="@+id/gfx_logo"
-        android:layout_marginTop="165dp"/>
+        tools:layout_editor_absoluteY="165dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,4 +13,8 @@
     <color name="alto">#DCDCDC</color> <!-- ripple grigio -->
     <color name="mtrl_textinput_default_box_stroke_color">#FFFFFFFF</color>
 
+    <color name="lipstick_fuchsia">#C32A62</color>
+    <color name="background_black">#151515</color>
+    <color name="bar_black">#272727</color>
+
 </resources>

@@ -23,7 +23,7 @@ public class AccessProfileActivity extends AppCompatActivity implements Fragment
         setContentView(R.layout.activity_access_profile);
 
         setAccessFragment();
-        onCloseActivity();
+        //onCloseActivity();
     }
 
     private void setAccessFragment() {
@@ -34,7 +34,7 @@ public class AccessProfileActivity extends AppCompatActivity implements Fragment
         transaction.commit();
     }
 
-    private void onCloseActivity() {
+    /*private void onCloseActivity() {
         ImageButton btn_close = findViewById(R.id.button_close);
         btn_close.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,7 +42,7 @@ public class AccessProfileActivity extends AppCompatActivity implements Fragment
                 finish();
             }
         });
-    }
+    }*/
 
     @Override
     public void replaceFragment(Fragment fragment) {
