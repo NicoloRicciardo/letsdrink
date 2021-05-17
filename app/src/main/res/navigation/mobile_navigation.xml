@@ -9,7 +9,7 @@
         android:id="@+id/navigation_drinks"
         android:name="it.unimib.letsdrink.ui.drinks.drinks_without_login.CocktailsFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_drinks">
+        tools:layout="@layout/fragment_cocktails">
         <action
             android:id="@+id/action_navigation_drinks_to_cocktailDetailFragment"
             app:destination="@id/cocktailDetailFragment" />

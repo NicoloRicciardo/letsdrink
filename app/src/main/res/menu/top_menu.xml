@@ -14,10 +14,5 @@
         android:title="@string/title_filter"
         app:showAsAction="ifRoom|withText"/>
 
-    <item
-        android:id="@+id/settings_item"
-        android:icon="@drawable/ic_settings_black_24dp"
-        android:title="@string/title_setting"
-        app:showAsAction="ifRoom|withText"/>
 
 </menu>
