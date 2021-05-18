@@ -44,9 +44,9 @@
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="it.unimib.letsdrink.ui.profile.ProfileFragment"
+        android:name="it.unimib.letsdrink.ui.profile.RegistrationFragment"
         android:label="@string/title_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_registration" />
     <fragment
         android:id="@+id/cocktailDetailFragment"
         android:name="it.unimib.letsdrink.ui.drinks.drinks_without_login.CocktailDetailFragment"
