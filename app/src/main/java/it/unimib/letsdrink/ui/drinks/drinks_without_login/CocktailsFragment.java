@@ -1,15 +1,11 @@
 package it.unimib.letsdrink.ui.drinks.drinks_without_login;
 
-import android.app.DatePickerDialog;
-import android.app.SearchManager;
-import android.content.Context;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,44 +17,31 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
-import android.widget.SearchView;
 import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
 import it.unimib.letsdrink.R;
 import it.unimib.letsdrink.domain.Cocktail;
 import it.unimib.letsdrink.ui.drinks.FirebaseDBCocktails;
-import it.unimib.letsdrink.ui.drinks.drinks_without_login.CocktailAdapter;
-import it.unimib.letsdrink.ui.drinks.drinks_without_login.CocktailDetailFragment;
 
 public class CocktailsFragment extends Fragment {
 
     private FirebaseDBCocktails db;
     private View root;
+    private CocktailAdapter cocktailAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         root = inflater.inflate(R.layout.fragment_cocktails, container, false);
         RecyclerView recyclerView = root.findViewById(R.id.cocktails_recycler);
-        Toolbar toolbar = root.findViewById(R.id.toolbar);
-        toolbar.inflateMenu(R.menu.top_menu);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-               onIconClick(item);
-                return true;
-            }
-        });
         db = new FirebaseDBCocktails();
         db.readCocktails(new FirebaseDBCocktails.DataStatus() {
             @Override
             public void dataIsLoaded(List<Cocktail> listOfCocktails) {
-                CocktailAdapter cocktailAdapter = new CocktailAdapter(listOfCocktails, getContext());
+                cocktailAdapter = new CocktailAdapter(listOfCocktails, getContext());
                 recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
                 recyclerView.setAdapter(cocktailAdapter);
 
@@ -74,48 +57,51 @@ public class CocktailsFragment extends Fragment {
             }
         });
 
-        SearchView searchView = root.findViewById(R.id.search);
-        String cocktailName;
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-
-                String cocktailName = searchView.getQuery().toString();
-                Cocktail cocktail = db.searchCocktail(cocktailName);
-                if (cocktail != null) {
-                    Fragment cocktailDetail = CocktailDetailFragment.newInstance(cocktail.getName(), cocktail.getMethod(),
-                            cocktail.getIngredients(), cocktail.getImageUrl());
-                    Navigation.findNavController(getView()).navigate(R.id.action_navigation_drinks_to_cocktailDetailFragment);
-                }
-                else {
-                    Toast.makeText(getContext(), "Il cocktail cercato non è presente", Toast.LENGTH_SHORT).show();
-                    //Snackbar snackbar = Snackbar.make(, "Il cocktail cercato non è presente", Snackbar.LENGTH_SHORT).show();
-                }
-                searchView.setQuery("", false);
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return true;
-            }
-        });
-
+        setHasOptionsMenu(true);
         return root;
     }
 
-    private void onIconClick(MenuItem item) {
-        switch (item.getItemId()) {
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.top_menu, menu);
+
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.search_item:
+                SearchView searchView = (SearchView) item.getActionView();
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        cocktailAdapter.getFilter().filter(newText);
+                        return false;
+                    }
+                });
+                break;
             case R.id.filter_item:
                 Log.d("prova", "menu");
                 Toast.makeText(getContext(), "menu", Toast.LENGTH_SHORT);
-                        /* Filters filters = new Filters(this, concertoMode, pubMode, discoMode);
-                        filters.show(requireActivity().getSupportFragmentManager(), "Filters"); */
+
                 break;
+
         }
+
+        return super.onOptionsItemSelected(item);
     }
 
-    /* @Override
+    /*
+
+    @Override
     public void okButtonClick(boolean valueDisco, boolean valuePub, boolean valueConcerto) {
         mMap.clear();
         discoMode = "Discoteca";

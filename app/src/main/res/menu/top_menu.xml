@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-   <!-- <item
+    <item
         android:id="@+id/search_item"
         android:icon="@drawable/ic_search_black_24dp"
         android:title="@string/title_search"
-        app:showAsAction="ifRoom|withText"/> -->
+        app:showAsAction="always|collapseActionView"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"/>
 
     <item
         android:id="@+id/filter_item"
         android:icon="@drawable/ic_filter_black_24dp"
         android:title="@string/title_filter"
         app:showAsAction="ifRoom|withText"/>
-
 
 </menu>
