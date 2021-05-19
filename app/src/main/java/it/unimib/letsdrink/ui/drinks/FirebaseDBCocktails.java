@@ -1,5 +1,7 @@
 package it.unimib.letsdrink.ui.drinks;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -48,7 +50,7 @@ public class FirebaseDBCocktails {
                 });
     }
 
-    public void readCocktailsCategory(String categoryName,final FirebaseDBCocktails.DataStatus dataStatus){
+    public void readCocktailsCategory(String categoryName, final FirebaseDBCocktails.DataStatus dataStatus) {
         collezione = db.collection("Categorie");
         collezione
                 .whereEqualTo("name", categoryName)
@@ -84,9 +86,12 @@ public class FirebaseDBCocktails {
     }
 
     public Cocktail searchCocktail(String name) {
-        for(int i=0; i<listOfCocktails.size(); i++){
-            if(listOfCocktails.get(i)!= null && listOfCocktails.get(i).getName()!= null && listOfCocktails.get(i).getName().equalsIgnoreCase(name))
+        for (int i = 0; i < listOfCocktails.size(); i++) {
+            if(listOfCocktails.get(i)!= null && listOfCocktails.get(i).getName()!= null &&
+                    listOfCocktails.get(i).getName().equalsIgnoreCase(name)){
                 return listOfCocktails.get(i);
+            }
+
         }
 
         return null;

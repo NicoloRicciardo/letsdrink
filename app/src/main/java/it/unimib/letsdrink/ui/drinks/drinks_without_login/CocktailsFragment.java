@@ -1,6 +1,8 @@
 package it.unimib.letsdrink.ui.drinks.drinks_without_login;
 
 import android.app.DatePickerDialog;
+import android.app.SearchManager;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -35,25 +37,21 @@ import it.unimib.letsdrink.ui.drinks.drinks_without_login.CocktailDetailFragment
 
 public class CocktailsFragment extends Fragment {
 
-    private SearchView searchView;
-    private String cocktailName;
     private FirebaseDBCocktails db;
     private View root;
-    private View snackview;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         root = inflater.inflate(R.layout.fragment_cocktails, container, false);
-        snackview = inflater.inflate(R.layout.fragment_cocktails, container, false);
         RecyclerView recyclerView = root.findViewById(R.id.cocktails_recycler);
         Toolbar toolbar = root.findViewById(R.id.toolbar);
         toolbar.inflateMenu(R.menu.top_menu);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                onIconClick(item);
-                return false;
+               onIconClick(item);
+                return true;
             }
         });
         db = new FirebaseDBCocktails();
@@ -76,41 +74,44 @@ public class CocktailsFragment extends Fragment {
             }
         });
 
-        searchView = root.findViewById(R.id.search);
+        SearchView searchView = root.findViewById(R.id.search);
+        String cocktailName;
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                cocktailName = searchView.getQuery().toString();
-                return true;
-            }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
-        return root;
-    }
-
-    private void onIconClick(MenuItem item) {
-        super.onOptionsItemSelected(item);
-        switch (item.getItemId()) {
-            case R.id.search_item:
+                String cocktailName = searchView.getQuery().toString();
                 Cocktail cocktail = db.searchCocktail(cocktailName);
                 if (cocktail != null) {
                     Fragment cocktailDetail = CocktailDetailFragment.newInstance(cocktail.getName(), cocktail.getMethod(),
                             cocktail.getIngredients(), cocktail.getImageUrl());
                     Navigation.findNavController(getView()).navigate(R.id.action_navigation_drinks_to_cocktailDetailFragment);
-                } else {
-                    Log.d("Prova","Errore" );
-                    Snackbar.make(snackview, "Il cocktail cercato non è presente", Snackbar.LENGTH_SHORT)
-                            .show();
                 }
-                break;
-            case R.id.filter_item:
-                /* Filters filters = new Filters(this, concertoMode, pubMode, discoMode);
-                filters.show(requireActivity().getSupportFragmentManager(), "Filters"); */
+                else {
+                    Toast.makeText(getContext(), "Il cocktail cercato non è presente", Toast.LENGTH_SHORT).show();
+                    //Snackbar snackbar = Snackbar.make(, "Il cocktail cercato non è presente", Snackbar.LENGTH_SHORT).show();
+                }
+                searchView.setQuery("", false);
+                return true;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return true;
+            }
+        });
+
+        return root;
+    }
+
+    private void onIconClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.filter_item:
+                Log.d("prova", "menu");
+                Toast.makeText(getContext(), "menu", Toast.LENGTH_SHORT);
+                        /* Filters filters = new Filters(this, concertoMode, pubMode, discoMode);
+                        filters.show(requireActivity().getSupportFragmentManager(), "Filters"); */
+                break;
         }
     }
 
@@ -148,6 +149,5 @@ public class CocktailsFragment extends Fragment {
             }
         });
     } */
-
 
 }

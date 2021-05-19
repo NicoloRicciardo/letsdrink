@@ -9,4 +9,5 @@
     <string name="title_setting">Impostazioni</string>
     <string name="title_filter">Filtri</string>
     <string name="registrazione">REGISTRAZIONE</string>
+    <string name="ricerca_cocktail">Cerca Cocktail...</string>
 </resources>
