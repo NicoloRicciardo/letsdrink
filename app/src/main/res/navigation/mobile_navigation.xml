@@ -34,7 +34,11 @@
         android:id="@+id/navigation_shaker"
         android:name="it.unimib.letsdrink.ui.shaker.ShakerFragment"
         android:label="@string/title_shaker"
-        tools:layout="@layout/fragment_shaker" />
+        tools:layout="@layout/fragment_shaker" >
+        <action
+            android:id="@+id/action_navigation_shaker_to_cocktailDetailFragment2"
+            app:destination="@id/cocktailDetailFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_favorites"
