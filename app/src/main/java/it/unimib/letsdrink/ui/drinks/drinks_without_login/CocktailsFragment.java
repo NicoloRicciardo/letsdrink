@@ -17,6 +17,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -31,20 +33,21 @@ public class CocktailsFragment extends Fragment {
     private FirebaseDBCocktails db;
     private View root;
     private CocktailAdapter cocktailAdapter;
+    private RecyclerView recyclerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         root = inflater.inflate(R.layout.fragment_cocktails, container, false);
-        RecyclerView recyclerView = root.findViewById(R.id.cocktails_recycler);
+        recyclerView = root.findViewById(R.id.cocktails_recycler);
         db = new FirebaseDBCocktails();
+
         db.readCocktails(new FirebaseDBCocktails.DataStatus() {
             @Override
             public void dataIsLoaded(List<Cocktail> listOfCocktails) {
                 cocktailAdapter = new CocktailAdapter(listOfCocktails, getContext());
                 recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
                 recyclerView.setAdapter(cocktailAdapter);
-
                 cocktailAdapter.setOnItemClickListener(new CocktailAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(int position, View v) {
@@ -56,7 +59,6 @@ public class CocktailsFragment extends Fragment {
                 });
             }
         });
-
         setHasOptionsMenu(true);
         return root;
     }
@@ -65,8 +67,6 @@ public class CocktailsFragment extends Fragment {
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.top_menu, menu);
-
-
     }
 
     @Override
@@ -75,6 +75,7 @@ public class CocktailsFragment extends Fragment {
         switch (id) {
             case R.id.search_item:
                 SearchView searchView = (SearchView) item.getActionView();
+                searchView.setQueryHint("Cerca un cocktail");
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                     @Override
                     public boolean onQueryTextSubmit(String query) {
@@ -84,23 +85,22 @@ public class CocktailsFragment extends Fragment {
                     @Override
                     public boolean onQueryTextChange(String newText) {
                         cocktailAdapter.getFilter().filter(newText);
+                        if(cocktailAdapter.getNoCocktailsFiltered())
+                            Log.d("prova", "Nessun cocktail trovato");
                         return false;
                     }
+
                 });
                 break;
             case R.id.filter_item:
                 Log.d("prova", "menu");
                 Toast.makeText(getContext(), "menu", Toast.LENGTH_SHORT);
-
                 break;
-
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     /*
-
     @Override
     public void okButtonClick(boolean valueDisco, boolean valuePub, boolean valueConcerto) {
         mMap.clear();

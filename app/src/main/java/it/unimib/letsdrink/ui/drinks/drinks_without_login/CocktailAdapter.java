@@ -17,18 +17,18 @@ import java.util.List;
 import it.unimib.letsdrink.domain.Cocktail;
 
 public class CocktailAdapter extends RecyclerView.Adapter<CocktailItemView> implements Filterable {
-    private List<Cocktail> listOfCocktails;
+    private List<Cocktail> listOfCocktails, listOfAllCocktails;
     private CocktailAdapter.OnItemClickListener listener;
     private Context context;
-    private List<Cocktail> allListOfCocktails;
+    boolean noCocktailsFiltered;
 
     CocktailAdapter(List<Cocktail> listOfCocktails, Context context) {
         this.listOfCocktails = listOfCocktails;
         this.context = context;
-        allListOfCocktails = new ArrayList<>();
-        allListOfCocktails.addAll(listOfCocktails);
+        listOfAllCocktails = new ArrayList<>();
+        listOfAllCocktails.addAll(listOfCocktails);
+        noCocktailsFiltered = false;
     }
-
 
     public interface OnItemClickListener {
         void onItemClick(int position, View v);
@@ -38,39 +38,41 @@ public class CocktailAdapter extends RecyclerView.Adapter<CocktailItemView> impl
         this.listener = listener;
     }
 
+    public boolean getNoCocktailsFiltered(){
+        return noCocktailsFiltered;
+    }
+
     @Override
     public Filter getFilter() {
         return filter;
     }
 
     Filter filter = new Filter() {
-
         //Automatic on background thread
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
-
             List<Cocktail> filteredList = new ArrayList<>();
-
             if (charSequence == null || charSequence.length() == 0) {
-                filteredList.addAll(allListOfCocktails);
-            } else {
-                for (Cocktail cocktail: allListOfCocktails) {
+                filteredList.addAll(listOfAllCocktails);
+            }
+            else {
+                for (Cocktail cocktail: listOfAllCocktails) {
                     if (cocktail.getName().toLowerCase().contains(charSequence.toString().toLowerCase())) {
                         filteredList.add(cocktail);
                     }
                 }
             }
-
             FilterResults filterResults = new FilterResults();
             filterResults.values = filteredList;
             return filterResults;
         }
-
         //Automatic on UI thread
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
             listOfCocktails.clear();
             listOfCocktails.addAll((Collection<? extends Cocktail>) filterResults.values);
+            if(listOfCocktails.size() == 0)
+                noCocktailsFiltered = true;
             notifyDataSetChanged();
         }
     };
