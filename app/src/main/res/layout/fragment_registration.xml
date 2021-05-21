@@ -73,9 +73,13 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="@string/data_user_name"
                     android:textColorHint="@color/white"
                     app:hintTextColor="@color/white"
                     app:boxStrokeColor="@color/lipstick_fuchsia"
+                    app:endIconMode="clear_text"
+                    app:endIconTint="@color/white"
+                    app:counterMaxLength="20"
                     app:boxStrokeWidthFocused="3dp"
                     android:layout_marginTop="20dp">
 
@@ -84,10 +88,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textCursorDrawable="@null"
-                        android:hint="@string/data_user_name"
                         android:inputType="textEmailAddress"
                         android:textColor="@color/white"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"
+                        android:maxLength="20"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -95,9 +99,12 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="@string/data_age"
                     android:textColorHint="@color/white"
                     app:hintTextColor="@color/white"
                     app:boxStrokeColor="@color/lipstick_fuchsia"
+                    app:endIconMode="clear_text"
+                    app:endIconTint="@color/white"
                     app:boxStrokeWidthFocused="3dp"
                     android:layout_marginTop="10dp">
 
@@ -106,7 +113,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textCursorDrawable="@null"
-                        android:hint="@string/data_age"
                         android:inputType="textEmailAddress"
                         android:textColor="@color/white"
                         android:textSize="20sp" />
@@ -117,9 +123,12 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="@string/data_email"
                     android:textColorHint="@color/white"
                     app:hintTextColor="@color/white"
                     app:boxStrokeColor="@color/lipstick_fuchsia"
+                    app:endIconMode="clear_text"
+                    app:endIconTint="@color/white"
                     app:boxStrokeWidthFocused="3dp"
                     android:layout_marginTop="10dp">
 
@@ -128,7 +137,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textCursorDrawable="@null"
-                        android:hint="@string/data_email"
                         android:inputType="textEmailAddress"
                         android:textColor="@color/white"
                         android:textSize="20sp" />
@@ -139,9 +147,12 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="@string/data_password"
                     android:textColorHint="@color/white"
                     app:hintTextColor="@color/white"
                     app:boxStrokeColor="@color/lipstick_fuchsia"
+                    app:endIconMode="password_toggle"
+                    app:endIconTint="@color/white"
                     app:boxStrokeWidthFocused="3dp"
                     android:layout_marginTop="10dp">
 
@@ -150,7 +161,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textCursorDrawable="@null"
-                        android:hint="@string/data_password"
                         android:inputType="textEmailAddress"
                         android:textColor="@color/white"
                         android:textSize="20sp" />
@@ -161,9 +171,12 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="@string/data_confirm_password"
                     android:textColorHint="@color/white"
                     app:hintTextColor="@color/white"
                     app:boxStrokeColor="@color/lipstick_fuchsia"
+                    app:endIconMode="password_toggle"
+                    app:endIconTint="@color/white"
                     app:boxStrokeWidthFocused="3dp"
                     android:layout_marginTop="10dp">
 
@@ -172,7 +185,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textCursorDrawable="@null"
-                        android:hint="@string/data_confirm_password"
                         android:inputType="textEmailAddress"
                         android:textColor="@color/white"
                         android:textSize="20sp" />
