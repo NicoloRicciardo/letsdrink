@@ -170,7 +170,7 @@ public class RegistrationFragment extends Fragment {
                 fragmentTransaction.replace(R.id.container, loginFragment);
                 fragmentTransaction.commit();*/
 
-                Navigation.findNavController(getView()).navigate(R.id.action_navigation_profile_to_loginFragment);
+                Navigation.findNavController(getView()).navigate(R.id.action_registrationFragment_to_navigation_profile);
             }
         });
     }

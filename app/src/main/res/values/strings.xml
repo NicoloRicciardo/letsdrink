@@ -27,7 +27,8 @@
     <string name="value_or">oppure</string>
     <string name="value_sign_up_with_google">Continua con Google</string>
     <string name="value_registration_question">Sei già registrato?</string>
-    <string name="value_login_question">Non sei ancora registrato?</string>
+    <!--<string name="value_login_question">Non sei ancora registrato?</string>-->
+    <string name="value_login_question">Non hai un profilo?</string>
 
     <!--Profile-->
     <string name="value_your_drinks">I tuoi drink</string>

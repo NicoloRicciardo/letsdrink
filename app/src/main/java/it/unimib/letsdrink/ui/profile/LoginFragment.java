@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -63,7 +64,7 @@ public class LoginFragment extends Fragment {
         mLayoutPassword = view.findViewById(R.id.text_layout_login_password);
 
         Button mButtonLogin = view.findViewById(R.id.button_login_access);
-        Button mButtonGoToRegistration = view.findViewById(R.id.button_login_sign_up);
+        Button ButtonGoToRegistration = view.findViewById(R.id.button_login_sign_up);
 
         mButtonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,13 +75,10 @@ public class LoginFragment extends Fragment {
             }
         });
 
-        mButtonGoToRegistration.setOnClickListener(new View.OnClickListener() {
+        ButtonGoToRegistration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fr = new RegistrationFragment();
-                FragmentChangeListener fc = (FragmentChangeListener)getActivity();
-                assert fc != null;
-                fc.replaceFragment(fr);
+                Navigation.findNavController(getView()).navigate(R.id.action_navigation_profile_to_registrationFragment);
             }
         });
     }

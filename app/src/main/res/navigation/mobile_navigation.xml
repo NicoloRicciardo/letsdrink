@@ -48,12 +48,12 @@
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="it.unimib.letsdrink.ui.profile.RegistrationFragment"
+        android:name="it.unimib.letsdrink.ui.profile.LoginFragment"
         android:label="@string/title_profile"
-        tools:layout="@layout/fragment_registration" >
+        tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_navigation_profile_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            android:id="@+id/action_navigation_profile_to_registrationFragment"
+            app:destination="@id/registrationFragment" />
     </fragment>
     <fragment
         android:id="@+id/cocktailDetailFragment"
@@ -71,10 +71,14 @@
             app:argType="string" />
     </fragment>
     <fragment
-        android:id="@+id/loginFragment"
-        android:name="it.unimib.letsdrink.ui.profile.LoginFragment"
-        android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        android:id="@+id/registrationFragment"
+        android:name="it.unimib.letsdrink.ui.profile.RegistrationFragment"
+        android:label="fragment_registration"
+        tools:layout="@layout/fragment_registration" >
+        <action
+            android:id="@+id/action_registrationFragment_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
+    </fragment>
 
 
 </navigation>
