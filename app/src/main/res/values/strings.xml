@@ -8,6 +8,31 @@
     <string name="title_search">Cerca</string>
     <string name="title_setting">Impostazioni</string>
     <string name="title_filter">Filtri</string>
-    <string name="registrazione">REGISTRAZIONE</string>
+
+    <!--Login and Registration-->
+    <string name="lets_drink_logo">logo</string>
+    <string name="header_registration_caps_lock">REGISTRAZIONE</string>
+    <string name="header_login_caps_lock">LOGIN</string>
+    <string name="subtitle_registration">Inserisci i tuoi dati</string>
+    <string name="subtitle_login">Accedi per continuare</string>
+    <string name="data_user_name">Nome Utente</string>
+    <string name="data_age">Età</string>
+    <string name="data_email">Email</string>
+    <string name="data_password">Password</string>
+    <string name="data_confirm_password">Conferma Password</string>
+    <string name="value_sign_up">Registrati</string>
+    <string name="value_sign_in">Accedi</string>
+    <string name="value_remember_me">Ricordami</string>
+    <string name="value_forgot_password">Password dimenticata?</string>
+    <string name="value_or">oppure</string>
+    <string name="value_sign_up_with_google">Continua con Google</string>
+    <string name="value_registration_question">Sei già registrato?</string>
+    <string name="value_login_question">Non sei ancora registrato?</string>
+
+    <!--Profile-->
+    <string name="value_your_drinks">I tuoi drink</string>
+    <string name="value_no_custom_drinks">Non hai ancora creato nessun drink…\nCosa aspetti?</string>
+    <string name="value_no_custom_drinks_placeholder">placeholder</string>
+
     <string name="ricerca_cocktail">Cerca Cocktail...</string>
 </resources>

@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -66,6 +67,8 @@ public class RegistrationFragment extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseFirestore mFirestore;
 
+    private View mRegistrationFragment;
+
     User user = new User();
 
     public RegistrationFragment() {
@@ -121,6 +124,8 @@ public class RegistrationFragment extends Fragment {
         Button mButtonGoToLogin = view.findViewById(R.id.button_registration_sign_in);
         googleSignInButton = view.findViewById(R.id.button_registration_google);
 
+        mRegistrationFragment = view.findViewById(R.id.fragment_registration);
+
         googleSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,9 +139,9 @@ public class RegistrationFragment extends Fragment {
         mButtonRegistration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                user.setUser_name(mUserName.getText().toString().trim());
-                user.setAge(mAge.getText().toString().trim());
-                user.setEmail(mEmail.getText().toString().trim());
+                user.setUser_name(Objects.requireNonNull(mUserName.getText()).toString().trim());
+                user.setAge(Objects.requireNonNull(mAge.getText()).toString().trim());
+                user.setEmail(Objects.requireNonNull(mEmail.getText()).toString().trim());
 
                 if(controlRegistrationFields()) {
                     signUpNormal();
@@ -157,13 +162,15 @@ public class RegistrationFragment extends Fragment {
                 ft.replace(R.id.fragment_registration, fragment);
                 ft.commit();*/
 
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().add(R.id.fragment_registration, new LoginFragment()).addToBackStack("accreg").commit();
+                /*FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.navigation_profile, new LoginFragment()).addToBackStack("accreg").commit();*/
 
                 /*LoginFragment loginFragment = new LoginFragment();
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.container, loginFragment);
                 fragmentTransaction.commit();*/
+
+                Navigation.findNavController(getView()).navigate(R.id.action_navigation_profile_to_loginFragment);
             }
         });
     }

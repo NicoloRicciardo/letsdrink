@@ -39,18 +39,19 @@
                         android:layout_height="91dp"
                         android:src="@drawable/gfx_cocktail_logo"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:contentDescription="@string/lets_drink_logo" />
 
                     <TextView
                         android:id="@+id/text_registration"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/registrazione"
+                        android:text="@string/header_registration_caps_lock"
                         android:textColor="@color/white"
                         android:textSize="25sp"
                         android:textStyle="bold"
                         android:layout_marginTop="17dp"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         app:layout_constraintStart_toEndOf="@+id/imageView_registration_logo"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -58,10 +59,10 @@
                         android:id="@+id/text_login_instructions"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Inserisci i tuoi dati"
+                        android:text="@string/subtitle_registration"
                         android:textColor="@color/white"
                         android:textSize="20sp"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         app:layout_constraintStart_toEndOf="@+id/imageView_registration_logo"
                         app:layout_constraintTop_toBottomOf="@+id/text_registration" />
 
@@ -83,7 +84,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textCursorDrawable="@null"
-                        android:hint="Nome Utente"
+                        android:hint="@string/data_user_name"
                         android:inputType="textEmailAddress"
                         android:textColor="@color/white"
                         android:textSize="20sp" />
@@ -105,7 +106,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textCursorDrawable="@null"
-                        android:hint="Età"
+                        android:hint="@string/data_age"
                         android:inputType="textEmailAddress"
                         android:textColor="@color/white"
                         android:textSize="20sp" />
@@ -127,7 +128,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textCursorDrawable="@null"
-                        android:hint="Email"
+                        android:hint="@string/data_email"
                         android:inputType="textEmailAddress"
                         android:textColor="@color/white"
                         android:textSize="20sp" />
@@ -149,7 +150,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textCursorDrawable="@null"
-                        android:hint="Password"
+                        android:hint="@string/data_password"
                         android:inputType="textEmailAddress"
                         android:textColor="@color/white"
                         android:textSize="20sp" />
@@ -171,7 +172,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textCursorDrawable="@null"
-                        android:hint="Conferma password"
+                        android:hint="@string/data_confirm_password"
                         android:inputType="textEmailAddress"
                         android:textColor="@color/white"
                         android:textSize="20sp" />
@@ -182,7 +183,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/lipstick_fuchsia"
-                    android:text="Registrati"
+                    android:text="@string/value_sign_up"
                     android:textSize="20sp"
                     android:textAllCaps="false"
                     android:height="65dp"
@@ -194,7 +195,7 @@
                     android:id="@+id/text_registration_or"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="oppure"
+                    android:text="@string/value_or"
                     android:textSize="15sp"
                     android:textColor="@color/white"
                     android:layout_gravity="center"
@@ -204,8 +205,7 @@
                     android:id="@+id/button_registration_google"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="Continua con Google"
+                    android:text="@string/value_sign_up_with_google"
                     app:isDarkTheme="false"
                     android:height="60dp"
                     android:width="290dp"
@@ -226,7 +226,7 @@
                         android:id="@+id/text_registration_question"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Sei già registrato?"
+                        android:text="@string/value_registration_question"
                         android:textSize="15sp"
                         android:textColor="@color/white" />
 
@@ -234,7 +234,7 @@
                         android:id="@+id/button_registration_sign_in"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Accedi"
+                        android:text="@string/value_sign_in"
                         android:textSize="15sp"
                         android:textColor="@color/lipstick_fuchsia"
                         android:textStyle="bold"
