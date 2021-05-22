@@ -1,5 +1,7 @@
 package it.unimib.letsdrink.ui.profile;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -19,8 +22,6 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -36,6 +37,10 @@ public class LoginFragment extends Fragment {
 
     private TextInputLayout mLayoutEmail;
     private TextInputLayout mLayoutPassword;
+
+    private CheckBox mRememberMe;
+    private SharedPreferences mPrefs;
+    private static final String PREFS_NAME = "PrefsFile";
 
     public LoginFragment() {
         // Required empty public constructor
@@ -63,15 +68,44 @@ public class LoginFragment extends Fragment {
         mLayoutEmail = view.findViewById(R.id.text_layout_login_email);
         mLayoutPassword = view.findViewById(R.id.text_layout_login_password);
 
+        mRememberMe = view.findViewById(R.id.checkbox_login_remember);
+        mPrefs = this.getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+
         Button mButtonLogin = view.findViewById(R.id.button_login_access);
         Button ButtonGoToRegistration = view.findViewById(R.id.button_login_sign_up);
+
+        SharedPreferences sp = this.getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        if(sp.contains("pref_email")) {
+            String u = sp.getString("pref_email", "not found");
+            mEmail.setText(u.toString());
+        }
+        if(sp.contains("pref_password")) {
+            String a = sp.getString("pref_password", "not found");
+            mPassword.setText(a.toString());
+        }
+        if(sp.contains("pref_check")) {
+            boolean b = sp.getBoolean("pref_check", false);
+            mRememberMe.setChecked(b);
+        }
 
         mButtonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (controlLoginFields()) {
+                    if(mRememberMe.isChecked()) {
+                        Boolean isChecked = mRememberMe.isChecked();
+                        SharedPreferences.Editor editor = mPrefs.edit();
+                        editor.putString("pref_email", mEmail.getText().toString());
+                        editor.putString("pref_password", mPassword.getText().toString());
+                        editor.putBoolean("pref_check", isChecked);
+                        editor.apply();
+                    } else {
+                        mPrefs.edit().clear().apply();
+                    }
                    signInNormal();
                 }
+                //mEmail.getText().clear();
+                //mPassword.getText().clear();
             }
         });
 
