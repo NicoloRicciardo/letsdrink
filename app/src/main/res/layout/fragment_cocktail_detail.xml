@@ -2,7 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:background="@color/background_black">
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -20,7 +21,8 @@
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:textColor="@color/white"/>
 
         <ImageView
             android:id="@+id/cocktail_detail_image"
@@ -45,7 +47,8 @@
             app:layout_constraintBottom_toBottomOf="@id/cocktail_detail_image"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/cocktail_detail_method" />
+            app:layout_constraintTop_toTopOf="@id/cocktail_detail_method"
+            android:textColor="@color/white"/>
 
         <TextView
             android:id="@+id/cocktail_detail_method"
@@ -55,7 +58,8 @@
             android:gravity="center_vertical"
             app:layout_constraintBottom_toBottomOf="@id/cocktail_detail_ingredients"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
+            app:layout_constraintRight_toRightOf="parent"
+            android:textColor="@color/white"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

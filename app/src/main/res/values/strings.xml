@@ -36,4 +36,16 @@
     <string name="value_no_custom_drinks_placeholder">placeholder</string>
 
     <string name="ricerca_cocktail">Cerca Cocktail...</string>
+    <string name="shaker_string">Scuoti il telefono e ottieni un cocktail</string>
+    <string name="cerca_il_cocktail_per_ingredienti">Cerca il cocktail per ingredienti</string>
+    <string name="ananas">Ananas</string>
+    <string name="arancia_filter">Arancia</string>
+    <string name="cognac_filter">Cognac</string>
+    <string name="gin_filter">Gin</string>
+    <string name="lime">Lime</string>
+    <string name="menta">Menta</string>
+    <string name="pesca_filter">Pesca</string>
+    <string name="rum">Rum</string>
+    <string name="soda_filter">Soda</string>
+    <string name="vodka_filter">Vodka</string>
 </resources>

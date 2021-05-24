@@ -58,11 +58,11 @@
     <fragment
         android:id="@+id/cocktailDetailFragment"
         android:name="it.unimib.letsdrink.ui.drinks.drinks_without_login.CocktailDetailFragment"
-        android:label="CocktailDetailFragment" />
+        />
     <fragment
         android:id="@+id/cocktailsCategoryFragment"
         android:name="it.unimib.letsdrink.ui.drinks.drinks_without_login.CocktailsCategoryFragment"
-        android:label="CocktailsCategoryFragment" >
+         >
         <action
             android:id="@+id/action_cocktailsCategoryFragment_to_cocktailDetailFragment"
             app:destination="@id/cocktailDetailFragment" />

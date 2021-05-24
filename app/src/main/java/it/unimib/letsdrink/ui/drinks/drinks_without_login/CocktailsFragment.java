@@ -34,12 +34,15 @@ public class CocktailsFragment extends Fragment {
     private View root;
     private CocktailAdapter cocktailAdapter;
     private RecyclerView recyclerView;
+    private TextView text;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         root = inflater.inflate(R.layout.fragment_cocktails, container, false);
         recyclerView = root.findViewById(R.id.cocktails_recycler);
+        text=root.findViewById(R.id.textNotFound);
+
         db = new FirebaseDBCocktails();
 
         db.readCocktails(new FirebaseDBCocktails.DataStatus() {
@@ -85,8 +88,11 @@ public class CocktailsFragment extends Fragment {
                     @Override
                     public boolean onQueryTextChange(String newText) {
                         cocktailAdapter.getFilter().filter(newText);
-                        if(cocktailAdapter.getNoCocktailsFiltered())
+                        if(cocktailAdapter.getNoCocktailsFiltered()) {
                             Log.d("prova", "Nessun cocktail trovato");
+                            text.setVisibility(View.VISIBLE);
+                            text.setText("Nessun cocktail trovato");
+                        }
                         return false;
                     }
 

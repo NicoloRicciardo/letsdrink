@@ -90,10 +90,14 @@ public class ShakerFragment extends Fragment implements SensorEventListener {
                         Fragment cocktailDetail = CocktailDetailFragment.newInstance(listOfCocktails.get(random).getName(), listOfCocktails.get(random).getMethod(),
                                 listOfCocktails.get(random).getIngredients(), listOfCocktails.get(random).getImageUrl());
                         //Navigation.findNavController(getView()).navigate(R.id.action_navigation_shaker_to_cocktailDetailFragment);
-                        //Navigation.findNavController(requireView()).navigate(R.id.action_navigation_shaker_to_cocktailDetailFragment2);
+                        Navigation.findNavController(requireView()).navigate(R.id.action_navigation_shaker_to_cocktailDetailFragment2);
 
                     }
                 });
+
+                if (isAceletometerSensorAvaiable) {
+                    sensorManager.unregisterListener(this);
+                }
 
             }
 
@@ -127,6 +131,7 @@ public class ShakerFragment extends Fragment implements SensorEventListener {
 
         if (isAceletometerSensorAvaiable) {
             sensorManager.unregisterListener(this);
+
         }
     }
 }

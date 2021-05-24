@@ -13,20 +13,21 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import it.unimib.letsdrink.R;
 
 public class CocktailDetailFragment extends Fragment {
-    private static String name;
-    private static String method;
-    private static String imageUrl;
-    private static String ingredienti;
+    private static String name, method, imageUrl, ingredienti;
     private static ArrayList<String> ingredients;
+
 
     public CocktailDetailFragment() {
     }
@@ -51,6 +52,9 @@ public class CocktailDetailFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_cocktail_detail, container, false);
+        ActionBar actionBar= ((AppCompatActivity) requireActivity()).getSupportActionBar();
+        actionBar.setTitle("");
+        actionBar.setDisplayHomeAsUpEnabled(false);
         setHasOptionsMenu(true);
         TextView txtName = root.findViewById(R.id.cocktail_detail_name);
         TextView txtIngredients = root.findViewById(R.id.cocktail_detail_ingredients);
