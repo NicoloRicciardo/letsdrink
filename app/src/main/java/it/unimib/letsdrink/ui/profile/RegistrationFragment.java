@@ -67,7 +67,7 @@ public class RegistrationFragment extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseFirestore mFirestore;
 
-    private View mRegistrationFragment;
+    //private View mRegistrationFragment;
 
     User user = new User();
 
@@ -124,7 +124,7 @@ public class RegistrationFragment extends Fragment {
         Button mButtonGoToLogin = view.findViewById(R.id.button_registration_sign_in);
         googleSignInButton = view.findViewById(R.id.button_registration_google);
 
-        mRegistrationFragment = view.findViewById(R.id.fragment_registration);
+        //mRegistrationFragment = view.findViewById(R.id.fragment_registration);
 
         googleSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -226,7 +226,10 @@ public class RegistrationFragment extends Fragment {
             mLayoutEmail.setError("Email inserita non valida");
         }
 
-        if (mPassword != null && !(Objects.requireNonNull(mPassword.getText()).toString().trim().isEmpty())) {
+        if (mPassword != null && mPassword.getText().toString().trim().length() < 6) {
+            password = false;
+            mLayoutPassword.setError("La Password deve essere di almeno 6 caratteri.");
+        } else if (mPassword != null && !(Objects.requireNonNull(mPassword.getText()).toString().trim().isEmpty())){
             password = true;
             mLayoutPassword.setError(null);
         } else {
