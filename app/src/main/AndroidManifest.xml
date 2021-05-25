@@ -25,14 +25,6 @@
 
         </activity>
 
-        <activity
-            android:name=".ui.profile.AccessProfileActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.LetsDrinkProfilo">
-
-
-        </activity>
-
     </application>
 
 </manifest>

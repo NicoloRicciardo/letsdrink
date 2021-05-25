@@ -32,4 +32,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /*public void hideKeyboard(View view) {
+        view = this.getCurrentFocus();
+        if (view != null){
+
+        }
+    }*/
 }

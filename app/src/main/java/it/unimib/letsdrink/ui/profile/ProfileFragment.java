@@ -17,11 +17,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.jetbrains.annotations.NotNull;
+
 import it.unimib.letsdrink.R;
 
 public class ProfileFragment extends Fragment {
 
     //private ProfileViewModel profileViewModel;
+    private TextView mUserNameCustom;
+    private TextView mEmailCustom;
+    User user = new User();
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore mFirestore;
 
     public static ProfileFragment newInstance() {
         return new ProfileFragment();
@@ -43,6 +53,24 @@ public class ProfileFragment extends Fragment {
 
         //setHasOptionsMenu(true);
         return root;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mAuth = FirebaseAuth.getInstance();
+
+        mFirestore = FirebaseFirestore.getInstance();
+
+        user.setUserID(mAuth.getUid());
+
+        mUserNameCustom = view.findViewById(R.id.text_profile_user_name);
+        //mUserNameCustom.setText();
+
+        mEmailCustom = view.findViewById(R.id.text_profile_email);
+        mEmailCustom.setText(mAuth.getCurrentUser().getEmail());
+
     }
 
     @Override

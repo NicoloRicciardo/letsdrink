@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.profile.LoginFragment"
     android:background="@color/background_black">
+    <!--android:onClick="hideKeyboard"-->
 
     <ScrollView
         android:layout_width="match_parent"
@@ -100,8 +101,8 @@
                     android:textColorHint="@color/white"
                     app:hintTextColor="@color/white"
                     app:boxStrokeColor="@color/lipstick_fuchsia"
-                    app:endIconMode="password_toggle"
                     app:endIconTint="@color/white"
+                    app:endIconMode="password_toggle"
                     app:errorTextColor="@color/white"
                     app:boxStrokeWidthFocused="3dp"
                     android:layout_marginTop="10dp">
@@ -111,7 +112,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textCursorDrawable="@null"
-                    android:inputType="textEmailAddress"
+                    android:inputType="textPassword"
                     android:textColor="@color/white"
                     android:textSize="20sp" />
                 </com.google.android.material.textfield.TextInputLayout>

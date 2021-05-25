@@ -117,19 +117,22 @@ public class LoginFragment extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 //extract the email and send reset link
-                                mAuth.sendPasswordResetEmail(resetEmail.getText().toString().trim()).
-                                        addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void unused) {
-                                                Toast.makeText(getContext(), "Reset link sent to your Email.", Toast.LENGTH_SHORT).show();
-                                            }
-                                        }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        //Toast.makeText(getContext(), "Error! Reset link not sent.", Toast.LENGTH_SHORT).show();
-                                        //Snackbar.make(view.findViewById(R.id.fragment_login), "Prova", Snackbar.LENGTH_SHORT).show();
-                                    }
-                                });
+
+                                    mAuth.sendPasswordResetEmail(resetEmail.getText().toString())
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void unused) {
+                                                    Toast.makeText(getContext(), "Reset link sent to your Email.", Toast.LENGTH_SHORT).show();
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Toast.makeText(getContext(), "Error! Reset link not sent.", Toast.LENGTH_SHORT).show();
+                                                    //Snackbar.make(view.findViewById(R.id.fragment_login), "Prova", Snackbar.LENGTH_SHORT).show();
+                                                }
+                                            });
+
                             }
                         })
                         .setNegativeButton("Esci", new DialogInterface.OnClickListener() {
@@ -203,6 +206,7 @@ public class LoginFragment extends Fragment {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Toast.makeText(getContext(), "Accesso effettuato.", Toast.LENGTH_SHORT).show();
+                            Navigation.findNavController(getView()).navigate(R.id.action_navigation_profile_to_profileFragment);
                             Log.d(TAG, "loggedUserWithEmail:success");
                         } else {
                             // If sign in fails, display a message to the user.
