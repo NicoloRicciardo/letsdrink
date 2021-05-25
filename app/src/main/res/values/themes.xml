@@ -16,5 +16,11 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="DialogTheme" parent="Theme.MaterialComponents.Dialog.Alert">
+        <item name="android:background">@color/background_black</item>
+        <item name="titleTextAppearance">?attr/textAppearanceHeadline6</item>
+        <item name="colorPrimary">@color/black</item>
+    </style>
+
     <style name="Theme.LetsDrinkProfilo" parent="Theme.MaterialComponents.DayNight.NoActionBar"/>
 </resources>
