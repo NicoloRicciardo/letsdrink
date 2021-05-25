@@ -69,14 +69,14 @@
                     app:layout_constraintTop_toBottomOf="@id/text_profile_email"/>
 
                 <TextView
-                    android:id="@+id/text_profile_not_loggerd_in"
+                    android:id="@+id/text_profile_not_logged_in"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/value_no_custom_drinks_placeholder"
                     android:textColor="@color/white"
                     android:textSize="17sp"
                     android:gravity="center"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="60dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/text_profile_your_drinks" />

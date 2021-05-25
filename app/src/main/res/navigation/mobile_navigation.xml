@@ -86,7 +86,20 @@
         android:id="@+id/profileFragment"
         android:name="it.unimib.letsdrink.ui.profile.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_customDrinkFragment"
+            app:destination="@id/customDrinkFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/customDrinkFragment"
+        android:name="it.unimib.letsdrink.ui.profile.CustomDrinkFragment"
+        android:label="fragment_custom_drink"
+        tools:layout="@layout/fragment_custom_drink" >
+        <action
+            android:id="@+id/action_customDrinkFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
 
 
 </navigation>
