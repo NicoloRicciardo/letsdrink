@@ -48,4 +48,6 @@
     <string name="rum">Rum</string>
     <string name="soda_filter">Soda</string>
     <string name="vodka_filter">Vodka</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
