@@ -21,24 +21,31 @@ import it.unimib.letsdrink.R;
 public class FiltersIngredients extends DialogFragment {
 
     private boolean modeAnanas, modeArancia, modeCognac, modeGin, modeLime, modeMenta, modePesca, modeRum, modeSoda, modeVodka;
-    private String ananas, arancia, cognac, gin, lime, menta, pesca, rum, soda, vodka;
-    private FilterInterface filter;
+    private static String ananas, arancia, cognac, gin, lime, menta, pesca, rum, soda, vodka;
+    private static FilterInterface filter;
 
-    public FiltersIngredients(String ananas, String arancia, String cognac,
-                              String gin, String lime, String menta, String pesca, String rum,
-                              String soda, String vodka, FilterInterface filter) {
-        this.ananas = ananas;
-        this.arancia = arancia;
-        this.cognac = cognac;
-        this.gin = gin;
-        this.lime = lime;
-        this.menta = menta;
-        this.pesca = pesca;
-        this.rum = rum;
-        this.soda = soda;
-        this.vodka = vodka;
-        this.filter = filter;
+    public FiltersIngredients() {}
+
+    public static FiltersIngredients newInstance(String ananas, String arancia, String cognac,
+                                                 String gin, String lime, String menta, String pesca, String rum,
+                                                 String soda, String vodka, FilterInterface filter) {
+        FiltersIngredients fragment = new FiltersIngredients();
+        FiltersIngredients.ananas = ananas;
+        FiltersIngredients.arancia = arancia;
+        FiltersIngredients.cognac = cognac;
+        FiltersIngredients.gin = gin;
+        FiltersIngredients.lime = lime;
+        FiltersIngredients.menta = menta;
+        FiltersIngredients.pesca = pesca;
+        FiltersIngredients.rum = rum;
+        FiltersIngredients.soda = soda;
+        FiltersIngredients.vodka = vodka;
+        FiltersIngredients.filter = filter;
+
+        return fragment;
+
     }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

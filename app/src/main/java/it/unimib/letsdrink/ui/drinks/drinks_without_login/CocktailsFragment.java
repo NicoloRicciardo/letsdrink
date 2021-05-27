@@ -22,26 +22,39 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import it.unimib.letsdrink.R;
 import it.unimib.letsdrink.domain.Cocktail;
 import it.unimib.letsdrink.ui.drinks.FirebaseDBCocktails;
 
-public class CocktailsFragment extends Fragment {
+public class CocktailsFragment extends Fragment implements FilterInterface {
 
     private FirebaseDBCocktails db;
     private View root;
     private CocktailAdapter cocktailAdapter;
     private RecyclerView recyclerView;
     private TextView text;
+    private String ananas, arancia, cognac, gin, lime, menta, pesca, rum, soda, vodka;
+    private FilterInterface filter;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+        ananas = "Ananas";
+        arancia = "Arancia";
+        cognac = "Cognac";
+        gin = "Gin";
+        lime = "Lime";
+        menta = "Menta";
+        pesca = "Pesca";
+        rum = "Rum";
+        soda = "Soda";
+        vodka = "Vodka";
         root = inflater.inflate(R.layout.fragment_cocktails, container, false);
         recyclerView = root.findViewById(R.id.cocktails_recycler);
-        text=root.findViewById(R.id.textNotFound);
+        text = root.findViewById(R.id.textNotFound);
 
         db = new FirebaseDBCocktails();
 
@@ -88,7 +101,7 @@ public class CocktailsFragment extends Fragment {
                     @Override
                     public boolean onQueryTextChange(String newText) {
                         cocktailAdapter.getFilter().filter(newText);
-                        if(cocktailAdapter.getNoCocktailsFiltered()) {
+                        if (cocktailAdapter.getNoCocktailsFiltered()) {
                             Log.d("prova", "Nessun cocktail trovato");
                             text.setVisibility(View.VISIBLE);
                             text.setText("Nessun cocktail trovato");
@@ -101,45 +114,74 @@ public class CocktailsFragment extends Fragment {
             case R.id.filter_item:
                 Log.d("prova", "menu");
                 Toast.makeText(getContext(), "menu", Toast.LENGTH_SHORT);
+                Fragment filters = FiltersIngredients.newInstance(ananas, arancia, cognac, gin, lime, menta, pesca, rum, soda, vodka, filter);
+                Navigation.findNavController(getView()).navigate(R.id.action_navigation_drinks_to_filtersIngredients);
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    /*
+
     @Override
-    public void okButtonClick(boolean valueDisco, boolean valuePub, boolean valueConcerto) {
-        mMap.clear();
-        discoMode = "Discoteca";
-        pubMode = "Pub";
-        concertoMode = "Concerto";
-        final String date = formatData(mDay, mMonth, mYear);
-        if (!valueDisco)
-            discoMode = "no";
-        if (!valuePub)
-            pubMode = "no";
-        if (!valueConcerto)
-            concertoMode = "no";
-        new FirebaseDB_Events().readEvent(new FirebaseDB_Events.DataStatus() {
+    public void okButtonClick(boolean valueAnanas, boolean valueArancia, boolean valueCognac, boolean valueGin, boolean valueLime,
+                              boolean valueMenta, boolean valuePesca, boolean valueRum, boolean valueSoda, boolean valueVodka) {
+        ananas = "Ananas";
+        arancia = "Arancia";
+        cognac = "Cognac";
+        gin = "Gin";
+        lime = "Lime";
+        menta = "Menta";
+        pesca = "Pesca";
+        rum = "Rum";
+        soda = "Soda";
+        vodka = "Vodka";
+        if (!valueAnanas)
+            ananas = "no";
+        if (!valueArancia)
+            arancia = "no";
+        if (!valueCognac)
+            cognac = "no";
+        if (!valueGin)
+            gin = "no";
+        if (!valueLime)
+            lime = "no";
+        if (!valueMenta)
+            menta = "no";
+        if (!valuePesca)
+            pesca = "no";
+        if (!valueRum)
+            rum = "no";
+        if (!valueSoda)
+            soda = "no";
+        if (!valueVodka)
+            vodka = "no";
+        db.readCocktails(new FirebaseDBCocktails.DataStatus() {
             @Override
-            public void dataIsLoaded(List<EventItem> listOfEvents, List<String> listOfKeys) {
-                int numEv = 0;
-                for (int cont = 0; cont < listOfEvents.size(); cont++) {
-                    final EventItem ev = listOfEvents.get(cont);
-                    if ((ev.getEventType().equals(discoMode) || ev.getEventType().equals(concertoMode) ||
-                            ev.getEventType().equals(pubMode)) && ev.getDateString().equals(date)) {
-                        String add = ev.getStreet();
-                        LatLng ll = getPosition(add);
-                        assert ll != null;
-                        mMap.addMarker(new MarkerOptions().position(ll).title(add));
-                        numEv++;
+            public void dataIsLoaded(List<Cocktail> listOfCocktails) {
+                ArrayList<Cocktail> cocktailsListFiltered = new ArrayList<>();
+                for (int cont = 0; cont < listOfCocktails.size(); cont++) {
+                    final Cocktail cocktail = listOfCocktails.get(cont);
+                    ArrayList<String> ingredients = listOfCocktails.get(cont).getIngredients();
+                    for (int i = 0; i < ingredients.size(); i++) {
+                        if (ingredients.get(i).contains(ananas) || ingredients.get(i).contains(arancia) || ingredients.get(i).contains(cognac) ||
+                                ingredients.get(i).contains(gin) || ingredients.get(i).contains(lime) || ingredients.get(i).contains(menta) ||
+                                ingredients.get(i).contains(pesca) || ingredients.get(i).contains(rum) || ingredients.get(i).contains(soda) ||
+                                ingredients.get(i).contains(vodka)) {
+                            cocktailsListFiltered.add(cocktail);
+                        }
+
                     }
+
                 }
-                if (numEv == 0) {
-                    Toast.makeText(requireContext(), "Nessun evento di questo tipo il " + date, Toast.LENGTH_LONG).show();
+                if (cocktailsListFiltered.size() == 0) {
+                    Toast.makeText(requireContext(), "Nessun cocktail trovato con questi ingredienti ", Toast.LENGTH_LONG).show();
+
+                }else{
+                    cocktailAdapter.setListOfAllCocktails(cocktailsListFiltered);
                 }
+
             }
         });
-    } */
+    }
 
 }
