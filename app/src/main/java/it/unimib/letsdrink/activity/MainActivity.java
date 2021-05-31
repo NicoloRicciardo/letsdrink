@@ -26,9 +26,9 @@ public class MainActivity extends AppCompatActivity {
                 R.id.navigation_drinks, R.id.navigation_categories, R.id.navigation_shaker, R.id.navigation_favorites, R.id.navigation_profile)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        navController.setGraph(R.navigation.mobile_navigation);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+        //navController.setGraph(R.navigation.mobile_navigation);
 
     }
 

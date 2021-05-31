@@ -1,75 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="15dp">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:text="@string/cerca_il_cocktail_per_ingredienti"
-        android:textSize="20sp" />
-
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switchAnanas"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/ananas" />
+        android:orientation="vertical"
+        android:padding="15dp">
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switchArancia"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/arancia_filter" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="@string/cerca_il_cocktail_per_ingredienti"
+            android:textSize="20sp" />
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switchCognac"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/cognac_filter" />
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switchAnanas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ananas" />
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switchGin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/gin_filter" />
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switchArancia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/arancia_filter" />
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switchLime"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/lime" />
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switchCognac"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/cognac_filter" />
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switchMenta"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/menta" />
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switchGin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/gin_filter" />
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switchPesca"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/pesca_filter" />
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switchLime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/lime" />
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switchRum"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/rum" />
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switchMenta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/menta" />
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switchSoda"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/soda_filter" />
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switchPesca"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pesca_filter" />
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switchVodka"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/vodka_filter" />
-</LinearLayout>
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switchRum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/rum" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switchSoda"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/soda_filter" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switchVodka"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/vodka_filter" />
+    </LinearLayout>
+</ScrollView>

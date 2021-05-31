@@ -3,9 +3,11 @@ package it.unimib.letsdrink.ui.drinks.drinks_without_login;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -16,34 +18,22 @@ import androidx.fragment.app.DialogFragment;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import it.unimib.letsdrink.R;
 
 public class FiltersIngredients extends DialogFragment {
 
     private boolean modeAnanas, modeArancia, modeCognac, modeGin, modeLime, modeMenta, modePesca, modeRum, modeSoda, modeVodka;
-    private static String ananas, arancia, cognac, gin, lime, menta, pesca, rum, soda, vodka;
     private static FilterInterface filter;
+    SwitchMaterial sAnanas, sArancia,sCognac, sGin, sLime, sMenta, sPesca, sRum, sSoda, sVodka;
 
-    public FiltersIngredients() {}
-
-    public static FiltersIngredients newInstance(String ananas, String arancia, String cognac,
-                                                 String gin, String lime, String menta, String pesca, String rum,
-                                                 String soda, String vodka, FilterInterface filter) {
+    public static FiltersIngredients newInstance(FilterInterface filter) {
         FiltersIngredients fragment = new FiltersIngredients();
-        FiltersIngredients.ananas = ananas;
-        FiltersIngredients.arancia = arancia;
-        FiltersIngredients.cognac = cognac;
-        FiltersIngredients.gin = gin;
-        FiltersIngredients.lime = lime;
-        FiltersIngredients.menta = menta;
-        FiltersIngredients.pesca = pesca;
-        FiltersIngredients.rum = rum;
-        FiltersIngredients.soda = soda;
-        FiltersIngredients.vodka = vodka;
         FiltersIngredients.filter = filter;
-
         return fragment;
-
     }
 
 
@@ -56,44 +46,24 @@ public class FiltersIngredients extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         View v = requireActivity().getLayoutInflater().inflate(R.layout.filters, new LinearLayout(requireActivity()), false);
-        final SwitchMaterial sAnanas = v.findViewById(R.id.switchAnanas);
-        final SwitchMaterial sArancia = v.findViewById(R.id.switchArancia);
-        final SwitchMaterial sCognac = v.findViewById(R.id.switchCognac);
-        final SwitchMaterial sGin = v.findViewById(R.id.switchGin);
-        final SwitchMaterial sLime = v.findViewById(R.id.switchLime);
-        final SwitchMaterial sMenta = v.findViewById(R.id.switchMenta);
-        final SwitchMaterial sPesca = v.findViewById(R.id.switchPesca);
-        final SwitchMaterial sRum = v.findViewById(R.id.switchRum);
-        final SwitchMaterial sSoda = v.findViewById(R.id.switchSoda);
-        final SwitchMaterial sVodka = v.findViewById(R.id.switchVodka);
-
-        if (ananas.equals("Ananas"))
-            sAnanas.setChecked(true);
-        if (arancia.equals("Arancia"))
-            sArancia.setChecked(true);
-        if (cognac.equals("Cognac"))
-            sCognac.setChecked(true);
-        if (gin.equals("Gin"))
-            sGin.setChecked(true);
-        if (lime.equals("Lime"))
-            sLime.setChecked(true);
-        if (menta.equals("Menta"))
-            sMenta.setChecked(true);
-        if (pesca.equals("Pesca"))
-            sPesca.setChecked(true);
-        if (rum.equals("Rum"))
-            sRum.setChecked(true);
-        if (soda.equals("Soda"))
-            sSoda.setChecked(true);
-        if (vodka.equals("Vodka"))
-            sVodka.setChecked(true);
-
+        sAnanas = v.findViewById(R.id.switchAnanas);
+        sArancia = v.findViewById(R.id.switchArancia);
+        sCognac = v.findViewById(R.id.switchCognac);
+        sGin = v.findViewById(R.id.switchGin);
+        sLime = v.findViewById(R.id.switchLime);
+        sMenta = v.findViewById(R.id.switchMenta);
+        sPesca = v.findViewById(R.id.switchPesca);
+        sRum = v.findViewById(R.id.switchRum);
+        sSoda = v.findViewById(R.id.switchSoda);
+        sVodka = v.findViewById(R.id.switchVodka);
+        loadToogle();
         Context c = getContext();
         assert c != null;
 
+
         return new MaterialAlertDialogBuilder(requireActivity(), R.style.DialogTheme)
                 .setView(v)
-                .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         setModeAnanas(sAnanas.isChecked());
@@ -106,15 +76,101 @@ public class FiltersIngredients extends DialogFragment {
                         setModeRum(sRum.isChecked());
                         setModeSoda(sSoda.isChecked());
                         setModeVodka(sVodka.isChecked());
+                        saveToogle();
                         dialog.dismiss();
                         filter.okButtonClick(isModeAnanas(), isModeArancia(), isModeCognac(),
                                 isModeGin(), isModeLime(), isModeMenta(), isModePesca(), isModeRum(),
                                 isModeSoda(), isModeVodka());
                     }
                 })
+                .setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
                 .setBackground(new ColorDrawable(Color.TRANSPARENT))
                 .create();
     }
+
+
+
+    private void saveToogle() {
+        SharedPreferences sharedPref = this.getActivity().getSharedPreferences("Filtri", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        Set<String> checkedCheckboxSet = new HashSet<>();
+        if (sAnanas.isChecked()) {
+            checkedCheckboxSet.add("Ananas");
+        }
+        if (sArancia.isChecked()) {
+            checkedCheckboxSet.add("Arancia");
+        }
+        if (sCognac.isChecked()) {
+            checkedCheckboxSet.add("Cognac");
+        }
+        if (sGin.isChecked()) {
+            checkedCheckboxSet.add("Gin");
+        }
+        if (sLime.isChecked()) {
+            checkedCheckboxSet.add("Lime");
+        }
+        if (sMenta.isChecked()) {
+            checkedCheckboxSet.add("Menta");
+        }
+        if (sPesca.isChecked()) {
+            checkedCheckboxSet.add("Pesca");
+        }
+        if (sRum.isChecked()) {
+            checkedCheckboxSet.add("Rum");
+        }
+        if (sVodka.isChecked()) {
+            checkedCheckboxSet.add("Vodka");
+        }
+        if (sSoda.isChecked()) {
+            checkedCheckboxSet.add("Soda");
+        }
+        editor.putStringSet("Filtri selezionati", checkedCheckboxSet);
+        editor.apply();
+    }
+
+
+    private void loadToogle() {
+        SharedPreferences sharedPref = this.getActivity().getSharedPreferences("Filtri", Context.MODE_PRIVATE);
+        Set<String> checkedCheckboxSet = sharedPref.getStringSet("Filtri selezionati", null);
+        if (checkedCheckboxSet != null) {
+            if (checkedCheckboxSet.contains("Arancia")) {
+                sArancia.setChecked(true);
+            }
+            if (checkedCheckboxSet.contains("Ananas")) {
+                sAnanas.setChecked(true);
+            }
+            if (checkedCheckboxSet.contains("Gine")) {
+                sGin.setChecked(true);
+            }
+            if (checkedCheckboxSet.contains("Lime")) {
+                sLime.setChecked(true);
+            }
+            if (checkedCheckboxSet.contains("Menta")) {
+                sMenta.setChecked(true);
+            }
+            if (checkedCheckboxSet.contains("Pesca")) {
+                sPesca.setChecked(true);
+            }
+            if (checkedCheckboxSet.contains("Rum")) {
+                sRum.setChecked(true);
+            }
+            if (checkedCheckboxSet.contains("Soda")) {
+                sSoda.setChecked(true);
+            }
+            if (checkedCheckboxSet.contains("Vodka")) {
+                sVodka.setChecked(true);
+            }
+            if (checkedCheckboxSet.contains("Cognac")) {
+                sCognac.setChecked(true);
+            }
+        }
+    }
+
 
     public boolean isModeAnanas() {
         return modeAnanas;
