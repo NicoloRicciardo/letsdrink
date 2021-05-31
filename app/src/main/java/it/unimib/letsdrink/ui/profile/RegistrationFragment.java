@@ -1,14 +1,10 @@
 package it.unimib.letsdrink.ui.profile;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
@@ -17,25 +13,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.airbnb.lottie.L;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.shobhitpuri.custombuttons.GoogleSignInButton;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,9 +33,10 @@ import it.unimib.letsdrink.R;
 public class RegistrationFragment extends Fragment {
 
     // private static final String TAG = "GoogleActivity";
-    private static final int RC_SIGN_IN = 9001;
+
+    /*private static final int RC_SIGN_IN = 9001;
     private GoogleSignInClient mGoogleSignInClient;
-    GoogleSignInButton googleSignInButton;
+    GoogleSignInButton googleSignInButton;*/
 
     private static final String TAG = "RegistrationFragment";
 
@@ -84,13 +72,13 @@ public class RegistrationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        createRequest();
+//        createRequest();
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_registration, container, false);
     }
 
-    private void createRequest() {
+    /*private void createRequest() {
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions
                 .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -99,7 +87,7 @@ public class RegistrationFragment extends Fragment {
                 .build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(requireActivity().getApplicationContext(), gso);
-    }
+    }*/
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -122,11 +110,11 @@ public class RegistrationFragment extends Fragment {
 
         Button mButtonRegistration = view.findViewById(R.id.button_registration);
         Button mButtonGoToLogin = view.findViewById(R.id.button_registration_sign_in);
-        googleSignInButton = view.findViewById(R.id.button_registration_google);
+//        googleSignInButton = view.findViewById(R.id.button_registration_google);
 
         //mRegistrationFragment = view.findViewById(R.id.fragment_registration);
 
-        googleSignInButton.setOnClickListener(new View.OnClickListener() {
+        /*googleSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (v.getId() == R.id.button_registration_google) {
@@ -134,7 +122,7 @@ public class RegistrationFragment extends Fragment {
                     signIn();
                 }
             }
-        });
+        });*/
 
         mButtonRegistration.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -206,7 +194,7 @@ public class RegistrationFragment extends Fragment {
         } else {
             userName = false;
             assert mUserName != null;
-            mLayoutUserName.setError("Nome Utente inserito non valido.");
+            mLayoutUserName.setError(getText(R.string.error_user_name));
         }
 
         if (mAge != null && !(Objects.requireNonNull(mAge.getText()).toString().trim().isEmpty())) {
@@ -215,7 +203,7 @@ public class RegistrationFragment extends Fragment {
         } else {
             age = false;
             assert mAge != null;
-            mLayoutAge.setError("Età inserita non valida.");
+            mLayoutAge.setError(getText(R.string.error_age));
         }
 
         if (mEmail != null && !(Objects.requireNonNull(mEmail.getText()).toString().trim().isEmpty())) {
@@ -223,18 +211,18 @@ public class RegistrationFragment extends Fragment {
             mLayoutEmail.setError(null);
         } else {
             email = false;
-            mLayoutEmail.setError("Email inserita non valida");
+            mLayoutEmail.setError(getText(R.string.error_email));
         }
 
-        if (mPassword != null && mPassword.getText().toString().trim().length() < 6) {
+        if (mPassword != null && Objects.requireNonNull(mPassword.getText()).toString().trim().length() < 6) {
             password = false;
-            mLayoutPassword.setError("La Password deve essere di almeno 6 caratteri.");
+            mLayoutPassword.setError(getText(R.string.error_password_min));
         } else if (mPassword != null && !(Objects.requireNonNull(mPassword.getText()).toString().trim().isEmpty())){
             password = true;
             mLayoutPassword.setError(null);
         } else {
             password = false;
-            mLayoutPassword.setError("La Password deve essere di almeno 6 caratteri.");
+            mLayoutPassword.setError(getText(R.string.error_password_min));
         }
 
         if (mConfirmPassword != null && !(Objects.requireNonNull(mConfirmPassword.getText()).toString().trim().isEmpty())) {
@@ -243,7 +231,7 @@ public class RegistrationFragment extends Fragment {
                 mLayoutConfirmPassword.setError(null);
             } //TODO settare errore
         } else {
-            mLayoutConfirmPassword.setError("Password inserita non valida.");
+            mLayoutConfirmPassword.setError(getText(R.string.error_password));
         }
 
         return userName && email && age && password && confirmPassword;
@@ -279,7 +267,7 @@ public class RegistrationFragment extends Fragment {
         }
     }
 
-    private void firebaseAuthWithGoogle(String idToken) {
+    /*private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener((Activity) requireContext(), new OnCompleteListener<AuthResult>() {
@@ -296,9 +284,9 @@ public class RegistrationFragment extends Fragment {
                         }
                     }
                 });
-    }
+    }*/
 
-    @Override
+    /*@Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -316,15 +304,17 @@ public class RegistrationFragment extends Fragment {
                 Log.w(TAG, "Google sign in failed", e);
             }
         }
-    }
+    }*/
 
-    private void signIn() {
+    /*private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
+    }*/
 
     private void goOnProfile(){
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fragment_registration, new ProfileFragment()).commit();
+        /*FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.fragment_registration, new ProfileFragment()).commit();*/
+        Navigation.findNavController(getView())
+                .navigate(R.id.action_registrationFragment_to_profileFragment);
     }
 }

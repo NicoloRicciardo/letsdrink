@@ -79,16 +79,19 @@
     <fragment
         android:id="@+id/registrationFragment"
         android:name="it.unimib.letsdrink.ui.profile.RegistrationFragment"
-        android:label="fragment_registration"
+        android:label="Registrazione"
         tools:layout="@layout/fragment_registration">
         <action
             android:id="@+id/action_registrationFragment_to_navigation_profile"
             app:destination="@id/navigation_profile" />
+        <action
+            android:id="@+id/action_registrationFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="it.unimib.letsdrink.ui.profile.ProfileFragment"
-        android:label="fragment_profile"
+        android:label="Profilo"
         tools:layout="@layout/fragment_profile" >
         <action
             android:id="@+id/action_profileFragment_to_customDrinkFragment"
@@ -97,7 +100,7 @@
     <fragment
         android:id="@+id/customDrinkFragment"
         android:name="it.unimib.letsdrink.ui.profile.CustomDrinkFragment"
-        android:label="fragment_custom_drink"
+        android:label="Cocktail personalizzato"
         tools:layout="@layout/fragment_custom_drink" >
         <action
             android:id="@+id/action_customDrinkFragment_to_profileFragment"

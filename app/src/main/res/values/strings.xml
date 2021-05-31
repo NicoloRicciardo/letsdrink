@@ -29,6 +29,13 @@
     <string name="value_registration_question">Sei già registrato?</string>
     <!--<string name="value_login_question">Non sei ancora registrato?</string>-->
     <string name="value_login_question">Non hai un profilo?</string>
+    
+    <!--Errors in Registration and Login-->
+    <string name="error_user_name">Nome Utente inserito non valido.</string>
+    <string name="error_age">Età inserita non valida.</string>
+    <string name="error_email">Email inserita non valida.</string>
+    <string name="error_password">Password inserita non valida.</string>
+    <string name="error_password_min">La Password deve essere di almeno 6 caratteri.</string>
 
     <!--Profile-->
     <string name="value_your_drinks">I tuoi drink</string>
