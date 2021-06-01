@@ -1,17 +1,12 @@
-package it.unimib.letsdrink.ui.drinks.drinks_without_login;
+package it.unimib.letsdrink.ui.drinks;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,8 +15,6 @@ import java.util.List;
 
 import it.unimib.letsdrink.R;
 import it.unimib.letsdrink.domain.Category;
-import it.unimib.letsdrink.ui.drinks.CategoryAdapter;
-import it.unimib.letsdrink.ui.drinks.FirebaseDBCategories;
 
 public class CategoriesFragment extends Fragment {
 

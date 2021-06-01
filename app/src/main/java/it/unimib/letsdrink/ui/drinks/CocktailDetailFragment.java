@@ -1,13 +1,12 @@
-package it.unimib.letsdrink.ui.drinks.drinks_without_login;
+package it.unimib.letsdrink.ui.drinks;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,7 +19,6 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import it.unimib.letsdrink.R;
 
@@ -60,10 +58,18 @@ public class CocktailDetailFragment extends Fragment {
         TextView txtIngredients = root.findViewById(R.id.cocktail_detail_ingredients);
         TextView txtMethod = root.findViewById((R.id.cocktail_detail_method));
         ImageView img = root.findViewById(R.id.cocktail_detail_image);
+        ImageButton imgBtn = root.findViewById(R.id.love_cocktail_detail);
         txtName.setText(name);
         txtIngredients.setText(ingredienti);
         txtMethod.setText(method);
         Glide.with(getContext()).load(imageUrl).into(img);
+        imgBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imgBtn.setColorFilter(Color.RED);
+                Log.d("cuore", "cuore premuto");
+            }
+        });
 
         return root;
     }

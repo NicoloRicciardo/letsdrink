@@ -17,12 +17,11 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import java.util.List;
-import java.util.Objects;
 
 import it.unimib.letsdrink.R;
 import it.unimib.letsdrink.domain.Cocktail;
 import it.unimib.letsdrink.ui.drinks.FirebaseDBCocktails;
-import it.unimib.letsdrink.ui.drinks.drinks_without_login.CocktailDetailFragment;
+import it.unimib.letsdrink.ui.drinks.CocktailDetailFragment;
 
 
 public class ShakerFragment extends Fragment implements SensorEventListener {

@@ -1,4 +1,4 @@
-package it.unimib.letsdrink.ui.drinks.drinks_with_login;
+package it.unimib.letsdrink.ui.drinks;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -16,20 +16,20 @@ import com.bumptech.glide.Glide;
 
 import it.unimib.letsdrink.R;
 import it.unimib.letsdrink.domain.Cocktail;
-import it.unimib.letsdrink.ui.drinks.drinks_without_login.CocktailAdapter;
 
-public class CocktailItemView_With_Login extends RecyclerView.ViewHolder {
+public class CocktailItemView extends RecyclerView.ViewHolder{
+
     private TextView name;
     private ImageView image;
     private Context context;
     private ImageButton imgBtn;
 
-    CocktailItemView_With_Login (ViewGroup parent, final CocktailAdapter_With_Login.OnItemClickListener listener, Context context) {
-        super(LayoutInflater.from(context).inflate(R.layout.card_view_cocktail_with_login, parent, false));
+    CocktailItemView (ViewGroup parent, final CocktailAdapter.OnItemClickListener listener, Context context) {
+        super(LayoutInflater.from(context).inflate(R.layout.card_view_cocktail, parent, false));
 
         this.context=context;
-        name = itemView.findViewById(R.id.text_cocktail_with_login);
-        image = itemView.findViewById(R.id.image_cocktail_with_login);
+        name = itemView.findViewById(R.id.text_cocktail);
+        image = itemView.findViewById(R.id.image_cocktail);
         imgBtn = itemView.findViewById(R.id.love_cocktail_card);
 
         itemView.setOnClickListener(new View.OnClickListener() {

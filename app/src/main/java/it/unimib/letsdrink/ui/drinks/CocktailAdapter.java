@@ -1,7 +1,6 @@
-package it.unimib.letsdrink.ui.drinks.drinks_without_login;
+package it.unimib.letsdrink.ui.drinks;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;

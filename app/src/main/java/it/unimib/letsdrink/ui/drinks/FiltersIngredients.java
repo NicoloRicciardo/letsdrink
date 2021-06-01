@@ -1,4 +1,4 @@
-package it.unimib.letsdrink.ui.drinks.drinks_without_login;
+package it.unimib.letsdrink.ui.drinks;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -19,7 +18,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import it.unimib.letsdrink.R;

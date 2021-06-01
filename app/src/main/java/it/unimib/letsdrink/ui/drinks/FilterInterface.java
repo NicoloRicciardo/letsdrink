@@ -1,4 +1,4 @@
-package it.unimib.letsdrink.ui.drinks.drinks_without_login;
+package it.unimib.letsdrink.ui.drinks;
 
 public interface FilterInterface {
     void okButtonClick(boolean ananas, boolean arancia, boolean cognac, boolean gin, boolean lime,
