@@ -226,7 +226,7 @@ public class LoginFragment extends Fragment {
         });
     }
 
-    /*@Override
+    @Override
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
@@ -234,7 +234,7 @@ public class LoginFragment extends Fragment {
         if(currentUser != null) {
             goOnProfile();
         }
-    }*/
+    }
 
     private boolean controlLoginFields() {
         boolean email;
