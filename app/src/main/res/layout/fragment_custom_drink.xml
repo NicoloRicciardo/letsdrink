@@ -75,7 +75,29 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/image_custom_drink_added_from_user" />
 
-            <EditText
+            <ImageView
+                android:id="@+id/image_add_ingredient"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="30dp"
+                android:src="@drawable/ic_baseline_add_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/image_custom_drink_added_from_user"
+                app:tint="@color/lipstick_fuchsia" />
+
+            <LinearLayout
+                android:id="@+id/layout_ingredients_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_custom_drink_ingredients">
+
+            </LinearLayout>
+
+            <!--<EditText
                 android:id="@+id/edit_text_ingredients"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -88,7 +110,7 @@
                 app:layout_constraintStart_toStartOf="@id/text_custom_drink_ingredients"
                 app:layout_constraintTop_toBottomOf="@+id/text_custom_drink_ingredients"
 
-                android:background="@drawable/bg_edit_text"/>
+                android:background="@drawable/bg_edit_text"/>-->
 
             <!--<com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/text_layout_custom_drink_procedure"
@@ -131,11 +153,11 @@
                 android:paddingTop="5dp"
 
                 android:maxLength="100"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginStart="30dp"
                 android:layout_marginEnd="30dp"
-                app:layout_constraintStart_toStartOf="@id/edit_text_ingredients"
-                app:layout_constraintTop_toBottomOf="@+id/edit_text_ingredients"
+                app:layout_constraintStart_toStartOf="@id/text_custom_drink_ingredients"
+                app:layout_constraintTop_toBottomOf="@+id/layout_ingredients_list"
 
                 android:inputType="textMultiLine"
                 android:gravity="top|left"

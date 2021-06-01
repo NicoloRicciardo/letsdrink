@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
+
+    <EditText
+        android:id="@+id/edit_text_ingredient_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:hint="Ingrediente..."
+        android:textColorHint="@color/light_gray"
+        android:textAlignment="viewStart"
+        android:textColor="@color/white"
+        android:maxLength="20"
+        android:singleLine="true"
+        android:background="@drawable/bg_edit_text"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="50dp"/>
+
+    <ImageView
+        android:id="@+id/image_delete_ingredient"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/close_button"
+        android:layout_marginEnd="30dp"/>
+
+</LinearLayout>
