@@ -1,5 +1,6 @@
 package it.unimib.letsdrink.ui.profile;
 
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -15,19 +16,30 @@ import androidx.preference.EditTextPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.HashMap;
 
 import it.unimib.letsdrink.R;
 
 public class SettingsFragment extends Fragment {
+
+    private static final String TAG = "SettingsFragment";
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -73,18 +85,21 @@ public class SettingsFragment extends Fragment {
     public static class Settings extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
 
         private ViewGroup vg;
+        private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        private FirebaseFirestore mFirestore= FirebaseFirestore.getInstance();
+        User user = new User();
+        DocumentReference documentReference;
 
         public Settings(ViewGroup vg) {
             this.vg = vg;
         }
 
         @Override
-        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-
-        }
-
-        @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+
+            user.setUserID(mAuth.getCurrentUser().getUid());
+            documentReference = mFirestore.collection("Utenti").document(user.getUserID());
+
             addPreferencesFromResource(R.xml.settings);
 
             final Preference image = findPreference("imageKey");
@@ -94,6 +109,28 @@ public class SettingsFragment extends Fragment {
             final Preference name = findPreference("nameKey");
             assert name != null;
             name.getIcon().setTint(Color.WHITE);
+            /*EditText resetName = new EditText(getActivity());
+            name.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    new MaterialAlertDialogBuilder(requireActivity(), R.style.DialogTheme)
+                            .setTitle("Cambia username")
+                            .setView(resetName)
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Log.d(TAG, "name change entrati");
+                                    HashMap<String, Object> edited = new HashMap<>();
+                                    edited.put("userName", resetName.getText().toString());
+                                    documentReference.update(edited);
+                                }
+                            })
+                            .setNegativeButton("Annulla", null)
+                            .setBackground(new ColorDrawable(Color.TRANSPARENT))
+                            .show();
+                    return true;
+                }
+            });*/
 
             final Preference password = findPreference("passwordKey");
             assert password != null;
@@ -102,23 +139,6 @@ public class SettingsFragment extends Fragment {
             final Preference aboutUs = findPreference("aboutKey");
             assert aboutUs != null;
             aboutUs.getIcon().setTint(Color.WHITE);
-
-            final Preference privacy = findPreference("privacyKey");
-            assert privacy != null;
-            privacy.getIcon().setTint(Color.WHITE);
-
-            final Preference version = findPreference("versionKey");
-            assert version != null;
-            version.getIcon().setTint(Color.WHITE);
-
-            final Preference logout = findPreference("logoutKey");
-            assert logout != null;
-            logout.getIcon().setTint(Color.WHITE);
-
-            final Preference remove = findPreference("removeKey");
-            assert remove != null;
-            remove.getIcon().setTint(Color.WHITE);
-
             aboutUs.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
@@ -132,6 +152,9 @@ public class SettingsFragment extends Fragment {
                 }
             });
 
+            final Preference privacy = findPreference("privacyKey");
+            assert privacy != null;
+            privacy.getIcon().setTint(Color.WHITE);
             privacy.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
@@ -144,6 +167,74 @@ public class SettingsFragment extends Fragment {
                     return true;
                 }
             });
+
+            /* */
+            final Preference version = findPreference("versionKey");
+            assert version != null;
+            version.getIcon().setTint(Color.WHITE);
+            /* */
+
+            final Preference logout = findPreference("logoutKey");
+            assert logout != null;
+            logout.getIcon().setTint(Color.WHITE);
+            logout.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    FirebaseAuth.getInstance().signOut();
+                    goOnLogin();
+                    return true;
+                }
+            });
+
+            final Preference remove = findPreference("removeKey");
+            assert remove != null;
+            remove.getIcon().setTint(Color.WHITE);
+
         }
+
+        private void goOnLogin() {
+            Navigation.findNavController(getView())
+                    .navigate(R.id.action_settingsFragment_to_navigation_profile);
+        }
+
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+
+            switch (key) {
+                case "nameKey":
+                    String name = sharedPreferences.getString("nameKey", "");
+                    /*Snackbar.make(requireView(), "Nome:  " + name, Snackbar.LENGTH_SHORT)
+                            .show();*/
+
+                    HashMap<String, Object> edited = new HashMap<>();
+                    edited.put("userName", name);
+                    documentReference.update(edited);
+                    break;
+                case "passwordKey":
+                    String password = sharedPreferences.getString("passwordKey", "");
+                    /*Snackbar.make(requireView(), "Nome:  " + name, Snackbar.LENGTH_SHORT)
+                            .show();*/
+
+                    /*HashMap<String, Object> edited = new HashMap<>();
+                    edited.put("userName", name);
+                    documentReference.update(edited);*/
+                    break;
+            }
+        }
+
+        @Override
+        public void onStart() {
+            super.onStart();
+            getPreferenceScreen().getSharedPreferences()
+                    .registerOnSharedPreferenceChangeListener(this);
+        }
+
+        @Override
+        public void onStop() {
+            super.onStop();
+            getPreferenceScreen().getSharedPreferences()
+                    .unregisterOnSharedPreferenceChangeListener(this);
+        }
+
     }
 }

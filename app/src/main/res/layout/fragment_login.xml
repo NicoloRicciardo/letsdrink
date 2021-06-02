@@ -162,19 +162,6 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="60dp" />
 
-                <Button
-                    android:id="@+id/button_prova"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/lipstick_fuchsia"
-                    android:text="esci"
-                    android:textSize="20sp"
-                    android:textAllCaps="false"
-                    android:height="65dp"
-                    android:width="285dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="60dp" />
-
                 <TextView
                     android:id="@+id/text_login_or"
                     android:layout_width="wrap_content"

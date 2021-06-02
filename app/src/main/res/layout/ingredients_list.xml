@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
@@ -8,10 +9,11 @@
 
     <EditText
         android:id="@+id/edit_text_ingredient_list"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:hint="Ingrediente..."
+        android:autofillHints="cocktailIngredient"
         android:textColorHint="@color/light_gray"
         android:textAlignment="viewStart"
         android:textColor="@color/white"
@@ -19,13 +21,16 @@
         android:singleLine="true"
         android:background="@drawable/bg_edit_text"
         android:layout_marginStart="30dp"
-        android:layout_marginEnd="50dp"/>
+        android:layout_marginEnd="20dp" />
 
     <ImageView
         android:id="@+id/image_delete_ingredient"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:src="@drawable/close_button"
-        android:layout_marginEnd="30dp"/>
+        android:src="@drawable/ic_close_24"
+        android:layout_marginEnd="31dp"
+        android:layout_marginTop="5dp"
+        app:tint="@drawable/button_link_color"
+        android:contentDescription="TODO" />
 
 </LinearLayout>

@@ -84,7 +84,7 @@
                 android:src="@drawable/ic_baseline_add_24"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/image_custom_drink_added_from_user"
-                app:tint="@color/lipstick_fuchsia" />
+                app:tint="@drawable/button_link_switch_fragment_color" />
 
             <LinearLayout
                 android:id="@+id/layout_ingredients_list"

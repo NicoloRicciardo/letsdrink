@@ -122,15 +122,6 @@ public class LoginFragment extends Fragment {
         Button buttonLogin = view.findViewById(R.id.button_login_access);
         Button buttonGoToRegistration = view.findViewById(R.id.button_login_sign_up);
 
-        Button buttonProva= view.findViewById(R.id.button_prova);
-        buttonProva.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                Toast.makeText(getContext(), "LogOut", Toast.LENGTH_SHORT).show();
-            }
-        });
-
         mAuth = FirebaseAuth.getInstance();
         mFirestore = FirebaseFirestore.getInstance();
 

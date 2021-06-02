@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.HashMap;
 
 import it.unimib.letsdrink.R;
 
@@ -122,6 +125,19 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(getView()).navigate(R.id.action_profileFragment_to_customDrinkFragment);
+            }
+        });
+
+        Button button = view.findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HashMap<String, Object> edited = new HashMap<>();
+                edited.put("userName", "gianpeppo");
+                /*edited.put("email", "richmnico@gmail.com");
+                edited.put("age", "23");*/
+                /*documentReference.set(edited);*/
+                documentReference.update(edited);
             }
         });
 

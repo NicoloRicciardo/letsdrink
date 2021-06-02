@@ -4,10 +4,14 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -39,7 +43,21 @@ public class CustomDrinkFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
+        ActionBar actionBar= ((AppCompatActivity) requireActivity()).getSupportActionBar();
+        actionBar.setTitle("Cocktail personalizzato");
+        setHasOptionsMenu(true);
+
         return inflater.inflate(R.layout.fragment_custom_drink, container, false);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull @NotNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            Navigation.findNavController(getView())
+                    .navigate(R.id.action_customDrinkFragment_to_profileFragment);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
