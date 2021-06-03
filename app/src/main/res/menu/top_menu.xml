@@ -13,6 +13,6 @@
         android:id="@+id/filter_item"
         android:icon="@drawable/ic_filter_black_24dp"
         android:title="@string/title_filter"
-        app:showAsAction="ifRoom|withText"/>
+        app:showAsAction="always|collapseActionView"/>
 
 </menu>

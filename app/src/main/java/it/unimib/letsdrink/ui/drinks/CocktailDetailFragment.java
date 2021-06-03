@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
@@ -25,6 +28,7 @@ import it.unimib.letsdrink.R;
 public class CocktailDetailFragment extends Fragment {
     private static String name, method, imageUrl, ingredienti;
     private static ArrayList<String> ingredients;
+    private FirebaseUser currentUser;
 
 
     public CocktailDetailFragment() {
@@ -54,6 +58,7 @@ public class CocktailDetailFragment extends Fragment {
         actionBar.setTitle("");
         actionBar.setDisplayHomeAsUpEnabled(false);
         setHasOptionsMenu(true);
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
         TextView txtName = root.findViewById(R.id.cocktail_detail_name);
         TextView txtIngredients = root.findViewById(R.id.cocktail_detail_ingredients);
         TextView txtMethod = root.findViewById((R.id.cocktail_detail_method));
@@ -66,8 +71,13 @@ public class CocktailDetailFragment extends Fragment {
         imgBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                imgBtn.setColorFilter(Color.RED);
-                Log.d("cuore", "cuore premuto");
+                if(currentUser!=null) {
+                    imgBtn.setColorFilter(Color.RED);
+                    Log.d("cuore", "cuore premuto");
+                }else{
+                    Toast.makeText(getContext(),"Devi essere loggato per salvare un cocktail", Toast.LENGTH_SHORT ).show();
+                }
+
             }
         });
 

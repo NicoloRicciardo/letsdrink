@@ -9,10 +9,13 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import it.unimib.letsdrink.R;
 import it.unimib.letsdrink.domain.Cocktail;
@@ -23,6 +26,7 @@ public class CocktailItemView extends RecyclerView.ViewHolder{
     private ImageView image;
     private Context context;
     private ImageButton imgBtn;
+    private FirebaseUser currentUser;
 
     CocktailItemView (ViewGroup parent, final CocktailAdapter.OnItemClickListener listener, Context context) {
         super(LayoutInflater.from(context).inflate(R.layout.card_view_cocktail, parent, false));
@@ -31,6 +35,7 @@ public class CocktailItemView extends RecyclerView.ViewHolder{
         name = itemView.findViewById(R.id.text_cocktail);
         image = itemView.findViewById(R.id.image_cocktail);
         imgBtn = itemView.findViewById(R.id.love_cocktail_card);
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,8 +52,12 @@ public class CocktailItemView extends RecyclerView.ViewHolder{
         imgBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                imgBtn.setColorFilter(Color.RED);
-                Log.d("cuore", "cuore premuto");
+                if(currentUser!=null) {
+                    imgBtn.setColorFilter(Color.RED);
+                    Log.d("cuore", "cuore premuto");
+                }else{
+                    Toast.makeText(context,"Devi essere loggato per salvare un cocktail", Toast.LENGTH_SHORT ).show();
+                }
             }
         });
     }

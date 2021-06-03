@@ -96,5 +96,7 @@ public class CocktailAdapter extends RecyclerView.Adapter<CocktailItemView> impl
         this.listOfCocktails = listOfCocktails;
     }
 
-
+    public List<Cocktail> getListOfCocktails() {
+        return listOfCocktails;
+    }
 }

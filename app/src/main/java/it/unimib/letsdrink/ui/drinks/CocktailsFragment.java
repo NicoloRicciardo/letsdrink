@@ -54,8 +54,9 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
                 cocktailAdapter.setOnItemClickListener(new CocktailAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(int position, View v) {
-                        Fragment cocktailDetail = CocktailDetailFragment.newInstance(listOfCocktails.get(position).getName(), listOfCocktails.get(position).getMethod(),
-                                listOfCocktails.get(position).getIngredients(), listOfCocktails.get(position).getImageUrl());
+                        List<Cocktail> cocktails = cocktailAdapter.getListOfCocktails();
+                        Fragment cocktailDetail = CocktailDetailFragment.newInstance(cocktails.get(position).getName(), cocktails.get(position).getMethod(),
+                                cocktails.get(position).getIngredients(), cocktails.get(position).getImageUrl());
                         Navigation.findNavController(getView()).navigate(R.id.action_navigation_drinks_to_cocktailDetailFragment);
 
                     }
@@ -89,7 +90,6 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
                     public boolean onQueryTextChange(String newText) {
                         cocktailAdapter.getFilter().filter(newText);
                         if (cocktailAdapter.getNoCocktailsFiltered()) {
-                            Log.d("prova", "Nessun cocktail trovato");
                             Toast.makeText(getContext(),"Nessun cocktail trovato", Toast.LENGTH_SHORT ).show();
                         }
                         return false;
@@ -137,12 +137,17 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
         }
         if (!filtri) {
             cocktailAdapter.setListOfocktails(cocktailList);
+            recyclerView.getRecycledViewPool().clear();
+            cocktailAdapter.notifyDataSetChanged();
         } else {
             if (cocktailsListFiltered.size() == 0) {
                 Toast.makeText(requireContext(), "Nessun cocktail trovato con questi ingredienti ", Toast.LENGTH_LONG).show();
 
             } else {
                 cocktailAdapter.setListOfocktails(cocktailsListFiltered);
+                List<Cocktail> cocktails = cocktailAdapter.getListOfCocktails();
+                recyclerView.getRecycledViewPool().clear();
+                cocktailAdapter.notifyDataSetChanged();
             }
         }
 
