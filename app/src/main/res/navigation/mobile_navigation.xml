@@ -99,6 +99,9 @@
         <action
             android:id="@+id/action_profileFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_tempSettingsFragment"
+            app:destination="@id/tempSettingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/customDrinkFragment"
@@ -123,6 +126,15 @@
             app:destination="@id/profileFragment" />
         <action
             android:id="@+id/action_settingsFragment_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
+    </fragment>
+    <fragment
+        android:id="@+id/tempSettingsFragment"
+        android:name="it.unimib.letsdrink.ui.profile.TempSettingsFragment"
+        android:label="fragment_temp_settings"
+        tools:layout="@layout/fragment_temp_settings" >
+        <action
+            android:id="@+id/action_tempSettingsFragment_to_navigation_profile"
             app:destination="@id/navigation_profile" />
     </fragment>
 

@@ -27,9 +27,8 @@
     <string name="value_or">oppure</string>
     <string name="value_sign_up_with_google">Continua con Google</string>
     <string name="value_registration_question">Sei già registrato?</string>
-    <!--<string name="value_login_question">Non sei ancora registrato?</string>-->
     <string name="value_login_question">Non hai un profilo?</string>
-    
+
     <!--Errors in Registration and Login-->
     <string name="error_user_name">Nome Utente inserito non valido.</string>
     <string name="error_age">Età inserita non valida.</string>
@@ -41,6 +40,27 @@
     <string name="value_your_drinks">I tuoi drink</string>
     <string name="value_no_custom_drinks">Non hai ancora creato nessun drink…\nCosa aspetti?</string>
     <string name="value_no_custom_drinks_placeholder">placeholder</string>
+
+    <!--Settings-->
+    <string name="settings_category_your_profile">Il tuo profilo</string>
+    <string name="settings_image_camera">camera</string>
+    <string name="settings_button_change_image">Cambia immagine del profilo</string>
+    <string name="settings_image_pencil">modifica</string>
+    <string name="settings_button_change_username">Modifica username</string>
+    <string name="settings_button_change_password">Modifica password</string>
+    <string name="settings_category_informations">Informazioni</string>
+    <string name="settings_image_about">about us</string>
+    <string name="settings_button_about">About us</string>
+    <string name="settings_image_privacy">lock</string>
+    <string name="settings_button_privacy">Privacy</string>
+    <string name="settings_image_version">versione</string>
+    <string name="settings_text_version">Versione</string>
+    <string name="settings_text_version_number">1.0.0</string>
+    <string name="settings_category_account">Account</string>
+    <string name="settings_image_logout">esci</string>
+    <string name="settings_button_logout">Logout</string>
+    <string name="settings_image_delete">elimina</string>
+    <string name="settings_button_delete">Elimina account</string>
 
     <string name="ricerca_cocktail">Cerca Cocktail...</string>
     <string name="shaker_string">Scuoti il telefono e ottieni un cocktail</string>

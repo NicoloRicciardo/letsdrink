@@ -39,7 +39,7 @@
 
         <Preference
             android:selectable="false"
-            android:summary="1.0"
+            android:summary="1.0.0"
             android:title="Versione"
             android:key="versionKey"
             app:icon="@drawable/ic_info_24"/>

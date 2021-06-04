@@ -18,6 +18,8 @@ import it.unimib.letsdrink.R;
 
 public class MainActivity extends AppCompatActivity {
 
+    NavController navController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,19 +29,18 @@ public class MainActivity extends AppCompatActivity {
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_drinks, R.id.navigation_categories, R.id.navigation_shaker, R.id.navigation_favorites, R.id.navigation_profile)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
         //navController.setGraph(R.navigation.mobile_navigation);
 
     }
 
-    /*public void hideKeyboard(View view) {
-        view = this.getCurrentFocus();
-        if (view != null){
+    @Override
+    public boolean onSupportNavigateUp() {
 
-        }
-    }*/
+        navController.navigateUp();
 
-
+        return super.onSupportNavigateUp();
+    }
 }

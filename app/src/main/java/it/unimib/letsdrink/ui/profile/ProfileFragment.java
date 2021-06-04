@@ -83,7 +83,7 @@ public class ProfileFragment extends Fragment {
             case R.id.settings_item:
                 /*this.getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);*/
                 Navigation.findNavController(getView())
-                        .navigate(R.id.action_profileFragment_to_settingsFragment);
+                        .navigate(R.id.action_profileFragment_to_tempSettingsFragment);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -128,16 +128,11 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        Button button = view.findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button change = view.findViewById(R.id.btn_prova);
+        change.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HashMap<String, Object> edited = new HashMap<>();
-                edited.put("userName", "gianpeppo");
-                /*edited.put("email", "richmnico@gmail.com");
-                edited.put("age", "23");*/
-                /*documentReference.set(edited);*/
-                documentReference.update(edited);
+                Navigation.findNavController(getView()).navigate(R.id.action_profileFragment_to_tempSettingsFragment);
             }
         });
 

@@ -155,6 +155,7 @@ public class LoginFragment extends Fragment {
                             public void onClick(DialogInterface dialog, int which) {
                                 //extract the email and send reset link
 
+                                if(!resetEmail.getText().toString().isEmpty()) {
                                     mAuth.sendPasswordResetEmail(resetEmail.getText().toString())
                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
@@ -169,6 +170,9 @@ public class LoginFragment extends Fragment {
                                                     //Snackbar.make(view.findViewById(R.id.fragment_login), "Prova", Snackbar.LENGTH_SHORT).show();
                                                 }
                                             });
+                                }else{
+                                    Toast.makeText(getContext(), "Error! Empty", Toast.LENGTH_SHORT).show();
+                                }
 
                             }
                         })
@@ -277,10 +281,13 @@ public class LoginFragment extends Fragment {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            goOnProfile();
+                            /*FirebaseUser user = mAuth.getCurrentUser();
+                            goOnProfile();*/
+                            /*FirebaseUser user = Objects.requireNonNull(task.getResult()).getUser();*/
                         } else {
                             // If sign in fails, display a message to the user.
+                            Snackbar.make(requireView(), "Autenticazione fallita", Snackbar.LENGTH_LONG)
+                                    .show();
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                         }
                     }
