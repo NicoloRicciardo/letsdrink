@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
@@ -41,8 +42,6 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
     private boolean filtri, listValueDrinks[];
 
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_cocktails, container, false);
@@ -57,7 +56,7 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
             @Override
             public void dataIsLoaded(List<Cocktail> listOfCocktails) {
                 cocktailList = listOfCocktails;
-                cocktailAdapter = new CocktailAdapter(listOfCocktails, getContext());
+                cocktailAdapter = new CocktailAdapter(cocktailList, getContext());
                 recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
                 recyclerView.setAdapter(cocktailAdapter);
                 cocktailAdapter.setOnItemClickListener(new CocktailAdapter.OnItemClickListener() {
@@ -125,7 +124,7 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
         drinkFilter(valueAnanas, valueArancia, valueCognac, valueGin, valueLime, valueMenta, valuePesca, valueRum, valueSoda, valueVodka);
         saveFiltri();
         if (!filtri) {
-            cocktailAdapter.setListOfocktails(cocktailList);
+            cocktailAdapter.setListOfCocktails(cocktailList);
             recyclerView.getRecycledViewPool().clear();
             cocktailAdapter.notifyDataSetChanged();
         } else {
@@ -133,7 +132,7 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
                 Toast.makeText(requireContext(), "Nessun cocktail trovato con questi ingredienti ", Toast.LENGTH_LONG).show();
 
             } else {
-                cocktailAdapter.setListOfocktails(cocktailsListFiltered);
+                cocktailAdapter.setListOfCocktails(cocktailsListFiltered);
                 recyclerView.getRecycledViewPool().clear();
                 cocktailAdapter.notifyDataSetChanged();
             }
@@ -173,29 +172,31 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
         editor.apply();
     }
 
-    /*@Override
+   /* @Override
     public void onStart() {
         super.onStart();
-        //SharedPreferences sharedPref = this.getActivity().getSharedPreferences("Filtri", Context.MODE_PRIVATE);
-        // boolean drinksFiltrati = sharedPref.getBoolean("FiltriBoolean", false);
-        // Log.d("ciao", String.valueOf(drinksFiltrati));
         SharedPreferences sharedPref = this.getActivity().getSharedPreferences("Filtri", Context.MODE_PRIVATE);
-        Set<String> checkedCheckboxSet = sharedPref.getStringSet("Filtri_selezionati", null);
-        // if (drinksFiltrati) {
-            //Set<String> checkedCheckboxSet = sharedPref.getStringSet("Filtri_selezionati", null);
-            String[] pippo = {"Ananas", "Arancia", "Cognac", "Gin", "Lime", "Menta", "Pesca", "Rum", "Soda", "Vodka" };
+        boolean drinksFiltrati = sharedPref.getBoolean("FiltriBoolean", false);
+        if (drinksFiltrati) {
+            Set<String> checkedCheckboxSet = sharedPref.getStringSet("Filtri_selezionati", null);
+            String[] nomiFiltri = {"Ananas", "Arancia", "Cognac", "Gin", "Lime", "Menta", "Pesca", "Rum", "Soda", "Vodka"};
             if (checkedCheckboxSet != null) {
-                for (int i = 0; i <listValueDrinks.length; i++) {
-                    if(checkedCheckboxSet.contains(pippo[i]))
+                for (int i = 0; i < listValueDrinks.length; i++) {
+                    if (checkedCheckboxSet.contains(nomiFiltri[i]))
                         listValueDrinks[i] = true;
 
                 }
-                drinkFilter( listValueDrinks[0],  listValueDrinks[1],  listValueDrinks[2],  listValueDrinks[3],  listValueDrinks[4],
-                        listValueDrinks[5],  listValueDrinks[6],  listValueDrinks[7],  listValueDrinks[8],  listValueDrinks[9]);
-                cocktailAdapter.setListOfocktails(cocktailList);
+                drinkFilter(listValueDrinks[0], listValueDrinks[1], listValueDrinks[2], listValueDrinks[3], listValueDrinks[4],
+                        listValueDrinks[5], listValueDrinks[6], listValueDrinks[7], listValueDrinks[8], listValueDrinks[9]);
+                cocktailAdapter.setListOfCocktails(cocktailsListFiltered);
                 recyclerView.getRecycledViewPool().clear();
                 cocktailAdapter.notifyDataSetChanged();
             }
-        // }
+        }else{
+            cocktailAdapter.setListOfCocktails(cocktailList);
+            recyclerView.getRecycledViewPool().clear();
+            cocktailAdapter.notifyDataSetChanged();
+        }
+
     } */
 }

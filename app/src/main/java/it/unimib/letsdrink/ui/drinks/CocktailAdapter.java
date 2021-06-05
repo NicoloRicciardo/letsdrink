@@ -92,7 +92,7 @@ public class CocktailAdapter extends RecyclerView.Adapter<CocktailItemView> impl
         return listOfCocktails.size();
     }
 
-    public void setListOfocktails(List<Cocktail> listOfCocktails) {
+    public void setListOfCocktails(List<Cocktail> listOfCocktails) {
         this.listOfCocktails = listOfCocktails;
     }
 
