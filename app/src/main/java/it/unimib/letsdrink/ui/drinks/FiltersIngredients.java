@@ -26,7 +26,7 @@ public class FiltersIngredients extends DialogFragment {
 
     private boolean modeAnanas, modeArancia, modeCognac, modeGin, modeLime, modeMenta, modePesca, modeRum, modeSoda, modeVodka;
     private static FilterInterface filter;
-    SwitchMaterial sAnanas, sArancia,sCognac, sGin, sLime, sMenta, sPesca, sRum, sSoda, sVodka;
+    SwitchMaterial sAnanas, sArancia, sCognac, sGin, sLime, sMenta, sPesca, sRum, sSoda, sVodka;
 
     public static FiltersIngredients newInstance(FilterInterface filter) {
         FiltersIngredients fragment = new FiltersIngredients();
@@ -92,7 +92,6 @@ public class FiltersIngredients extends DialogFragment {
     }
 
 
-
     private void saveToogle() {
         SharedPreferences sharedPref = this.getActivity().getSharedPreferences("Filtri", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -121,28 +120,32 @@ public class FiltersIngredients extends DialogFragment {
         if (sRum.isChecked()) {
             checkedCheckboxSet.add("Rum");
         }
-        if (sVodka.isChecked()) {
-            checkedCheckboxSet.add("Vodka");
-        }
         if (sSoda.isChecked()) {
             checkedCheckboxSet.add("Soda");
         }
-        editor.putStringSet("Filtri selezionati", checkedCheckboxSet);
+        if (sVodka.isChecked()) {
+            checkedCheckboxSet.add("Vodka");
+        }
+
+        editor.putStringSet("Filtri_selezionati", checkedCheckboxSet);
         editor.apply();
     }
 
 
     private void loadToogle() {
         SharedPreferences sharedPref = this.getActivity().getSharedPreferences("Filtri", Context.MODE_PRIVATE);
-        Set<String> checkedCheckboxSet = sharedPref.getStringSet("Filtri selezionati", null);
+        Set<String> checkedCheckboxSet = sharedPref.getStringSet("Filtri_selezionati", null);
         if (checkedCheckboxSet != null) {
-            if (checkedCheckboxSet.contains("Arancia")) {
-                sArancia.setChecked(true);
-            }
             if (checkedCheckboxSet.contains("Ananas")) {
                 sAnanas.setChecked(true);
             }
-            if (checkedCheckboxSet.contains("Gine")) {
+            if (checkedCheckboxSet.contains("Arancia")) {
+                sArancia.setChecked(true);
+            }
+            if (checkedCheckboxSet.contains("Cognac")) {
+                sCognac.setChecked(true);
+            }
+            if (checkedCheckboxSet.contains("Gin")) {
                 sGin.setChecked(true);
             }
             if (checkedCheckboxSet.contains("Lime")) {
@@ -163,9 +166,7 @@ public class FiltersIngredients extends DialogFragment {
             if (checkedCheckboxSet.contains("Vodka")) {
                 sVodka.setChecked(true);
             }
-            if (checkedCheckboxSet.contains("Cognac")) {
-                sCognac.setChecked(true);
-            }
+
         }
     }
 

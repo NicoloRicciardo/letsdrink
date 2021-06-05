@@ -1,6 +1,8 @@
 package it.unimib.letsdrink.ui.drinks;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,6 +25,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import it.unimib.letsdrink.R;
 import it.unimib.letsdrink.domain.Cocktail;
@@ -34,13 +37,19 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
     private CocktailAdapter cocktailAdapter;
     private RecyclerView recyclerView;
     private TextView text;
-    private List<Cocktail> cocktailList;
+    private List<Cocktail> cocktailList, cocktailsListFiltered;
+    private boolean filtri, listValueDrinks[];
+
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_cocktails, container, false);
         recyclerView = root.findViewById(R.id.cocktails_recycler);
         text = root.findViewById(R.id.textNotFound);
+
+        listValueDrinks = new boolean[10];
 
         db = new FirebaseDBCocktails();
 
@@ -90,7 +99,7 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
                     public boolean onQueryTextChange(String newText) {
                         cocktailAdapter.getFilter().filter(newText);
                         if (cocktailAdapter.getNoCocktailsFiltered()) {
-                            Toast.makeText(getContext(),"Nessun cocktail trovato", Toast.LENGTH_SHORT ).show();
+                            Toast.makeText(getContext(), "Nessun cocktail trovato", Toast.LENGTH_SHORT).show();
                         }
                         return false;
                     }
@@ -111,8 +120,28 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
     @Override
     public void okButtonClick(boolean valueAnanas, boolean valueArancia, boolean valueCognac, boolean valueGin, boolean valueLime,
                               boolean valueMenta, boolean valuePesca, boolean valueRum, boolean valueSoda, boolean valueVodka) {
-        ArrayList<Cocktail> cocktailsListFiltered = new ArrayList<>();
-        boolean filtri = false;
+        cocktailsListFiltered = new ArrayList<>();
+        filtri = false;
+        drinkFilter(valueAnanas, valueArancia, valueCognac, valueGin, valueLime, valueMenta, valuePesca, valueRum, valueSoda, valueVodka);
+        saveFiltri();
+        if (!filtri) {
+            cocktailAdapter.setListOfocktails(cocktailList);
+            recyclerView.getRecycledViewPool().clear();
+            cocktailAdapter.notifyDataSetChanged();
+        } else {
+            if (cocktailsListFiltered.size() == 0) {
+                Toast.makeText(requireContext(), "Nessun cocktail trovato con questi ingredienti ", Toast.LENGTH_LONG).show();
+
+            } else {
+                cocktailAdapter.setListOfocktails(cocktailsListFiltered);
+                recyclerView.getRecycledViewPool().clear();
+                cocktailAdapter.notifyDataSetChanged();
+            }
+        }
+
+    }
+
+    private void drinkFilter(boolean valueAnanas, boolean valueArancia, boolean valueCognac, boolean valueGin, boolean valueLime, boolean valueMenta, boolean valuePesca, boolean valueRum, boolean valueSoda, boolean valueVodka) {
         for (int cont = 0; cont < cocktailList.size(); cont++) {
             final Cocktail cocktail = cocktailList.get(cont);
             ArrayList<String> ingredients = cocktailList.get(cont).getIngredients();
@@ -135,22 +164,38 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
                 }
             }
         }
-        if (!filtri) {
-            cocktailAdapter.setListOfocktails(cocktailList);
-            recyclerView.getRecycledViewPool().clear();
-            cocktailAdapter.notifyDataSetChanged();
-        } else {
-            if (cocktailsListFiltered.size() == 0) {
-                Toast.makeText(requireContext(), "Nessun cocktail trovato con questi ingredienti ", Toast.LENGTH_LONG).show();
+    }
 
-            } else {
-                cocktailAdapter.setListOfocktails(cocktailsListFiltered);
-                List<Cocktail> cocktails = cocktailAdapter.getListOfCocktails();
+    private void saveFiltri() {
+        SharedPreferences sharedPref = this.getActivity().getSharedPreferences("Filtri", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean("FiltriBoolean", filtri);
+        editor.apply();
+    }
+
+    /*@Override
+    public void onStart() {
+        super.onStart();
+        //SharedPreferences sharedPref = this.getActivity().getSharedPreferences("Filtri", Context.MODE_PRIVATE);
+        // boolean drinksFiltrati = sharedPref.getBoolean("FiltriBoolean", false);
+        // Log.d("ciao", String.valueOf(drinksFiltrati));
+        SharedPreferences sharedPref = this.getActivity().getSharedPreferences("Filtri", Context.MODE_PRIVATE);
+        Set<String> checkedCheckboxSet = sharedPref.getStringSet("Filtri_selezionati", null);
+        // if (drinksFiltrati) {
+            //Set<String> checkedCheckboxSet = sharedPref.getStringSet("Filtri_selezionati", null);
+            String[] pippo = {"Ananas", "Arancia", "Cognac", "Gin", "Lime", "Menta", "Pesca", "Rum", "Soda", "Vodka" };
+            if (checkedCheckboxSet != null) {
+                for (int i = 0; i <listValueDrinks.length; i++) {
+                    if(checkedCheckboxSet.contains(pippo[i]))
+                        listValueDrinks[i] = true;
+
+                }
+                drinkFilter( listValueDrinks[0],  listValueDrinks[1],  listValueDrinks[2],  listValueDrinks[3],  listValueDrinks[4],
+                        listValueDrinks[5],  listValueDrinks[6],  listValueDrinks[7],  listValueDrinks[8],  listValueDrinks[9]);
+                cocktailAdapter.setListOfocktails(cocktailList);
                 recyclerView.getRecycledViewPool().clear();
                 cocktailAdapter.notifyDataSetChanged();
             }
-        }
-
-    }
-
+        // }
+    } */
 }
