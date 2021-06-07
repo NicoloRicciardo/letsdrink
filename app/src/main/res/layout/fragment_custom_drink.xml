@@ -31,13 +31,23 @@
                 android:singleLine="true"
 
                 android:layout_marginStart="80dp"
-                android:layout_marginEnd="80dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="100dp"
+                app:layout_constraintEnd_toStartOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
 
                 android:background="@drawable/bg_edit_text"/>
             <!--android:backgroundTint="@color/lipstick_fuchsia"-->
+
+            <!--<ImageView
+                android:id="@+id/image_custom_drink_camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_camera_24"
+                app:tint="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/edit_text_custom_drink_name"
+                app:layout_constraintTop_toTopOf="parent" />-->
 
             <ImageView
                 android:id="@+id/image_custom_drink_added_from_user"
@@ -142,7 +152,7 @@
             </com.google.android.material.textfield.TextInputLayout>-->
 
             <EditText
-                android:id="@+id/edit_text_prova"
+                android:id="@+id/edit_text_custom_drink_method"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Inserisci il procedimento..."
@@ -192,7 +202,7 @@
             android:layout_marginBottom="20dp">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/floating_action_button_profile_add_drink"
+                android:id="@+id/floating_action_button_custom_drink_add"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="TODO"

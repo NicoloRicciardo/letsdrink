@@ -8,7 +8,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -26,14 +25,10 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -48,8 +43,6 @@ import it.unimib.letsdrink.R;
 public class SettingsFragment extends Fragment {
 
     private static final String TAG = "SettingsFragment";
-
-    private FirebaseAuth mAuth;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -83,8 +76,6 @@ public class SettingsFragment extends Fragment {
         /*ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);*/
-
-        mAuth = FirebaseAuth.getInstance();
 
         FragmentManager fm = requireActivity().getSupportFragmentManager();
         fm.beginTransaction().replace(R.id.layout_settings, new Settings(container)).commit();
@@ -201,46 +192,8 @@ public class SettingsFragment extends Fragment {
             final Preference remove = findPreference("removeKey");
             assert remove != null;
             remove.getIcon().setTint(Color.WHITE);
-            remove.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    FirebaseAuth.getInstance().getCurrentUser().delete();
-                    goOnLogin();
-                    return true;
-                }
-            });
-                    /*new MaterialAlertDialogBuilder(requireActivity(), R.style.DialogTheme)
-                            .setTitle("Sei sicuro?")
-                            .setMessage("Se accetti cancellerai il tuo account")
-                            .setPositiveButton("Cancella", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    FirebaseAuth.getInstance().getCurrentUser().delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Toast.makeText(getContext(), "Utente cancellato", Toast.LENGTH_SHORT).show();
-                                            goOnLogin();
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(getContext(), "Utente NON cancellato", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                }
-                            })
-                            .setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            })
-                            .show();
-                    return true;
-                }
-            });*/
 
-                }
+        }
 
         private void goOnLogin() {
             Navigation.findNavController(getView())
@@ -249,8 +202,8 @@ public class SettingsFragment extends Fragment {
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            HashMap<String, Object> edited = new HashMap<>();
 
             switch (key) {
                 case "nameKey":
@@ -258,10 +211,10 @@ public class SettingsFragment extends Fragment {
                     /*Snackbar.make(requireView(), "Nome:  " + name, Snackbar.LENGTH_SHORT)
                             .show();*/
 
+                    HashMap<String, Object> edited = new HashMap<>();
                     edited.put("userName", name);
                     documentReference.update(edited);
                     break;
-
                 case "passwordKey":
                     String password = sharedPreferences.getString("passwordKey", "");
 
@@ -278,35 +231,6 @@ public class SettingsFragment extends Fragment {
                         }
                     });
                     break;
-
-                /*case "removeKey":
-                    new MaterialAlertDialogBuilder(requireActivity(), R.style.DialogTheme)
-                            .setTitle("Sei sicuro?")
-                            .setMessage("Se accetti cancellerai il tuo account")
-                            .setPositiveButton("Cancella", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    user.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Toast.makeText(getContext(), "Utente cancellato", Toast.LENGTH_SHORT).show();
-                                            goOnLogin();
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(getContext(), "Utente NON cancellato", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                }
-                            })
-                            .setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            })
-                            .show();*/
             }
         }
 

@@ -1,29 +1,35 @@
 package it.unimib.letsdrink.ui.profile;
 
+import java.util.ArrayList;
+
+import it.unimib.letsdrink.domain.Cocktail;
+
 public class User {
-    private String user_name;
+    private String userName;
     private String age;
     private String email;
     /*private String password;*/
     private String userID;
+    private ArrayList<Cocktail> customDrinks;
 
     public User() {
     }
 
-    public User(String user_name, String age, String email, String userID) {
-        this.user_name = user_name;
+    public User(String userName, String age, String email, String userID, ArrayList<Cocktail> custom_drinks) {
+        this.userName = userName;
         this.age = age;
         this.email = email;
         /*this.password = password;*/
         this.userID = userID;
+        this.customDrinks = custom_drinks;
     }
 
-    public String getUser_name() {
-        return user_name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getAge() {
@@ -56,5 +62,17 @@ public class User {
 
     public void setUserID(String userID) {
         this.userID = userID;
+    }
+
+    public ArrayList<Cocktail> getCustomDrinks() {
+        return customDrinks;
+    }
+
+    public void addNewCustomDrink (Cocktail newDrink){
+        this.customDrinks.add(newDrink);
+    }
+
+    public void removeCustomDrink (Cocktail userDrink){
+        this.customDrinks.remove(userDrink);
     }
 }

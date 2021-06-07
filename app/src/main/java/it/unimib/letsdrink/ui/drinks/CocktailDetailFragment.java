@@ -56,7 +56,6 @@ public class CocktailDetailFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_cocktail_detail, container, false);
         ActionBar actionBar= ((AppCompatActivity) requireActivity()).getSupportActionBar();
         actionBar.setTitle("");
-        actionBar.setDisplayHomeAsUpEnabled(false);
         setHasOptionsMenu(true);
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         TextView txtName = root.findViewById(R.id.cocktail_detail_name);

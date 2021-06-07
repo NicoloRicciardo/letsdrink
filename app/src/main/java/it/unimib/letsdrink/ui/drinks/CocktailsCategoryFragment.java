@@ -44,7 +44,6 @@ public class CocktailsCategoryFragment extends Fragment {
         RecyclerView recyclerView = root.findViewById(R.id.cocktails_recycler);
         ActionBar actionBar= ((AppCompatActivity) requireActivity()).getSupportActionBar();
         actionBar.setTitle(CocktailsCategoryFragment.name);
-        actionBar.setDisplayHomeAsUpEnabled(false);
         setHasOptionsMenu(true);
         Bundle bundle = this.getArguments();
         String categoryName = bundle.getString("name");

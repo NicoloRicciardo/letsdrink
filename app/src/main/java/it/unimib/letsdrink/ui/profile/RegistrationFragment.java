@@ -127,7 +127,7 @@ public class RegistrationFragment extends Fragment {
         mButtonRegistration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                user.setUser_name(Objects.requireNonNull(mUserName.getText()).toString().trim());
+                user.setUserName(Objects.requireNonNull(mUserName.getText()).toString().trim());
                 user.setAge(Objects.requireNonNull(mAge.getText()).toString().trim());
                 user.setEmail(Objects.requireNonNull(mEmail.getText()).toString().trim());
 
@@ -168,9 +168,10 @@ public class RegistrationFragment extends Fragment {
         DocumentReference documentReference = mFirestore.collection("Utenti").document(user.getUserID());
 
         Map<String, Object> userDB = new HashMap<>();
-        userDB.put("userName", user.getUser_name());
+        userDB.put("userName", user.getUserName());
         userDB.put("age", user.getAge());
         userDB.put("email", user.getEmail());
+        //TODO aggiungere arraylist dei custom drinks (vuoto)
 
         documentReference.set(userDB).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override

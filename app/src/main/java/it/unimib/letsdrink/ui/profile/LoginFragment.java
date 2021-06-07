@@ -146,7 +146,7 @@ public class LoginFragment extends Fragment {
             public void onClick(View v) {
                 EditText resetEmail = new EditText(getActivity());
 
-                new MaterialAlertDialogBuilder(requireActivity())
+                new MaterialAlertDialogBuilder(requireActivity(), R.style.DialogTheme)
                         .setTitle("Reset Password?")
                         .setMessage("Inserisci la tua Email per ricevere il link di reset.")
                         .setView(resetEmail)
@@ -156,7 +156,7 @@ public class LoginFragment extends Fragment {
                                 //extract the email and send reset link
 
                                 if(!resetEmail.getText().toString().isEmpty()) {
-                                    mAuth.sendPasswordResetEmail(resetEmail.getText().toString())
+                                    mAuth.sendPasswordResetEmail(resetEmail.getText().toString().trim())
                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void unused) {
@@ -168,6 +168,7 @@ public class LoginFragment extends Fragment {
                                                 public void onFailure(@NonNull Exception e) {
                                                     Toast.makeText(getContext(), "Error! Reset link not sent.", Toast.LENGTH_SHORT).show();
                                                     //Snackbar.make(view.findViewById(R.id.fragment_login), "Prova", Snackbar.LENGTH_SHORT).show();
+                                                    Log.d(TAG, "errore" + e);
                                                 }
                                             });
                                 }else{
