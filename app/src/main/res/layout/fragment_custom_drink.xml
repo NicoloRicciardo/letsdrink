@@ -22,32 +22,33 @@
                 android:id="@+id/edit_text_custom_drink_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nome Drink"
+                android:inputType="text"
+                android:hint="@string/value_custom_drink_name"
+                android:autofillHints=""
                 android:textColorHint="@color/light_gray"
                 android:textAlignment="viewStart"
                 android:textColor="@color/white"
                 android:maxLength="20"
-
                 android:singleLine="true"
-
+                android:background="@drawable/bg_edit_text"
                 android:layout_marginStart="80dp"
-                android:layout_marginEnd="100dp"
-                app:layout_constraintEnd_toStartOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-
-                android:background="@drawable/bg_edit_text"/>
-            <!--android:backgroundTint="@color/lipstick_fuchsia"-->
-
-            <!--<ImageView
-                android:id="@+id/image_custom_drink_camera"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_camera_24"
-                app:tint="@color/white"
+                android:layout_marginEnd="80dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/edit_text_custom_drink_name"
-                app:layout_constraintTop_toTopOf="parent" />-->
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/image_custom_drink_camera"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginStart="20dp"
+                android:src="@drawable/ic_camera_24"
+                app:tint="@drawable/button_link_color"
+                android:contentDescription="@string/image_description_add_custom_drink_image"
+                app:layout_constraintEnd_toStartOf="@+id/edit_text_custom_drink_name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/image_custom_drink_added_from_user"
@@ -55,23 +56,10 @@
                 android:layout_height="140dp"
                 android:layout_marginTop="20dp"
                 android:src="@drawable/default_custom_drink"
+                android:contentDescription="@string/image_description_custom_drink"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_text_custom_drink_name"
-                android:contentDescription="TODO" />
-
-            <!--<TextView
-                android:id="@+id/text_profile_user_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/data_user_name"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/image_custom_drink_added_from_user" />-->
+                app:layout_constraintTop_toBottomOf="@+id/edit_text_custom_drink_name" />
 
             <TextView
                 android:id="@+id/text_custom_drink_ingredients"
@@ -79,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="50dp"
-                android:text="Ingredienti"
+                android:text="@string/value_custom_drink_ingredients"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -94,7 +82,8 @@
                 android:src="@drawable/ic_baseline_add_24"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/image_custom_drink_added_from_user"
-                app:tint="@drawable/button_link_switch_fragment_color" />
+                app:tint="@drawable/button_link_switch_fragment_color"
+                android:contentDescription="@string/image_description_custom_drink_add_ingredient" />
 
             <LinearLayout
                 android:id="@+id/layout_ingredients_list"
@@ -107,55 +96,11 @@
 
             </LinearLayout>
 
-            <!--<EditText
-                android:id="@+id/edit_text_ingredients"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="Nome Drink"
-                android:textColorHint="@color/light_gray"
-                android:textAlignment="viewStart"
-                android:textColor="@color/white"
-                android:maxLength="20"
-                android:layout_marginTop="10dp"
-                app:layout_constraintStart_toStartOf="@id/text_custom_drink_ingredients"
-                app:layout_constraintTop_toBottomOf="@+id/text_custom_drink_ingredients"
-
-                android:background="@drawable/bg_edit_text"/>-->
-
-            <!--<com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/text_layout_custom_drink_procedure"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Procedimento"
-                android:textColorHint="@color/white"
-                app:hintTextColor="@color/white"
-                app:boxStrokeColor="@color/lipstick_fuchsia"
-                app:errorTextColor="@color/white"
-                app:boxStrokeWidthFocused="3dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/edit_text_ingredients">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/text_field_custom_drink_procedure"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:gravity="top"
-                    android:textCursorDrawable="@null"
-                    android:inputType="text"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:maxLength="100" />
-            </com.google.android.material.textfield.TextInputLayout>-->
-
             <EditText
                 android:id="@+id/edit_text_custom_drink_method"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Inserisci il procedimento..."
+                android:hint="@string/value_custom_drink_method"
                 android:textColorHint="@color/light_gray"
                 android:textColor="@color/white"
 
@@ -177,21 +122,8 @@
                 android:scrollbars="vertical"
                 android:background="@drawable/bg_edit_text_box"
 
-                tools:ignore="RtlHardcoded,RtlSymmetry" />
-            <!--android:textAlignment="viewStart"-->
-
-
-            <!--<androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/profile_recycler"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_profile_your_drinks"
-                android:scrollbars="vertical" />-->
+                tools:ignore="RtlHardcoded,RtlSymmetry"
+                android:autofillHints="" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -205,7 +137,7 @@
                 android:id="@+id/floating_action_button_custom_drink_add"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="TODO"
+                android:contentDescription="@string/image_description_custom_drink_done"
                 android:src="@drawable/ic_baseline_check_24"
                 android:layout_marginEnd="20dp"
                 android:layout_alignParentEnd="true"

@@ -27,7 +27,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -48,7 +47,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.Objects;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import it.unimib.letsdrink.R;
 
 public class TempSettingsFragment extends Fragment {
@@ -62,10 +60,6 @@ public class TempSettingsFragment extends Fragment {
     private DocumentReference documentReference;
     private FirebaseStorage storage;
     private StorageReference storageReference;
-
-   /* private CircleImageView profileImage;*/
-
-    /*public Uri imageUri;*/
 
 
     public TempSettingsFragment() {
@@ -93,15 +87,12 @@ public class TempSettingsFragment extends Fragment {
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        String userName = "", age, email, id;
-
         mFirestore= FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         firebaseUser = mAuth.getCurrentUser();
         documentReference = mFirestore.collection("Utenti").document(firebaseUser.getUid());
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
-        /*profileImage = view.findViewById(R.id.image_profile);*/
 
         Button changeImageProfile = view.findViewById(R.id.button_settings_change_image);
         changeImageProfile.setOnClickListener(new View.OnClickListener() {
@@ -109,7 +100,6 @@ public class TempSettingsFragment extends Fragment {
             public void onClick(View v) {
                 Intent openGalleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(openGalleryIntent, 1000);
-                /*choosePicture();*/
             }
         });
 
@@ -232,13 +222,6 @@ public class TempSettingsFragment extends Fragment {
 
     }
 
-    /*private void choosePicture() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, 1);
-    }*/
-
     private void goOnLogin() {
         Navigation.findNavController(getView())
                 .navigate(R.id.action_tempSettingsFragment_to_navigation_profile);
@@ -250,34 +233,11 @@ public class TempSettingsFragment extends Fragment {
         if(requestCode == 1000) {
             if(resultCode == Activity.RESULT_OK) {
                 Uri imageUri = data.getData();
-                /*profileImage.setImageURI(imageUri);*/
 
                 uploadImageToFirebase(imageUri);
             }
         }
-
-        /*if(requestCode == 1 && resultCode == Activity.RESULT_OK && data != null) {
-            imageUri = data.getData();
-            profileImage.setImageURI(imageUri);
-            uploadPicture();
-        }*/
     }
-
-    /*private void uploadPicture() {
-        StorageReference riversRef = storageReference.child("images/" + firebaseUser.getUid());
-        riversRef.putFile(imageUri)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Toast.makeText(getContext(), "Image uploaded", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull @NotNull Exception e) {
-                Toast.makeText(getContext(), "Failed to upload", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }*/
 
     private void uploadImageToFirebase(Uri imageUri) {
         StorageReference fileRef = storageReference.child("profile.jpg");

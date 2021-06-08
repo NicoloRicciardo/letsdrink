@@ -40,6 +40,7 @@
     <string name="value_your_drinks">I tuoi drink</string>
     <string name="value_no_custom_drinks">Non hai ancora creato nessun drink…\nCosa aspetti?</string>
     <string name="value_no_custom_drinks_placeholder">placeholder</string>
+    <string name="image_description_create_custom_drink">Aggiungi un tuo drink</string>
 
     <!--Settings-->
     <string name="settings_category_your_profile">Il tuo profilo</string>
@@ -48,7 +49,7 @@
     <string name="settings_image_pencil">modifica</string>
     <string name="settings_button_change_username">Modifica username</string>
     <string name="settings_button_change_password">Modifica password</string>
-    <string name="settings_category_informations">Informazioni</string>
+    <string name="settings_category_info">Informazioni</string>
     <string name="settings_image_about">about us</string>
     <string name="settings_button_about">About us</string>
     <string name="settings_image_privacy">lock</string>
@@ -61,6 +62,18 @@
     <string name="settings_button_logout">Logout</string>
     <string name="settings_image_delete">elimina</string>
     <string name="settings_button_delete">Elimina account</string>
+
+    <!--Custom Drinks-->
+    <string name="value_custom_drink_name">Nome Drink</string>
+    <string name="image_description_add_custom_drink_image">Aggiungi una foto</string>
+    <string name="image_description_custom_drink">Foto del drink</string>
+    <string name="value_custom_drink_ingredients">Inserisci gli ingredienti</string>
+    <string name="image_description_custom_drink_add_ingredient">Aggiungi ingrediente</string>
+    <string name="value_custom_drink_ingredient_add">Ingrediente…</string>
+    <string name="image_description_custom_drink_delete_ingredient">Togli ingrediente</string>
+    <string name="value_custom_drink_method">Inserisci il procedimento…</string>
+    <string name="image_description_custom_drink_done">Finito il drink</string>
+
 
     <string name="ricerca_cocktail">Cerca Cocktail...</string>
     <string name="shaker_string">Scuoti il telefono e ottieni un cocktail</string>

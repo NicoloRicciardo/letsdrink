@@ -53,7 +53,6 @@ import java.util.Objects;
 
 import it.unimib.letsdrink.R;
 
-
 public class LoginFragment extends Fragment {
 
     private static final String TAG = "LoginFragment";
@@ -73,7 +72,6 @@ public class LoginFragment extends Fragment {
     private static final String PREFS_NAME = "PrefsFile";
 
     private FirebaseAuth mAuth;
-    private FirebaseFirestore mFirestore;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -118,14 +116,8 @@ public class LoginFragment extends Fragment {
         mRememberMe = view.findViewById(R.id.checkbox_login_remember);
         mPrefs = this.getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
 
-        Button buttonForgotPassword = view.findViewById(R.id.button_login_forgot_password);
-        Button buttonLogin = view.findViewById(R.id.button_login_access);
-        Button buttonGoToRegistration = view.findViewById(R.id.button_login_sign_up);
-
         mAuth = FirebaseAuth.getInstance();
-        mFirestore = FirebaseFirestore.getInstance();
-
-        googleSignInButton = view.findViewById(R.id.button_login_google);
+        FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
 
         SharedPreferences sp = this.getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         if(sp.contains("pref_email")) {
@@ -141,6 +133,7 @@ public class LoginFragment extends Fragment {
             mRememberMe.setChecked(b);
         }
 
+        Button buttonForgotPassword = view.findViewById(R.id.button_login_forgot_password);
         buttonForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -167,14 +160,12 @@ public class LoginFragment extends Fragment {
                                                 @Override
                                                 public void onFailure(@NonNull Exception e) {
                                                     Toast.makeText(getContext(), "Error! Reset link not sent.", Toast.LENGTH_SHORT).show();
-                                                    //Snackbar.make(view.findViewById(R.id.fragment_login), "Prova", Snackbar.LENGTH_SHORT).show();
                                                     Log.d(TAG, "errore" + e);
                                                 }
                                             });
                                 }else{
                                     Toast.makeText(getContext(), "Error! Empty", Toast.LENGTH_SHORT).show();
                                 }
-
                             }
                         })
                         .setNegativeButton("Esci", null)
@@ -182,12 +173,13 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        Button buttonLogin = view.findViewById(R.id.button_login_access);
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (controlLoginFields()) {
                     if(mRememberMe.isChecked()) {
-                        Boolean isChecked = mRememberMe.isChecked();
+                        boolean isChecked = mRememberMe.isChecked();
                         SharedPreferences.Editor editor = mPrefs.edit();
                         editor.putString("pref_email", mEmail.getText().toString());
                         editor.putString("pref_password", mPassword.getText().toString());
@@ -203,6 +195,7 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        googleSignInButton = view.findViewById(R.id.button_login_google);
         googleSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -213,6 +206,7 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        Button buttonGoToRegistration = view.findViewById(R.id.button_login_sign_up);
         buttonGoToRegistration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -236,7 +230,8 @@ public class LoginFragment extends Fragment {
         boolean email;
         boolean password;
 
-        if (mEmail != null && !(Objects.requireNonNull(mEmail.getText()).toString().trim().isEmpty())) {
+        if (mEmail != null && !(Objects.requireNonNull(mEmail.getText())
+                .toString().trim().isEmpty())) {
             email = true;
             mLayoutEmail.setError(null);
         } else {
@@ -244,7 +239,8 @@ public class LoginFragment extends Fragment {
             mLayoutEmail.setError(getText(R.string.error_email));
         }
 
-        if (mPassword != null && !(Objects.requireNonNull(mPassword.getText()).toString().trim().isEmpty())) {
+        if (mPassword != null && !(Objects.requireNonNull(mPassword.getText())
+                .toString().trim().isEmpty())) {
             password = true;
             mLayoutPassword.setError(null);
         } else {
@@ -256,8 +252,9 @@ public class LoginFragment extends Fragment {
     }
 
     private void signInNormal() {
-        FirebaseAuth.getInstance().signInWithEmailAndPassword(Objects.requireNonNull(mEmail.getText()).toString().trim(), Objects.requireNonNull(mPassword.getText()).toString().trim())
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(Objects.requireNonNull(mEmail
+                .getText()).toString().trim(), Objects.requireNonNull(mPassword.getText())
+                .toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
@@ -271,6 +268,31 @@ public class LoginFragment extends Fragment {
                         }
                     }
                 });
+    }
+
+    private void signIn() {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            Log.d(TAG, "entrato RC_SIGN_IN");
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
+                firebaseAuthWithGoogle(account.getIdToken());
+            } catch (ApiException e) {
+                // Google Sign In failed, update UI appropriately
+                Log.w(TAG, "Google sign in failed", e);
+            }
+        }
     }
 
     private void firebaseAuthWithGoogle(String idToken) {
@@ -295,35 +317,8 @@ public class LoginFragment extends Fragment {
                 });
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
-            Log.d(TAG, "entrato RC_SIGN_IN");
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                // Google Sign In was successful, authenticate with Firebase
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
-                firebaseAuthWithGoogle(account.getIdToken());
-            } catch (ApiException e) {
-                // Google Sign In failed, update UI appropriately
-                Log.w(TAG, "Google sign in failed", e);
-            }
-        }
-    }
-
-    private void signIn() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
-
     private void goOnProfile(){
-        /*FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fragment_login, new ProfileFragment()).commit();*/
-        Navigation.findNavController(getView())
+        Navigation.findNavController(requireView())
                 .navigate(R.id.action_navigation_profile_to_profileFragment);
     }
 

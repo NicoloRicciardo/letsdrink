@@ -42,6 +42,8 @@ import it.unimib.letsdrink.R;
 
 public class ProfileFragment extends Fragment {
 
+    private static final String TAG = "ProfileFragment";
+
     //private ProfileViewModel profileViewModel;
     private TextView mUserNameCustom;
     private TextView mEmailCustom;
@@ -128,13 +130,13 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        Button change = view.findViewById(R.id.btn_prova);
+        /*Button change = view.findViewById(R.id.btn_prova);
         change.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(getView()).navigate(R.id.action_profileFragment_to_tempSettingsFragment);
             }
-        });
+        });*/
 
     }
 

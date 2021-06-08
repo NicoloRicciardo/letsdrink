@@ -8,7 +8,6 @@ public class User {
     private String userName;
     private String age;
     private String email;
-    /*private String password;*/
     private String userID;
     private ArrayList<Cocktail> customDrinks;
 
@@ -19,7 +18,6 @@ public class User {
         this.userName = userName;
         this.age = age;
         this.email = email;
-        /*this.password = password;*/
         this.userID = userID;
         this.customDrinks = custom_drinks;
     }
@@ -47,14 +45,6 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    /*public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }*/
 
     public String getUserID() {
         return userID;

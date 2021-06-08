@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,6 +39,8 @@ import it.unimib.letsdrink.R;
 import it.unimib.letsdrink.domain.Cocktail;
 
 public class CustomDrinkFragment extends Fragment {
+
+    private static final String TAG = "CustomDrinkFragment";
 
     private LinearLayout mLayoutIngredientsList;
     private ImageView mAddIngredient;
@@ -81,16 +84,6 @@ public class CustomDrinkFragment extends Fragment {
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull @NotNull MenuItem item) {
-        /*if (item.getItemId() == android.R.id.home) {
-            Navigation.findNavController(getView())
-                    .navigate(R.id.action_customDrinkFragment_to_profileFragment);
-            return true;
-        }*/
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -110,7 +103,13 @@ public class CustomDrinkFragment extends Fragment {
         //TODO settare cambio immagine
         mCustomDrink.setImageUrl("");
 
-        /*mSetDrinkPhoto; //imageview della camera*/
+        mSetDrinkPhoto = view.findViewById(R.id.image_custom_drink_camera);
+        mSetDrinkPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "cliccata camera");
+            }
+        });
 
         mAddIngredient.setOnClickListener(new View.OnClickListener() {
             @Override

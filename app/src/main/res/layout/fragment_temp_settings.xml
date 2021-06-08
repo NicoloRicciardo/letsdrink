@@ -103,7 +103,7 @@
             app:layout_constraintTop_toBottomOf="@+id/button_settings_change_username"/>
 
         <View
-            android:id="@+id/view_settings_line_before_informations"
+            android:id="@+id/view_settings_line_before_info"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@android:color/darker_gray"
@@ -114,17 +114,17 @@
             <!--android:background="#292929"-->
 
         <TextView
-            android:id="@+id/text_view_settings_informations"
+            android:id="@+id/text_view_settings_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/settings_category_informations"
+            android:text="@string/settings_category_info"
             android:textColor="@color/lipstick_fuchsia"
             android:textStyle="bold"
             android:layout_marginTop="10dp"
             android:layout_marginStart="15dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/view_settings_line_before_informations"/>
+            app:layout_constraintTop_toBottomOf="@id/view_settings_line_before_info"/>
 
         <ImageView
             android:id="@+id/image_view_settings_about"
@@ -132,7 +132,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_about_settings_24"
             app:tint="@color/white"
-            app:layout_constraintStart_toStartOf="@+id/text_view_settings_informations"
+            app:layout_constraintStart_toStartOf="@+id/text_view_settings_info"
             app:layout_constraintTop_toTopOf="@+id/button_settings_about"
             app:layout_constraintBottom_toBottomOf="@+id/button_settings_about"
             android:contentDescription="@string/settings_image_about" />
@@ -150,7 +150,7 @@
             android:layout_marginStart="50dp"
             android:layout_marginTop="10dp"
             app:layout_constraintStart_toEndOf="@+id/image_view_settings_about"
-            app:layout_constraintTop_toBottomOf="@+id/text_view_settings_informations"/>
+            app:layout_constraintTop_toBottomOf="@+id/text_view_settings_info"/>
 
         <ImageView
             android:id="@+id/image_view_settings_privacy"
@@ -215,7 +215,7 @@
         </LinearLayout>
 
         <View
-            android:id="@+id/view_settings_line_after_informations"
+            android:id="@+id/view_settings_line_after_info"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@android:color/darker_gray"
@@ -235,7 +235,7 @@
             android:layout_marginStart="15dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/view_settings_line_after_informations"/>
+            app:layout_constraintTop_toBottomOf="@id/view_settings_line_after_info"/>
 
         <ImageView
             android:id="@+id/image_view_settings_logout"
