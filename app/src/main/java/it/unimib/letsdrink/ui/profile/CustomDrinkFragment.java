@@ -7,12 +7,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -20,18 +18,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -98,8 +89,6 @@ public class CustomDrinkFragment extends Fragment {
         mNameCustomDrink = view.findViewById(R.id.edit_text_custom_drink_name);
         mMethodCustomDrink = view.findViewById(R.id.edit_text_custom_drink_method);
 
-        mCustomDrink.setName(mNameCustomDrink.getText().toString().trim());
-        mCustomDrink.setMethod(mMethodCustomDrink.getText().toString().trim());
         //TODO settare cambio immagine
         mCustomDrink.setImageUrl("");
 
@@ -115,23 +104,32 @@ public class CustomDrinkFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 addView();
+
             }
         });
-
-        if(controlIngredients()) {
-            mCustomDrink.setIngredients(mIngredientsCustomDrink);
-        }
 
         mCreateCustomDrink = view.findViewById(R.id.floating_action_button_custom_drink_add);
         mCreateCustomDrink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                collezione.document(currentUser).collection("customDrink").add(mCustomDrink);
+
+                if(controlParameters()) {
+                    mCustomDrink.setIngredients(mIngredientsCustomDrink);
+                    mCustomDrink.setName(mNameCustomDrink.getText().toString());
+                    mCustomDrink.setMethod(mMethodCustomDrink.getText().toString());
+
+                    collezione.document(currentUser).collection("customDrink").add(mCustomDrink);
+
+                    Navigation.findNavController(getView())
+                            .navigate(R.id.action_customDrinkFragment_to_profileFragment);
+                } else {
+                    Toast.makeText(getContext(), "Inserisci tutti i campi richiesti", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
 
-    private boolean controlIngredients() {
+    private boolean controlParameters() {
         mIngredientsCustomDrink.clear();
         boolean result = true;
 
@@ -150,9 +148,14 @@ public class CustomDrinkFragment extends Fragment {
 
         if(mIngredientsCustomDrink.size() == 0){
             result = false;
-            Toast.makeText(getContext(), "Inserire ingredienti!", Toast.LENGTH_SHORT).show();
-        } else if(!result){
-            Toast.makeText(getContext(), "Inserire tutti i dati.", Toast.LENGTH_SHORT).show();
+        }
+
+        if(mNameCustomDrink.getText().toString().equals("")) {
+            result = false;
+        }
+
+        if(mMethodCustomDrink.getText().toString().equals("")) {
+            result = false;
         }
 
         return result;

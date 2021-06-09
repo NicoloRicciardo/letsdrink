@@ -2,9 +2,6 @@ package it.unimib.letsdrink.ui.profile;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 
@@ -12,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,25 +19,28 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
+import java.util.List;
 
 import it.unimib.letsdrink.R;
+import it.unimib.letsdrink.domain.Category;
+import it.unimib.letsdrink.domain.Cocktail;
+import it.unimib.letsdrink.ui.drinks.CategoryAdapter;
+import it.unimib.letsdrink.ui.drinks.CocktailAdapter;
+import it.unimib.letsdrink.ui.drinks.CocktailDetailFragment;
+import it.unimib.letsdrink.ui.drinks.CocktailsCategoryFragment;
+import it.unimib.letsdrink.ui.drinks.FirebaseDBCategories;
 
 public class ProfileFragment extends Fragment {
 
@@ -53,6 +55,7 @@ public class ProfileFragment extends Fragment {
     User user = new User();
     private FirebaseAuth mAuth;
     private FirebaseFirestore mFirestore;
+    private FirebaseDBCustomDrink mfirebaseDBCustomDrink;
 
     public static ProfileFragment newInstance() {
         return new ProfileFragment();
@@ -97,8 +100,37 @@ public class ProfileFragment extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
         mFirestore = FirebaseFirestore.getInstance();
+        mfirebaseDBCustomDrink = new FirebaseDBCustomDrink(mAuth.getCurrentUser().getUid());
+
+        mPlaceholder = view.findViewById(R.id.text_profile_not_logged_in);
+        mPlaceholder.setText(R.string.value_no_custom_drinks);
 
         mUserNameCustom = view.findViewById(R.id.text_profile_user_name);
+        RecyclerView recyclerView = view.findViewById(R.id.profile_recycler);
+        new FirebaseDBCustomDrink(mAuth.getCurrentUser().getUid()).readCocktails(new FirebaseDBCustomDrink.DataStatus() {
+            @Override
+            public void dataIsLoaded(List<Cocktail> listOfCustomDrink) {
+                if(listOfCustomDrink.size() == 0) {
+                    mPlaceholder.setVisibility(View.VISIBLE);
+                } else {
+                    recyclerView.setVisibility(View.VISIBLE);
+                    CocktailAdapter cocktailAdapter = new CocktailAdapter(listOfCustomDrink, getContext());
+                    recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+                    recyclerView.setAdapter(cocktailAdapter);
+
+                    cocktailAdapter.setOnItemClickListener(new CocktailAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(int position, View v) {
+                            Fragment cocktailDetail = CustomDrinkDetailFragment.newInstance(listOfCustomDrink.get(position).getName(), listOfCustomDrink.get(position).getMethod(),
+                                    listOfCustomDrink.get(position).getIngredients(), listOfCustomDrink.get(position).getImageUrl());
+
+                            Navigation.findNavController(getView()).navigate(R.id.action_profileFragment_to_customDrinkDetailFragment);
+                        }
+                    });
+                }
+
+            }
+        });
 
         user.setUserID(mAuth.getUid());
         DocumentReference documentReference = mFirestore.collection("Utenti").document(user.getUserID());
@@ -119,9 +151,6 @@ public class ProfileFragment extends Fragment {
         mEmailCustom = view.findViewById(R.id.text_profile_email);
         mEmailCustom.setText(mAuth.getCurrentUser().getEmail());
 
-        mPlaceholder = view.findViewById(R.id.text_profile_not_logged_in);
-        mPlaceholder.setText(R.string.value_no_custom_drinks);
-
         mAddDrinks = view.findViewById(R.id.floating_action_button_profile_add_drink);
         mAddDrinks.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,13 +159,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        /*Button change = view.findViewById(R.id.btn_prova);
-        change.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(getView()).navigate(R.id.action_profileFragment_to_tempSettingsFragment);
-            }
-        });*/
+
 
     }
 

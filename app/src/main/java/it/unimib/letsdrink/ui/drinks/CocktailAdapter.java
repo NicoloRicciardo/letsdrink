@@ -21,7 +21,7 @@ public class CocktailAdapter extends RecyclerView.Adapter<CocktailItemView> impl
     private Context context;
     boolean noCocktailsFiltered;
 
-    CocktailAdapter(List<Cocktail> listOfCocktails, Context context) {
+    public CocktailAdapter(List<Cocktail> listOfCocktails, Context context) {
         this.listOfCocktails = listOfCocktails;
         this.context = context;
         listOfAllCocktails = new ArrayList<>();
@@ -33,7 +33,7 @@ public class CocktailAdapter extends RecyclerView.Adapter<CocktailItemView> impl
         void onItemClick(int position, View v);
     }
 
-    void setOnItemClickListener(CocktailAdapter.OnItemClickListener listener) {
+    public void setOnItemClickListener(CocktailAdapter.OnItemClickListener listener) {
         this.listener = listener;
     }
 
