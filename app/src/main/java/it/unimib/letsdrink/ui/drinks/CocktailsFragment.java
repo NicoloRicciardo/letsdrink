@@ -49,6 +49,7 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
         text = root.findViewById(R.id.textNotFound);
 
         listValueDrinks = new boolean[10];
+        cocktailsListFiltered = new ArrayList<>();
 
         db = new FirebaseDBCocktails();
 
@@ -59,6 +60,31 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
                 cocktailAdapter = new CocktailAdapter(cocktailList, getContext());
                 recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
                 recyclerView.setAdapter(cocktailAdapter);
+
+                SharedPreferences sharedPref = getActivity().getSharedPreferences("Filtri", Context.MODE_PRIVATE);
+                boolean drinksFiltrati = sharedPref.getBoolean("FiltriBoolean", false);
+                if (drinksFiltrati) {
+                    Set<String> checkedCheckboxSet = sharedPref.getStringSet("Filtri_selezionati", null);
+                    String[] nomiFiltri = {"Ananas", "Arancia", "Cognac", "Gin", "Lime", "Menta", "Pesca", "Rum", "Soda", "Vodka"};
+                    if (checkedCheckboxSet != null) {
+                        for (int i = 0; i < listValueDrinks.length; i++) {
+                            if (checkedCheckboxSet.contains(nomiFiltri[i]))
+                                listValueDrinks[i] = true;
+
+                        }
+                        /*drinkFilter(listValueDrinks[0], listValueDrinks[1], listValueDrinks[2], listValueDrinks[3], listValueDrinks[4],
+                                listValueDrinks[5], listValueDrinks[6], listValueDrinks[7], listValueDrinks[8], listValueDrinks[9]);*/
+                        drinkFilterArray(listValueDrinks);
+                        cocktailAdapter.setListOfCocktails(cocktailsListFiltered);
+                        recyclerView.getRecycledViewPool().clear();
+                        cocktailAdapter.notifyDataSetChanged();
+                    }
+                } else {
+                    cocktailAdapter.setListOfCocktails(cocktailList);
+                    recyclerView.getRecycledViewPool().clear();
+                    cocktailAdapter.notifyDataSetChanged();
+                }
+
                 cocktailAdapter.setOnItemClickListener(new CocktailAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(int position, View v) {
@@ -107,7 +133,6 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
                 });
                 break;
             case R.id.filter_item:
-                Toast.makeText(getContext(), "menu", Toast.LENGTH_SHORT);
                 FiltersIngredients filterDialog = FiltersIngredients.newInstance(this);
                 Navigation.findNavController(getView()).navigate(R.id.action_navigation_drinks_to_filtersIngredients);
                 break;
@@ -117,11 +142,12 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
 
 
     @Override
-    public void okButtonClick(boolean valueAnanas, boolean valueArancia, boolean valueCognac, boolean valueGin, boolean valueLime,
-                              boolean valueMenta, boolean valuePesca, boolean valueRum, boolean valueSoda, boolean valueVodka) {
-        cocktailsListFiltered = new ArrayList<>();
+    /*public void okButtonClick(boolean valueAnanas, boolean valueArancia, boolean valueCognac, boolean valueGin, boolean valueLime,
+                              boolean valueMenta, boolean valuePesca, boolean valueRum, boolean valueSoda, boolean valueVodka) {*/
+    public void okButtonClick(boolean[] modeDrinks) {
         filtri = false;
-        drinkFilter(valueAnanas, valueArancia, valueCognac, valueGin, valueLime, valueMenta, valuePesca, valueRum, valueSoda, valueVodka);
+        //drinkFilter(valueAnanas, valueArancia, valueCognac, valueGin, valueLime, valueMenta, valuePesca, valueRum, valueSoda, valueVodka);
+        drinkFilterArray(modeDrinks);
         saveFiltri();
         if (!filtri) {
             cocktailAdapter.setListOfCocktails(cocktailList);
@@ -140,7 +166,42 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
 
     }
 
-    private void drinkFilter(boolean valueAnanas, boolean valueArancia, boolean valueCognac, boolean valueGin, boolean valueLime, boolean valueMenta, boolean valuePesca, boolean valueRum, boolean valueSoda, boolean valueVodka) {
+    private void drinkFilterArray(boolean[] modeDrinks) {
+        for (int cont = 0; cont < cocktailList.size(); cont++) {
+            final Cocktail cocktail = cocktailList.get(cont);
+            ArrayList<String> ingredients = cocktailList.get(cont).getIngredients();
+            for (int k = 0; k < modeDrinks.length; k++) {
+                for (int i = 0; i < ingredients.size(); i++) {
+                    if ((k == 0 && modeDrinks[k] && ingredients.get(i).contains("Ananas")) ||
+                            (k == 1 && modeDrinks[k] && ingredients.get(i).contains("Arancia")) ||
+                            (k == 2 && modeDrinks[k] && ingredients.get(i).contains("Cognac")) ||
+                            (k == 3 && modeDrinks[k] && ingredients.get(i).contains("Gin")) ||
+                            (k == 4 && modeDrinks[k] && ingredients.get(i).contains("Lime")) ||
+                            (k == 5 && modeDrinks[k] && ingredients.get(i).contains("Menta")) ||
+                            (k == 6 && modeDrinks[k] && ingredients.get(i).contains("Pesca")) ||
+                            (k == 7 && modeDrinks[k] && ingredients.get(i).contains("Rum")) ||
+                            (k == 8 && modeDrinks[k] && ingredients.get(i).contains("Soda")) ||
+                            (k == 9 && modeDrinks[k] && ingredients.get(i).contains("Vodka"))
+                    ) {
+                        if (!(cocktailsListFiltered.contains(cocktail))) {
+                            cocktailsListFiltered.add(cocktail);
+                            filtri = true;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void saveFiltri() {
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("Filtri", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean("FiltriBoolean", filtri);
+        editor.apply();
+    }
+
+   /* private void drinkFilter(boolean valueAnanas, boolean valueArancia, boolean valueCognac, boolean valueGin, boolean valueLime, boolean valueMenta, boolean valuePesca,
+                             boolean valueRum, boolean valueSoda, boolean valueVodka) {
         for (int cont = 0; cont < cocktailList.size(); cont++) {
             final Cocktail cocktail = cocktailList.get(cont);
             ArrayList<String> ingredients = cocktailList.get(cont).getIngredients();
@@ -163,40 +224,8 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
                 }
             }
         }
-    }
+    }*/
 
-    private void saveFiltri() {
-        SharedPreferences sharedPref = this.getActivity().getSharedPreferences("Filtri", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putBoolean("FiltriBoolean", filtri);
-        editor.apply();
-    }
 
-   /* @Override
-    public void onStart() {
-        super.onStart();
-        SharedPreferences sharedPref = this.getActivity().getSharedPreferences("Filtri", Context.MODE_PRIVATE);
-        boolean drinksFiltrati = sharedPref.getBoolean("FiltriBoolean", false);
-        if (drinksFiltrati) {
-            Set<String> checkedCheckboxSet = sharedPref.getStringSet("Filtri_selezionati", null);
-            String[] nomiFiltri = {"Ananas", "Arancia", "Cognac", "Gin", "Lime", "Menta", "Pesca", "Rum", "Soda", "Vodka"};
-            if (checkedCheckboxSet != null) {
-                for (int i = 0; i < listValueDrinks.length; i++) {
-                    if (checkedCheckboxSet.contains(nomiFiltri[i]))
-                        listValueDrinks[i] = true;
 
-                }
-                drinkFilter(listValueDrinks[0], listValueDrinks[1], listValueDrinks[2], listValueDrinks[3], listValueDrinks[4],
-                        listValueDrinks[5], listValueDrinks[6], listValueDrinks[7], listValueDrinks[8], listValueDrinks[9]);
-                cocktailAdapter.setListOfCocktails(cocktailsListFiltered);
-                recyclerView.getRecycledViewPool().clear();
-                cocktailAdapter.notifyDataSetChanged();
-            }
-        }else{
-            cocktailAdapter.setListOfCocktails(cocktailList);
-            recyclerView.getRecycledViewPool().clear();
-            cocktailAdapter.notifyDataSetChanged();
-        }
-
-    } */
 }

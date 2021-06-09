@@ -25,6 +25,7 @@ import it.unimib.letsdrink.R;
 public class FiltersIngredients extends DialogFragment {
 
     private boolean modeAnanas, modeArancia, modeCognac, modeGin, modeLime, modeMenta, modePesca, modeRum, modeSoda, modeVodka;
+    private boolean[] filtri;
     private static FilterInterface filter;
     SwitchMaterial sAnanas, sArancia, sCognac, sGin, sLime, sMenta, sPesca, sRum, sSoda, sVodka;
 
@@ -54,6 +55,7 @@ public class FiltersIngredients extends DialogFragment {
         sRum = v.findViewById(R.id.switchRum);
         sSoda = v.findViewById(R.id.switchSoda);
         sVodka = v.findViewById(R.id.switchVodka);
+        filtri = new boolean[10];
         loadToogle();
         Context c = getContext();
         assert c != null;
@@ -64,7 +66,7 @@ public class FiltersIngredients extends DialogFragment {
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        setModeAnanas(sAnanas.isChecked());
+                        /*setModeAnanas(sAnanas.isChecked());
                         setModeArancia(sArancia.isChecked());
                         setModeCognac(sCognac.isChecked());
                         setModeGin(sGin.isChecked());
@@ -73,12 +75,24 @@ public class FiltersIngredients extends DialogFragment {
                         setModePesca(sPesca.isChecked());
                         setModeRum(sRum.isChecked());
                         setModeSoda(sSoda.isChecked());
-                        setModeVodka(sVodka.isChecked());
+                        setModeVodka(sVodka.isChecked());*/
+                        filtri[0] = sAnanas.isChecked();
+                        filtri[1] = sArancia.isChecked();
+                        filtri[2] = sCognac.isChecked();
+                        filtri[3] = sGin.isChecked();
+                        filtri[4] = sLime.isChecked();
+                        filtri[5] = sMenta.isChecked();
+                        filtri[6] = sPesca.isChecked();
+                        filtri[7] = sRum.isChecked();
+                        filtri[8] = sSoda.isChecked();
+                        filtri[9] = sVodka.isChecked();
+                        setFiltri(filtri);
                         saveToogle();
                         dialog.dismiss();
-                        filter.okButtonClick(isModeAnanas(), isModeArancia(), isModeCognac(),
+                        /*filter.okButtonClick(isModeAnanas(), isModeArancia(), isModeCognac(),
                                 isModeGin(), isModeLime(), isModeMenta(), isModePesca(), isModeRum(),
-                                isModeSoda(), isModeVodka());
+                                isModeSoda(), isModeVodka()); */
+                        filter.okButtonClick(getFiltri());
                     }
                 })
                 .setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
@@ -170,8 +184,15 @@ public class FiltersIngredients extends DialogFragment {
         }
     }
 
+    public boolean[] getFiltri() {
+        return filtri;
+    }
 
-    public boolean isModeAnanas() {
+    public void setFiltri(boolean[] filtri) {
+        this.filtri = filtri;
+    }
+
+    /*public boolean isModeAnanas() {
         return modeAnanas;
     }
 
@@ -249,5 +270,5 @@ public class FiltersIngredients extends DialogFragment {
 
     public void setModeVodka(boolean modeVodka) {
         this.modeVodka = modeVodka;
-    }
+    }*/
 }

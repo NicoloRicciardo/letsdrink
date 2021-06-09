@@ -89,7 +89,9 @@ public class CocktailAdapter extends RecyclerView.Adapter<CocktailItemView> impl
 
     @Override
     public int getItemCount() {
-        return listOfCocktails.size();
+        if (listOfCocktails != null)
+            return listOfCocktails.size();
+        return 0;
     }
 
     public void setListOfCocktails(List<Cocktail> listOfCocktails) {
