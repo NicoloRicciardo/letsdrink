@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -24,6 +25,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -45,12 +47,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.shobhitpuri.custombuttons.GoogleSignInButton;
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import it.unimib.letsdrink.R;
 
 public class LoginFragment extends Fragment {
@@ -214,6 +220,17 @@ public class LoginFragment extends Fragment {
                         .navigate(R.id.action_navigation_profile_to_registrationFragment);
             }
         });
+
+        
+        /*CircleImageView profileImage = view.findViewById(R.id.image_profile);
+        StorageReference profileRef = FirebaseStorage.getInstance().getReference()
+                .child("UserImage/" + mAuth.getCurrentUser().getUid() + "/profile.jpg");
+        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri).into(profileImage);
+            }
+        });*/
     }
 
     @Override

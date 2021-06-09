@@ -240,7 +240,8 @@ public class TempSettingsFragment extends Fragment {
     }
 
     private void uploadImageToFirebase(Uri imageUri) {
-        StorageReference fileRef = storageReference.child("profile.jpg");
+        // upload image to firebase storage
+        StorageReference fileRef = storageReference.child("UserImage/"+ mAuth.getCurrentUser().getUid() +"/profile.jpg");
         fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
