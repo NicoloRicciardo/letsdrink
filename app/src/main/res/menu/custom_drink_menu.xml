@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/settings_item"
-        android:icon="@drawable/ic_settings_black_24dp"
-        android:title="@string/title_setting"
+        android:id="@+id/delete_item"
+        android:icon="@drawable/ic_delete_24"
+        android:title="cestino"
         app:showAsAction="always|collapseActionView"/>
 
 </menu>

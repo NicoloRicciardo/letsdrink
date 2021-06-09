@@ -143,7 +143,11 @@
     <fragment
         android:id="@+id/customDrinkDetailFragment"
         android:name="it.unimib.letsdrink.ui.profile.CustomDrinkDetailFragment"
-        android:label="CustomDrinkDetailFragment" />
+        android:label="CustomDrinkDetailFragment" >
+        <action
+            android:id="@+id/action_customDrinkDetailFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
 
 
 </navigation>

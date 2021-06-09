@@ -57,6 +57,8 @@ public class ProfileFragment extends Fragment {
     private FirebaseFirestore mFirestore;
     private FirebaseDBCustomDrink mfirebaseDBCustomDrink;
 
+    private CustomDrinkAdapter customDrinkAdapter;
+
     public static ProfileFragment newInstance() {
         return new ProfileFragment();
     }
@@ -114,11 +116,11 @@ public class ProfileFragment extends Fragment {
                     mPlaceholder.setVisibility(View.VISIBLE);
                 } else {
                     recyclerView.setVisibility(View.VISIBLE);
-                    CocktailAdapter cocktailAdapter = new CocktailAdapter(listOfCustomDrink, getContext());
+                    customDrinkAdapter = new CustomDrinkAdapter(listOfCustomDrink, getContext());
                     recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-                    recyclerView.setAdapter(cocktailAdapter);
+                    recyclerView.setAdapter(customDrinkAdapter);
 
-                    cocktailAdapter.setOnItemClickListener(new CocktailAdapter.OnItemClickListener() {
+                    customDrinkAdapter.setOnItemClickListener(new CustomDrinkAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(int position, View v) {
                             Fragment cocktailDetail = CustomDrinkDetailFragment.newInstance(listOfCustomDrink.get(position).getName(), listOfCustomDrink.get(position).getMethod(),
@@ -162,5 +164,10 @@ public class ProfileFragment extends Fragment {
 
 
     }
+
+    /*public CustomDrinkAdapter getAdapter() {
+
+        return customDrinkAdapter;
+    }*/
 
 }

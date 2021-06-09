@@ -10,6 +10,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,5 +51,22 @@ public class FirebaseDBCustomDrink {
                         }
                     }
                 });
+    }
+
+    public void deleteCustomDrink(Cocktail cocktail, final FirebaseDBCustomDrink.DataStatus dataStatus) {
+        String name = cocktail.getName();
+        collezione.document(id).collection("customDrink").whereEqualTo("name", name).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (DocumentSnapshot document : task.getResult()) {
+                        Cocktail cocktail = document.toObject(Cocktail.class);
+                        listOfCocktails.remove(cocktail);
+                        document.getReference().delete();
+                    }
+                    dataStatus.dataIsLoaded(listOfCocktails);
+                }
+            }
+        });
     }
 }
