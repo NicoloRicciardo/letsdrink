@@ -1,10 +1,293 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layout_settings"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.profile.SettingsFragment"
+
     android:background="@color/background_black">
 
-</FrameLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/text_view_settings_your_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_category_your_profile"
+            android:textColor="@color/lipstick_fuchsia"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <ImageView
+            android:id="@+id/image_view_settings_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_camera_24"
+            app:tint="@color/white"
+
+            app:layout_constraintStart_toStartOf="@+id/text_view_settings_your_profile"
+            app:layout_constraintTop_toTopOf="@+id/button_settings_change_image"
+            app:layout_constraintBottom_toBottomOf="@+id/button_settings_change_image"
+            android:contentDescription="@string/settings_image_camera" />
+
+        <Button
+            android:id="@+id/button_settings_change_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_button_change_image"
+            android:textAlignment="textStart"
+            android:textAllCaps="false"
+            android:background="@drawable/button_background_transparent"
+            android:textColor="@drawable/button_link_color"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toEndOf="@+id/image_view_settings_camera"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_settings_your_profile"/>
+
+        <ImageView
+            android:id="@+id/image_view_settings_pencil_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_create_24"
+            app:tint="@color/white"
+            app:layout_constraintStart_toStartOf="@+id/image_view_settings_camera"
+            app:layout_constraintTop_toTopOf="@+id/button_settings_change_username"
+            app:layout_constraintBottom_toBottomOf="@+id/button_settings_change_username"
+            android:contentDescription="@string/settings_image_pencil" />
+
+        <Button
+            android:id="@+id/button_settings_change_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_button_change_username"
+            android:textAlignment="textStart"
+            android:textAllCaps="false"
+            android:background="@drawable/button_background_transparent"
+            android:textColor="@drawable/button_link_color"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_marginStart="50dp"
+            app:layout_constraintStart_toEndOf="@+id/image_view_settings_pencil_username"
+            app:layout_constraintTop_toBottomOf="@+id/button_settings_change_image"/>
+
+        <ImageView
+            android:id="@+id/image_view_settings_pencil_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_create_24"
+            app:tint="@color/white"
+            app:layout_constraintStart_toStartOf="@+id/image_view_settings_pencil_username"
+            app:layout_constraintTop_toTopOf="@+id/button_settings_change_password"
+            app:layout_constraintBottom_toBottomOf="@+id/button_settings_change_password"
+            android:contentDescription="@string/settings_image_pencil" />
+
+        <Button
+            android:id="@+id/button_settings_change_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_button_change_password"
+            android:textAlignment="textStart"
+            android:textAllCaps="false"
+            android:background="@drawable/button_background_transparent"
+            android:textColor="@drawable/button_link_color"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_marginStart="50dp"
+            app:layout_constraintStart_toEndOf="@+id/image_view_settings_pencil_password"
+            app:layout_constraintTop_toBottomOf="@+id/button_settings_change_username"/>
+
+        <View
+            android:id="@+id/view_settings_line_before_info"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_settings_change_password" />
+            <!--android:background="#292929"-->
+
+        <TextView
+            android:id="@+id/text_view_settings_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_category_info"
+            android:textColor="@color/lipstick_fuchsia"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_settings_line_before_info"/>
+
+        <ImageView
+            android:id="@+id/image_view_settings_about"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_about_settings_24"
+            app:tint="@color/white"
+            app:layout_constraintStart_toStartOf="@+id/text_view_settings_info"
+            app:layout_constraintTop_toTopOf="@+id/button_settings_about"
+            app:layout_constraintBottom_toBottomOf="@+id/button_settings_about"
+            android:contentDescription="@string/settings_image_about" />
+
+        <Button
+            android:id="@+id/button_settings_about"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_button_about"
+            android:textAlignment="textStart"
+            android:textAllCaps="false"
+            android:background="@drawable/button_background_transparent"
+            android:textColor="@drawable/button_link_color"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toEndOf="@+id/image_view_settings_about"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_settings_info"/>
+
+        <ImageView
+            android:id="@+id/image_view_settings_privacy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_lock_24"
+            app:tint="@color/white"
+            app:layout_constraintStart_toStartOf="@+id/image_view_settings_about"
+            app:layout_constraintTop_toTopOf="@+id/button_settings_privacy"
+            app:layout_constraintBottom_toBottomOf="@+id/button_settings_privacy"
+            android:contentDescription="@string/settings_image_privacy" />
+
+        <Button
+            android:id="@+id/button_settings_privacy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_button_privacy"
+            android:textAlignment="textStart"
+            android:textAllCaps="false"
+            android:background="@drawable/button_background_transparent"
+            android:textColor="@drawable/button_link_color"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_marginStart="50dp"
+            app:layout_constraintStart_toEndOf="@+id/image_view_settings_privacy"
+            app:layout_constraintTop_toBottomOf="@+id/button_settings_about"/>
+
+        <ImageView
+            android:id="@+id/image_view_settings_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_info_24"
+            app:tint="@color/white"
+            app:layout_constraintStart_toStartOf="@+id/image_view_settings_about"
+            app:layout_constraintTop_toTopOf="@+id/linear_layout_settings_version"
+            app:layout_constraintBottom_toBottomOf="@+id/linear_layout_settings_version"
+            android:contentDescription="@string/settings_image_version" />
+
+        <LinearLayout
+            android:id="@+id/linear_layout_settings_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toEndOf="@+id/image_view_settings_version"
+            app:layout_constraintTop_toBottomOf="@+id/button_settings_privacy">
+
+            <TextView
+                android:id="@+id/text_view_settings_version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_text_version"
+                android:textColor="@color/light_gray"/>
+
+            <TextView
+                android:id="@+id/text_view_settings_version_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_text_version_number"
+                android:textColor="@color/light_gray"/>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view_settings_line_after_info"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linear_layout_settings_version" />
+
+        <TextView
+            android:id="@+id/text_view_settings_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_category_account"
+            android:textColor="@color/lipstick_fuchsia"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_settings_line_after_info"/>
+
+        <ImageView
+            android:id="@+id/image_view_settings_logout"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_logout_settings_24"
+            app:tint="@color/white"
+            app:layout_constraintStart_toStartOf="@+id/text_view_settings_account"
+            app:layout_constraintTop_toTopOf="@+id/button_settings_logout"
+            app:layout_constraintBottom_toBottomOf="@+id/button_settings_logout"
+            android:contentDescription="@string/settings_image_logout" />
+
+        <Button
+            android:id="@+id/button_settings_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_button_logout"
+            android:textAlignment="textStart"
+            android:textAllCaps="false"
+            
+            android:textColor="@drawable/button_link_color"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toEndOf="@+id/image_view_settings_logout"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_settings_account"/>
+
+        <ImageView
+            android:id="@+id/image_view_settings_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_delete_24"
+            app:tint="@color/white"
+            app:layout_constraintStart_toStartOf="@+id/image_view_settings_logout"
+            app:layout_constraintTop_toTopOf="@+id/button_settings_delete_account"
+            app:layout_constraintBottom_toBottomOf="@+id/button_settings_delete_account"
+            android:contentDescription="@string/settings_image_delete" />
+
+        <Button
+            android:id="@+id/button_settings_delete_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_button_delete"
+            android:textAlignment="textStart"
+            android:textAllCaps="false"
+            android:background="@drawable/button_background_transparent"
+            android:textColor="@drawable/button_link_color"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_marginStart="50dp"
+            app:layout_constraintStart_toEndOf="@+id/image_view_settings_delete"
+            app:layout_constraintTop_toBottomOf="@+id/button_settings_logout"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

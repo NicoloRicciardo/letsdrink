@@ -47,7 +47,6 @@ public class FirebaseDBCustomDrink {
                             for (DocumentSnapshot document : task.getResult()) {
                                 Cocktail cocktail = document.toObject(Cocktail.class);
                                 listOfCocktails.add(cocktail);
-                                Log.d("FirebaseDBCustomDrink", cocktail.getName());
                             }
 
                             dataStatus.dataIsLoaded(listOfCocktails);
@@ -55,9 +54,7 @@ public class FirebaseDBCustomDrink {
                     }
                 });
 
-        for (int i = 0; i < listOfCocktails.size(); i++) {
-            Log.d("FirebaseDBCustomDrink", listOfCocktails.get(i).getName());
-        }
+
     }
 
     public void deleteCustomDrink(Cocktail cocktail, final FirebaseDBCustomDrink.DataStatus dataStatus) {
@@ -69,6 +66,7 @@ public class FirebaseDBCustomDrink {
                 if (task.isSuccessful()) {
                     for (DocumentSnapshot document : task.getResult()) {
                         Cocktail cocktail = document.toObject(Cocktail.class);
+                        Log.d("FirebaseDBCustomDrink", cocktail.getName());
                         listOfCocktails.remove(cocktail);
                         document.getReference().delete();
                     }
@@ -76,5 +74,8 @@ public class FirebaseDBCustomDrink {
                 }
             }
         });
+        for (int i = 0; i < listOfCocktails.size(); i++) {
+            Log.d("FirebaseDBCustomDrink", listOfCocktails.get(i).getName());
+        }
     }
 }

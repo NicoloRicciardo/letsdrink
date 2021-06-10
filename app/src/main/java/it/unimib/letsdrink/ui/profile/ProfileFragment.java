@@ -49,7 +49,7 @@ public class ProfileFragment extends Fragment {
     //private ProfileViewModel profileViewModel;
     private TextView mUserNameCustom;
     private TextView mEmailCustom;
-    private TextView mPlaceholder;
+    private TextView mPlaceholder, mYourDrinks;
     private FloatingActionButton mAddDrinks;
 
     User user = new User();
@@ -106,6 +106,7 @@ public class ProfileFragment extends Fragment {
 
         mPlaceholder = view.findViewById(R.id.text_profile_not_logged_in);
         mPlaceholder.setText(R.string.value_no_custom_drinks);
+        mYourDrinks = view.findViewById(R.id.text_profile_your_drinks);
 
         mUserNameCustom = view.findViewById(R.id.text_profile_user_name);
         RecyclerView recyclerView = view.findViewById(R.id.profile_recycler);
@@ -117,7 +118,9 @@ public class ProfileFragment extends Fragment {
             public void dataIsLoaded(List<Cocktail> listOfCustomDrink) {
                 if(listOfCustomDrink.size() == 0) {
                     mPlaceholder.setVisibility(View.VISIBLE);
+                    mYourDrinks.setVisibility(View.INVISIBLE);
                 } else {
+                    mYourDrinks.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.VISIBLE);
                     customDrinkAdapter = new CustomDrinkAdapter(listOfCustomDrink, getContext());
                     recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
@@ -141,6 +144,7 @@ public class ProfileFragment extends Fragment {
                                     customDrinkAdapter.setListOfCocktails(listOfCustomDrinkCocktail);
                                     recyclerView.getRecycledViewPool().clear();
                                     customDrinkAdapter.notifyDataSetChanged();
+                                    Navigation.findNavController(getView()).navigate(R.id.action_profileFragment_self);
                                 }
                             });
                         }
