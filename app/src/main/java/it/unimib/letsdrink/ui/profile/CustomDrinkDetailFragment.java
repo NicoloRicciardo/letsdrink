@@ -78,13 +78,13 @@ public class CustomDrinkDetailFragment extends Fragment {
         return root;
     }
 
-    @Override
+    /*@Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.custom_drink_menu, menu);
-    }
+    }*/
 
-    @Override
+    /*@Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.delete_item) {
@@ -92,9 +92,9 @@ public class CustomDrinkDetailFragment extends Fragment {
             new FirebaseDBCustomDrink(mUserID).deleteCustomDrink(cocktail, new FirebaseDBCustomDrink.DataStatus() {
                 @Override
                 public void dataIsLoaded(List<Cocktail> cocktailList) {
-                    /*cocktailAdapter.setListOfCocktails(cocktailsListFiltered);
+                    *//*cocktailAdapter.setListOfCocktails(cocktailsListFiltered);
                     recyclerView.getRecycledViewPool().clear();
-                    cocktailAdapter.notifyDataSetChanged();*/
+                    cocktailAdapter.notifyDataSetChanged();*//*
                 }
             });
 
@@ -102,7 +102,7 @@ public class CustomDrinkDetailFragment extends Fragment {
                     .navigate(R.id.action_customDrinkDetailFragment_to_profileFragment);
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
 
 }

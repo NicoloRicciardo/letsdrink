@@ -24,6 +24,7 @@ public class CustomDrinkItemView extends RecyclerView.ViewHolder{
 
     private TextView name;
     private ImageView image;
+    private ImageButton delete;
     private Context context;
 
     public CustomDrinkItemView (ViewGroup parent, final CustomDrinkAdapter.OnItemClickListener listener, Context context) {
@@ -32,6 +33,7 @@ public class CustomDrinkItemView extends RecyclerView.ViewHolder{
         this.context=context;
         name = itemView.findViewById(R.id.text_custom_drink);
         image = itemView.findViewById(R.id.image_custom_drink);
+        delete = itemView.findViewById(R.id.delete_custom_drink_card);
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,6 +42,18 @@ public class CustomDrinkItemView extends RecyclerView.ViewHolder{
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
                         listener.onItemClick(position, v);
+                    }
+                }
+            }
+        });
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onDeleteClick(position, v);
                     }
                 }
             }

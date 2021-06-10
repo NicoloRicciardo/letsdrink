@@ -109,7 +109,10 @@ public class ProfileFragment extends Fragment {
 
         mUserNameCustom = view.findViewById(R.id.text_profile_user_name);
         RecyclerView recyclerView = view.findViewById(R.id.profile_recycler);
-        new FirebaseDBCustomDrink(mAuth.getCurrentUser().getUid()).readCocktails(new FirebaseDBCustomDrink.DataStatus() {
+
+        FirebaseDBCustomDrink db = new FirebaseDBCustomDrink(mAuth.getCurrentUser().getUid());
+
+        db.readCocktails(new FirebaseDBCustomDrink.DataStatus() {
             @Override
             public void dataIsLoaded(List<Cocktail> listOfCustomDrink) {
                 if(listOfCustomDrink.size() == 0) {
@@ -127,6 +130,19 @@ public class ProfileFragment extends Fragment {
                                     listOfCustomDrink.get(position).getIngredients(), listOfCustomDrink.get(position).getImageUrl());
 
                             Navigation.findNavController(getView()).navigate(R.id.action_profileFragment_to_customDrinkDetailFragment);
+                        }
+
+                        @Override
+                        public void onDeleteClick(int position, View v) {
+
+                            db.deleteCustomDrink(listOfCustomDrink.get(position), new FirebaseDBCustomDrink.DataStatus() {
+                                @Override
+                                public void dataIsLoaded(List<Cocktail> listOfCustomDrinkCocktail) {
+                                    customDrinkAdapter.setListOfCocktails(listOfCustomDrinkCocktail);
+                                    recyclerView.getRecycledViewPool().clear();
+                                    customDrinkAdapter.notifyDataSetChanged();
+                                }
+                            });
                         }
                     });
                 }

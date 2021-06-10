@@ -1,5 +1,7 @@
 package it.unimib.letsdrink.ui.profile;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -45,16 +47,22 @@ public class FirebaseDBCustomDrink {
                             for (DocumentSnapshot document : task.getResult()) {
                                 Cocktail cocktail = document.toObject(Cocktail.class);
                                 listOfCocktails.add(cocktail);
+                                Log.d("FirebaseDBCustomDrink", cocktail.getName());
                             }
 
                             dataStatus.dataIsLoaded(listOfCocktails);
                         }
                     }
                 });
+
+        for (int i = 0; i < listOfCocktails.size(); i++) {
+            Log.d("FirebaseDBCustomDrink", listOfCocktails.get(i).getName());
+        }
     }
 
     public void deleteCustomDrink(Cocktail cocktail, final FirebaseDBCustomDrink.DataStatus dataStatus) {
         String name = cocktail.getName();
+
         collezione.document(id).collection("customDrink").whereEqualTo("name", name).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {

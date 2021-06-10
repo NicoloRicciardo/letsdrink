@@ -27,6 +27,7 @@ public class CustomDrinkAdapter extends RecyclerView.Adapter<CustomDrinkItemView
 
     public interface OnItemClickListener {
         void onItemClick(int position, View v);
+        void onDeleteClick(int position, View v);
     }
 
     public void setOnItemClickListener(CustomDrinkAdapter.OnItemClickListener listener) {
@@ -49,6 +50,14 @@ public class CustomDrinkAdapter extends RecyclerView.Adapter<CustomDrinkItemView
         if (listOfCocktails != null)
             return listOfCocktails.size();
         return 0;
+    }
+
+    public void setListOfCocktails(List <Cocktail> listOfCocktails) {
+        this.listOfCocktails = listOfCocktails;
+    }
+
+    public List<Cocktail> getListOfCocktails() {
+        return listOfCocktails;
     }
 
 }
