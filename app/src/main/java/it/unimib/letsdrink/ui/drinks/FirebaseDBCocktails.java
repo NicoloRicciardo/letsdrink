@@ -85,17 +85,4 @@ public class FirebaseDBCocktails {
 
     }
 
-    public Cocktail searchCocktail(String name) {
-        for (int i = 0; i < listOfCocktails.size(); i++) {
-            if(listOfCocktails.get(i)!= null && listOfCocktails.get(i).getName()!= null &&
-                    listOfCocktails.get(i).getName().equalsIgnoreCase(name)){
-                return listOfCocktails.get(i);
-            }
-
-        }
-
-        return null;
-
-
-    }
 }

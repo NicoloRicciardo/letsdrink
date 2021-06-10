@@ -94,6 +94,11 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
                         Navigation.findNavController(getView()).navigate(R.id.action_navigation_drinks_to_cocktailDetailFragment);
 
                     }
+
+                    @Override
+                    public void onSaveClick(int position, View v) {
+
+                    }
                 });
             }
         });
@@ -225,7 +230,6 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
             }
         }
     }*/
-
 
 
 }

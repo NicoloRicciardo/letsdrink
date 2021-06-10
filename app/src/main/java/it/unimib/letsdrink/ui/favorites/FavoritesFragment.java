@@ -21,7 +21,6 @@ import it.unimib.letsdrink.R;
 
 public class FavoritesFragment extends Fragment {
 
-    private FavoritesViewModel favoritesViewModel;
 
     public static FavoritesFragment newInstance() {
         return new FavoritesFragment();
@@ -30,30 +29,10 @@ public class FavoritesFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        favoritesViewModel =
-                new ViewModelProvider(this).get(FavoritesViewModel.class);
         View root = inflater.inflate(R.layout.fragment_favorites, container, false);
-        final TextView textView = root.findViewById(R.id.text_favorites);
-        favoritesViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
-
-        setHasOptionsMenu(true);
         return root;
     }
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.top_menu,menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        return super.onOptionsItemSelected(item);
-    }
 
 
 }

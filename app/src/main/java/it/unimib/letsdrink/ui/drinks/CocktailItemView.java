@@ -52,11 +52,12 @@ public class CocktailItemView extends RecyclerView.ViewHolder{
         imgBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                if(currentUser!=null) {
-                    imgBtn.setColorFilter(Color.RED);
-                    Log.d("cuore", "cuore premuto");
-                }else{
-                    Toast.makeText(context,"Devi essere loggato per salvare un cocktail", Toast.LENGTH_SHORT ).show();
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onSaveClick(position, view);
+                        imgBtn.setColorFilter(Color.RED);
+                    }
                 }
             }
         });

@@ -31,6 +31,7 @@ public class CocktailAdapter extends RecyclerView.Adapter<CocktailItemView> impl
 
     public interface OnItemClickListener {
         void onItemClick(int position, View v);
+        void onSaveClick(int position, View v);
     }
 
     public void setOnItemClickListener(CocktailAdapter.OnItemClickListener listener) {

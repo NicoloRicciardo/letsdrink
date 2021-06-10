@@ -62,6 +62,11 @@ public class CocktailsCategoryFragment extends Fragment {
                         Navigation.findNavController(getView()).navigate(R.id.action_cocktailsCategoryFragment_to_cocktailDetailFragment);
 
                     }
+
+                    @Override
+                    public void onSaveClick(int position, View v) {
+
+                    }
                 });
             }
         });
