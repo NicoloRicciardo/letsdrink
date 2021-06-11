@@ -118,20 +118,6 @@ public class CustomDrinkFragment extends Fragment {
             }
         });
 
-        /*mStorageReference.child("UserImage/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/"
-                + mNameCustomDrink.getText().toString()+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                // Got the download URL for 'users/me/profile.png'
-                mCustomDrink.setImageUrl(uri.toString());
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-            }
-        });*/
-
         mAddIngredient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -160,17 +146,8 @@ public class CustomDrinkFragment extends Fragment {
             }
         });
 
-        /*mCustomDrink.setImageUrl(fetchUrlFromStorage())*/;
-
     }
 
-    /*private String fetchUrlFromStorage (){
-        // Points to the root reference
-        mStorageReference.child("UserImage/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/"
-                + mNameCustomDrink.getText().toString()+".jpg").getDownloadUrl().toString();
-        return mStorageReference.toString();
-    }
-*/
     private boolean controlParameters() {
         mIngredientsCustomDrink.clear();
         boolean result = true;
@@ -246,6 +223,12 @@ public class CustomDrinkFragment extends Fragment {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Toast.makeText(getContext(), "Immagine caricata", Toast.LENGTH_SHORT).show();
+                fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        mCustomDrink.setImageUrl(uri.toString());
+                    }
+                });
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

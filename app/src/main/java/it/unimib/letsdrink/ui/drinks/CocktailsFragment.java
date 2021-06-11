@@ -24,12 +24,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import it.unimib.letsdrink.R;
 import it.unimib.letsdrink.domain.Cocktail;
+import it.unimib.letsdrink.ui.favorites.FirebaseDBFavorites;
 
 public class CocktailsFragment extends Fragment implements FilterInterface {
 
@@ -40,6 +45,7 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
     private TextView text;
     private List<Cocktail> cocktailList, cocktailsListFiltered;
     private boolean filtri, listValueDrinks[];
+    private FirebaseDBFavorites dbFav;
 
 
     @Override
@@ -57,6 +63,7 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
             @Override
             public void dataIsLoaded(List<Cocktail> listOfCocktails) {
                 cocktailList = listOfCocktails;
+
                 cocktailAdapter = new CocktailAdapter(cocktailList, getContext());
                 recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
                 recyclerView.setAdapter(cocktailAdapter);
@@ -97,7 +104,17 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
 
                     @Override
                     public void onSaveClick(int position, View v) {
-
+                        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                        if(firebaseUser != null){
+                            dbFav = new FirebaseDBFavorites(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                            List<Cocktail> cocktails = cocktailAdapter.getListOfCocktails();
+                            dbFav.addFavoriteCocktail(cocktails.get(position), new FirebaseDBFavorites.DataStatus() {
+                                @Override
+                                public void dataIsLoaded(List<Cocktail> cocktailList) {
+                                    //idk
+                                }
+                            });
+                        }
                     }
                 });
             }

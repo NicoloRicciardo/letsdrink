@@ -12,6 +12,8 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 
 import java.util.ArrayList;
@@ -19,11 +21,13 @@ import java.util.List;
 
 import it.unimib.letsdrink.R;
 import it.unimib.letsdrink.domain.Cocktail;
+import it.unimib.letsdrink.ui.favorites.FirebaseDBFavorites;
 
 public class CocktailsCategoryFragment extends Fragment {
 
     private static String name, imageUrl;
     private static ArrayList<DocumentReference> drinks;
+    private FirebaseDBFavorites dbFav;
 
 
     public CocktailsCategoryFragment() {
@@ -47,6 +51,7 @@ public class CocktailsCategoryFragment extends Fragment {
         setHasOptionsMenu(true);
         Bundle bundle = this.getArguments();
         String categoryName = bundle.getString("name");
+
         new FirebaseDBCocktails().readCocktailsCategory(categoryName, new FirebaseDBCocktails.DataStatus() {
             @Override
             public void dataIsLoaded(List<Cocktail> listOfCocktails) {
@@ -65,7 +70,16 @@ public class CocktailsCategoryFragment extends Fragment {
 
                     @Override
                     public void onSaveClick(int position, View v) {
-
+                        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                        if(firebaseUser != null){
+                            dbFav = new FirebaseDBFavorites(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                            dbFav.addFavoriteCocktail(listOfCocktails.get(position), new FirebaseDBFavorites.DataStatus() {
+                                @Override
+                                public void dataIsLoaded(List<Cocktail> cocktailList) {
+                                    //idk
+                                }
+                            });
+                        }
                     }
                 });
             }

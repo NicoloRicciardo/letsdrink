@@ -47,7 +47,14 @@
         android:id="@+id/navigation_favorites"
         android:name="it.unimib.letsdrink.ui.favorites.FavoritesFragment"
         android:label="@string/title_favorites"
-        tools:layout="@layout/fragment_favorites" />
+        tools:layout="@layout/fragment_favorites" >
+        <action
+            android:id="@+id/action_navigation_favorites_self"
+            app:destination="@id/navigation_favorites" />
+        <action
+            android:id="@+id/action_navigation_favorites_to_cocktailDetailFragment"
+            app:destination="@id/cocktailDetailFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_profile"

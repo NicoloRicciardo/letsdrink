@@ -12,7 +12,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
-        />
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/text_favorites_none"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Non hai ancora salvato dei preferiti!"
+        android:textColor="@color/white"
+        android:textSize="17sp"
+        android:layout_gravity="center"
+        android:layout_marginTop="60dp"
+        android:visibility="gone"/>
 
 </LinearLayout>
 

@@ -3,6 +3,7 @@ package it.unimib.letsdrink.ui.profile;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,11 +30,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import it.unimib.letsdrink.R;
 import it.unimib.letsdrink.domain.Category;
 import it.unimib.letsdrink.domain.Cocktail;
@@ -51,11 +58,13 @@ public class ProfileFragment extends Fragment {
     private TextView mEmailCustom;
     private TextView mPlaceholder, mYourDrinks;
     private FloatingActionButton mAddDrinks;
+    private CircleImageView mUserImage;
 
     User user = new User();
     private FirebaseAuth mAuth;
     private FirebaseFirestore mFirestore;
     private FirebaseDBCustomDrink mfirebaseDBCustomDrink;
+    private StorageReference mStorageReference;
 
     private CustomDrinkAdapter customDrinkAdapter;
 
@@ -103,10 +112,13 @@ public class ProfileFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         mFirestore = FirebaseFirestore.getInstance();
         mfirebaseDBCustomDrink = new FirebaseDBCustomDrink(mAuth.getCurrentUser().getUid());
+        mStorageReference = FirebaseStorage.getInstance().getReference();
 
         mPlaceholder = view.findViewById(R.id.text_profile_not_logged_in);
         mPlaceholder.setText(R.string.value_no_custom_drinks);
         mYourDrinks = view.findViewById(R.id.text_profile_your_drinks);
+        mUserImage = view.findViewById(R.id.image_profile);
+        setUserImage();
 
         mUserNameCustom = view.findViewById(R.id.text_profile_user_name);
         RecyclerView recyclerView = view.findViewById(R.id.profile_recycler);
@@ -181,8 +193,17 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+    }
 
-
+    private void setUserImage() {
+        StorageReference fileRef = mStorageReference
+                .child("UserImage/" + mAuth.getCurrentUser().getUid() + "/profile.jpg");
+        fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri).into(mUserImage);
+            }
+        });
     }
 
     /*public CustomDrinkAdapter getAdapter() {

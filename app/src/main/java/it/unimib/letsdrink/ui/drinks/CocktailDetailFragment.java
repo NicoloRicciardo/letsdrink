@@ -62,23 +62,10 @@ public class CocktailDetailFragment extends Fragment {
         TextView txtIngredients = root.findViewById(R.id.cocktail_detail_ingredients);
         TextView txtMethod = root.findViewById((R.id.cocktail_detail_method));
         ImageView img = root.findViewById(R.id.cocktail_detail_image);
-        ImageButton imgBtn = root.findViewById(R.id.love_cocktail_detail);
         txtName.setText(name);
         txtIngredients.setText(ingredienti);
         txtMethod.setText(method);
         Glide.with(getContext()).load(imageUrl).into(img);
-        imgBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(currentUser!=null) {
-                    imgBtn.setColorFilter(Color.RED);
-                    Log.d("cuore", "cuore premuto");
-                }else{
-                    Toast.makeText(getContext(),"Devi essere loggato per salvare un cocktail", Toast.LENGTH_SHORT ).show();
-                }
-
-            }
-        });
 
         return root;
     }
