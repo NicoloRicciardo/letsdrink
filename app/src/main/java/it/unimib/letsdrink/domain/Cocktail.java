@@ -6,6 +6,8 @@ import android.widget.ImageView;
 
 import java.util.ArrayList;
 
+/*classe relativa al cocktail generico, composto da:
+procedeimento (method), nome (name), immagine (ImageUrl) e ingredienti (ingredeints)*/
 public class Cocktail {
     private String method;
     private String name;

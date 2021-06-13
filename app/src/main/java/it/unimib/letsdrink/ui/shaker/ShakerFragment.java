@@ -25,7 +25,6 @@ import it.unimib.letsdrink.ui.drinks.CocktailDetailFragment;
 
 
 public class ShakerFragment extends Fragment implements SensorEventListener {
-
     private SensorManager sensorManager;
     private Sensor acelerometerSensor;
     private boolean isAceletometerSensorAvaiable, isNotFirstTime = false;
@@ -35,6 +34,9 @@ public class ShakerFragment extends Fragment implements SensorEventListener {
     private FirebaseDBCocktails db;
 
 
+    /*all' onCreateView istanziamo il sensor manager per accedere ai sensori
+    a noi interessa l'acelerometro e appena lo riceviamo lo settiamo a disponibile
+    facciamo l'inflate del file xml dello shaker*/
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -55,6 +57,10 @@ public class ShakerFragment extends Fragment implements SensorEventListener {
     }
 
 
+    /*all'onSensorChanged abbiamo le variazioni dei parametri relativi allo spostamento
+     del cellulare all'interno di un sistema cartesiano a 3 dimensioni (x,y,z),
+     se quest'ultime variano in base al movimento del dispositivo e lo spostamento risulta essere
+     di almeno 5 unità ci sposteremo nel fragment relativo al singolo cocktail randomico*/
     @Override
     public void onSensorChanged(SensorEvent event) {
         Log.d("attivo evento 1", event.values[0] + "m/s2 su asse x");
@@ -110,11 +116,14 @@ public class ShakerFragment extends Fragment implements SensorEventListener {
         Log.d("prova", String.valueOf(isNotFirstTime));
     }
 
+    //credo si possa anche togliere
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
 
+   /* quando il fragment è nella fase onResume del suo ciclo di vita, bisogna registrare il sensore
+    al proprio listener in modo tale che sia nuovamente disponibile alla prossima chiamata*/
     @Override
     public void onResume() {
         super.onResume();
@@ -124,6 +133,9 @@ public class ShakerFragment extends Fragment implements SensorEventListener {
         }
     }
 
+    /* quando il fragment è nella fase onPause del suo ciclo di vita, bisogna rilasciare il sensore
+   al proprio listener in modo tale che non sprechi batteria inutilmente visto che rimarrebbe inutilizato
+    essendo il fragment appunto in onPause*/
     @Override
     public void onPause() {
         super.onPause();
