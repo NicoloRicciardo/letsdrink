@@ -14,15 +14,26 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import it.unimib.letsdrink.R;
 import it.unimib.letsdrink.domain.Cocktail;
+import it.unimib.letsdrink.ui.favorites.FirebaseDBFavorites;
 
 public class CocktailItemView extends RecyclerView.ViewHolder {
 
@@ -31,6 +42,8 @@ public class CocktailItemView extends RecyclerView.ViewHolder {
     private Context context;
     private ImageButton imgBtn;
     private FirebaseUser currentUser;
+    //List<Cocktail> listOfFavoritesCocktails;
+    FirebaseDBFavorites db;
     int color = 0;
 
     CocktailItemView(ViewGroup parent, final CocktailAdapter.OnItemClickListener listener, Context context) {
@@ -41,6 +54,9 @@ public class CocktailItemView extends RecyclerView.ViewHolder {
         image = itemView.findViewById(R.id.image_cocktail);
         imgBtn = itemView.findViewById(R.id.love_cocktail_card);
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        String id = currentUser.getUid();
+        db = new FirebaseDBFavorites(id);
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,8 +73,7 @@ public class CocktailItemView extends RecyclerView.ViewHolder {
         imgBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-                if (firebaseUser != null) {
+                if (currentUser != null) {
                     if (listener != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
@@ -85,11 +100,26 @@ public class CocktailItemView extends RecyclerView.ViewHolder {
                 }
             }
         });
+
     }
 
     void bind(Cocktail cocktail) {
         name.setText(cocktail.getName());
         Glide.with(context).load(cocktail.getImageUrl()).into(image);
+        db.readCocktails(new FirebaseDBFavorites.DataStatus() {
+            @Override
+            public void dataIsLoaded(List<Cocktail> cocktailList) {
+                for(int i = 0; i < cocktailList.size(); i++){
+                    if(cocktailList.get(i).getName().equals(cocktail.getName())){
+                        imgBtn.setImageResource(R.drawable.ic_favorites_black_24dp);
+                        imgBtn.setColorFilter(Color.RED);
+                        color = 1;
+                    }
+                }
+            }
+        });
+
+
     }
 
 }

@@ -79,8 +79,6 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
                                 listValueDrinks[i] = true;
 
                         }
-                        /*drinkFilter(listValueDrinks[0], listValueDrinks[1], listValueDrinks[2], listValueDrinks[3], listValueDrinks[4],
-                                listValueDrinks[5], listValueDrinks[6], listValueDrinks[7], listValueDrinks[8], listValueDrinks[9]);*/
                         drinkFilterArray(listValueDrinks);
                         cocktailAdapter.setListOfCocktails(cocktailsListFiltered);
                         recyclerView.getRecycledViewPool().clear();
@@ -164,11 +162,8 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
 
 
     @Override
-    /*public void okButtonClick(boolean valueAnanas, boolean valueArancia, boolean valueCognac, boolean valueGin, boolean valueLime,
-                              boolean valueMenta, boolean valuePesca, boolean valueRum, boolean valueSoda, boolean valueVodka) {*/
     public void okButtonClick(boolean[] modeDrinks) {
         filtri = false;
-        //drinkFilter(valueAnanas, valueArancia, valueCognac, valueGin, valueLime, valueMenta, valuePesca, valueRum, valueSoda, valueVodka);
         drinkFilterArray(modeDrinks);
         saveFiltri();
         if (!filtri) {
@@ -221,32 +216,4 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
         editor.putBoolean("FiltriBoolean", filtri);
         editor.apply();
     }
-
-   /* private void drinkFilter(boolean valueAnanas, boolean valueArancia, boolean valueCognac, boolean valueGin, boolean valueLime, boolean valueMenta, boolean valuePesca,
-                             boolean valueRum, boolean valueSoda, boolean valueVodka) {
-        for (int cont = 0; cont < cocktailList.size(); cont++) {
-            final Cocktail cocktail = cocktailList.get(cont);
-            ArrayList<String> ingredients = cocktailList.get(cont).getIngredients();
-            for (int i = 0; i < ingredients.size(); i++) {
-                if ((valueAnanas && ingredients.get(i).contains("Ananas")) ||
-                        (valueArancia && ingredients.get(i).contains("Arancia")) ||
-                        (valueCognac && ingredients.get(i).contains("Cognac")) ||
-                        (valueGin && ingredients.get(i).contains("Gin")) ||
-                        (valueLime && ingredients.get(i).contains("Lime")) ||
-                        (valueMenta && ingredients.get(i).contains("Menta")) ||
-                        (valuePesca && ingredients.get(i).contains("Pesca")) ||
-                        (valueRum && ingredients.get(i).contains("Rum")) ||
-                        (valueSoda && ingredients.get(i).contains("Soda")) ||
-                        (valueVodka && ingredients.get(i).contains("Vodka"))
-                ) {
-                    if (!(cocktailsListFiltered.contains(cocktail))) {
-                        cocktailsListFiltered.add(cocktail);
-                        filtri = true;
-                    }
-                }
-            }
-        }
-    }*/
-
-
 }

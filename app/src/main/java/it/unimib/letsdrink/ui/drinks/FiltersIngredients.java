@@ -24,7 +24,6 @@ import it.unimib.letsdrink.R;
 
 public class FiltersIngredients extends DialogFragment {
 
-    private boolean modeAnanas, modeArancia, modeCognac, modeGin, modeLime, modeMenta, modePesca, modeRum, modeSoda, modeVodka;
     private boolean[] filtri;
     private static FilterInterface filter;
     SwitchMaterial sAnanas, sArancia, sCognac, sGin, sLime, sMenta, sPesca, sRum, sSoda, sVodka;
@@ -66,16 +65,6 @@ public class FiltersIngredients extends DialogFragment {
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        /*setModeAnanas(sAnanas.isChecked());
-                        setModeArancia(sArancia.isChecked());
-                        setModeCognac(sCognac.isChecked());
-                        setModeGin(sGin.isChecked());
-                        setModeLime(sLime.isChecked());
-                        setModeMenta(sMenta.isChecked());
-                        setModePesca(sPesca.isChecked());
-                        setModeRum(sRum.isChecked());
-                        setModeSoda(sSoda.isChecked());
-                        setModeVodka(sVodka.isChecked());*/
                         filtri[0] = sAnanas.isChecked();
                         filtri[1] = sArancia.isChecked();
                         filtri[2] = sCognac.isChecked();
@@ -89,9 +78,6 @@ public class FiltersIngredients extends DialogFragment {
                         setFiltri(filtri);
                         saveToogle();
                         dialog.dismiss();
-                        /*filter.okButtonClick(isModeAnanas(), isModeArancia(), isModeCognac(),
-                                isModeGin(), isModeLime(), isModeMenta(), isModePesca(), isModeRum(),
-                                isModeSoda(), isModeVodka()); */
                         filter.okButtonClick(getFiltri());
                     }
                 })
@@ -191,84 +177,4 @@ public class FiltersIngredients extends DialogFragment {
     public void setFiltri(boolean[] filtri) {
         this.filtri = filtri;
     }
-
-    /*public boolean isModeAnanas() {
-        return modeAnanas;
-    }
-
-    public void setModeAnanas(boolean modeAnanas) {
-        this.modeAnanas = modeAnanas;
-    }
-
-    public boolean isModeArancia() {
-        return modeArancia;
-    }
-
-    public void setModeArancia(boolean modeArancia) {
-        this.modeArancia = modeArancia;
-    }
-
-    public boolean isModeCognac() {
-        return modeCognac;
-    }
-
-    public void setModeCognac(boolean modeCognac) {
-        this.modeCognac = modeCognac;
-    }
-
-    public boolean isModeGin() {
-        return modeGin;
-    }
-
-    public void setModeGin(boolean modeGin) {
-        this.modeGin = modeGin;
-    }
-
-    public boolean isModeLime() {
-        return modeLime;
-    }
-
-    public void setModeLime(boolean modeLime) {
-        this.modeLime = modeLime;
-    }
-
-    public boolean isModeMenta() {
-        return modeMenta;
-    }
-
-    public void setModeMenta(boolean modeMenta) {
-        this.modeMenta = modeMenta;
-    }
-
-    public boolean isModePesca() {
-        return modePesca;
-    }
-
-    public void setModePesca(boolean modePesca) {
-        this.modePesca = modePesca;
-    }
-
-    public boolean isModeRum() {
-        return modeRum;
-    }
-
-    public void setModeRum(boolean modeRum) {
-        this.modeRum = modeRum;
-    }
-
-    public boolean isModeSoda() {
-        return modeSoda;
-    }
-
-    public void setModeSoda(boolean modeSoda) {
-        this.modeSoda = modeSoda;
-    }
-
-    public boolean isModeVodka() {
-        return modeVodka;
-    }
-
-    public void setModeVodka(boolean modeVodka) {
-        this.modeVodka = modeVodka;
-    }*/
 }
