@@ -6,7 +6,8 @@
     android:layout_height="200dp"
     android:layout_margin="5dp"
     card_view:cardCornerRadius="8dp"
-    card_view:cardElevation="2dp">
+    card_view:cardElevation="2dp"
+    android:backgroundTint="@color/bar_black">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -23,13 +24,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_weight="1.0"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                android:contentDescription="TODO" />
 
             <TextView
                 android:id="@+id/text_cocktail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
+                android:textColor="@color/light_gray"
+                android:layout_marginStart="4dp"
                 android:layout_marginBottom="4dp" />
 
         </LinearLayout>
@@ -40,7 +43,9 @@
             android:layout_height="54dp"
             android:background="@null"
             android:src="@drawable/ic_heart_black_line_24_dp"
-            android:layout_gravity="end" />
+            android:layout_gravity="end"
+            android:contentDescription="TODO"
+            card_view:tint="@color/white" />
 
     </FrameLayout>
 

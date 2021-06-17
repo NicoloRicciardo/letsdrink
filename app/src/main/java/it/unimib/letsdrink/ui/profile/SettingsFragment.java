@@ -70,7 +70,7 @@ public class SettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        ActionBar actionBar= ((AppCompatActivity) requireActivity()).getSupportActionBar();
+        ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
         actionBar.setTitle("Impostazioni");
 
         return inflater.inflate(R.layout.fragment_settings, container, false);
@@ -80,7 +80,7 @@ public class SettingsFragment extends Fragment {
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mFirestore= FirebaseFirestore.getInstance();
+        mFirestore = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         firebaseUser = mAuth.getCurrentUser();
         documentReference = mFirestore.collection("Utenti").document(firebaseUser.getUid());
@@ -107,11 +107,11 @@ public class SettingsFragment extends Fragment {
                         .setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                if(!resetUsername.getText().toString().isEmpty()) {
+                                if (!resetUsername.getText().toString().isEmpty()) {
                                     HashMap<String, Object> edited = new HashMap<>();
                                     edited.put("userName", resetUsername.getText().toString());
                                     documentReference.update(edited);
-                                }else{
+                                } else {
                                     Toast.makeText(getContext(), "Error! Empty", Toast.LENGTH_SHORT).show();
                                 }
 
@@ -161,11 +161,11 @@ public class SettingsFragment extends Fragment {
         btnAboutUs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new MaterialAlertDialogBuilder(requireActivity(), R.style.DialogTheme)
+                new MaterialAlertDialogBuilder(requireActivity(), R.style.AlertDialogTheme)
                         .setTitle("About us")
                         .setMessage("L'applicazione mostra i cocktail")
                         .setPositiveButton("OK", null)
-                        .setBackground(new ColorDrawable(Color.TRANSPARENT))
+                        /*.setBackground(new ColorDrawable(Color.TRANSPARENT))*/
                         .show();
             }
         });
@@ -174,11 +174,11 @@ public class SettingsFragment extends Fragment {
         btnPrivacy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new MaterialAlertDialogBuilder(requireActivity(), R.style.DialogTheme)
+                new MaterialAlertDialogBuilder(requireActivity(), R.style.AlertDialogTheme)
                         .setTitle("Privacy Policy")
                         .setMessage("Informazioni sulla raccolta e diffusione dei dati")
                         .setPositiveButton("OK", null)
-                        .setBackground(new ColorDrawable(Color.TRANSPARENT))
+                        /*.setBackground(new ColorDrawable(Color.TRANSPARENT))*/
                         .show();
             }
         });
@@ -188,8 +188,18 @@ public class SettingsFragment extends Fragment {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mAuth.signOut();
-                goOnLogin();
+                new MaterialAlertDialogBuilder(requireActivity(), R.style.AlertDialogTheme)
+                        .setTitle("Effettuare il logout")
+                        .setMessage("Sei sicuro di voler effettuare il logout?")
+                        .setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mAuth.signOut();
+                                goOnLogin();
+                            }
+                        })
+                        .setNegativeButton("Esci", null)
+                        .show();
             }
         });
 
@@ -200,7 +210,6 @@ public class SettingsFragment extends Fragment {
                 new MaterialAlertDialogBuilder(requireActivity(), R.style.AlertDialogTheme)
                         .setTitle("Elimina Account")
                         .setMessage("Sei sicuro di voler eliminare il tuo account?")
-                        //.setBackground(getResources().getDrawable(R.drawable."", null))
                         .setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -212,7 +221,6 @@ public class SettingsFragment extends Fragment {
                         .show();
             }
         });
-
     }
 
     private void goOnLogin() {
@@ -223,8 +231,8 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 1000) {
-            if(resultCode == Activity.RESULT_OK) {
+        if (requestCode == 1000) {
+            if (resultCode == Activity.RESULT_OK) {
                 Uri imageUri = data.getData();
 
                 uploadImageToFirebase(imageUri);
@@ -234,7 +242,7 @@ public class SettingsFragment extends Fragment {
 
     private void uploadImageToFirebase(Uri imageUri) {
         // upload image to firebase storage
-        StorageReference fileRef = storageReference.child("UserImage/"+ mAuth.getCurrentUser().getUid() +"/profile.jpg");
+        StorageReference fileRef = storageReference.child("UserImage/" + mAuth.getCurrentUser().getUid() + "/profile.jpg");
         fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {

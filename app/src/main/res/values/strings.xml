@@ -51,7 +51,7 @@
     <string name="settings_button_change_password">Modifica password</string>
     <string name="settings_category_info">Informazioni</string>
     <string name="settings_image_about">about us</string>
-    <string name="settings_button_about">About us</string>
+    <string name="settings_button_about">About Let\'s Drink</string>
     <string name="settings_image_privacy">lock</string>
     <string name="settings_button_privacy">Privacy</string>
     <string name="settings_image_version">versione</string>
@@ -74,6 +74,20 @@
     <string name="value_custom_drink_method">Inserisci il procedimento…</string>
     <string name="image_description_custom_drink_done">Finito il drink</string>
 
+    <!--Detail image-->
+    <string name="value_ingredients">Ingredienti</string>
+    <string name="value_method">Procedimento</string>
+    <string name="value_description_image">Immagine drink</string>
+
+    <!--Default custom drinks images
+    <string name="default_custom_drink_name_blue">https://firebasestorage.googleapis.com/v0/b/let-s-drink-5630b.appspot.com/o/UserImage%2FDefaultImage%2Fdefault_custom_drink_blue.png?alt=media&token=628fbc6e-6331-4b0d-9e1e-a1beee2a53eb</string>
+    <string name="default_custom_drink_name_light_blue"></string>
+    <string name="default_custom_drink_name_purple"></string>
+    <string name="default_custom_drink_name_red"></string>
+    <string name="default_custom_drink_name_dark_blue"></string>
+    <string name="default_custom_drink_name_fuchsia"></string>
+    <string name="default_custom_drink_name_grey"></string>
+    <string name="default_custom_drink_name_light_purple"></string>-->
 
     <string name="ricerca_cocktail">Cerca Cocktail...</string>
     <string name="shaker_string">Scuoti il telefono e ottieni un cocktail</string>

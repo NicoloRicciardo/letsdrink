@@ -145,7 +145,7 @@ public class LoginFragment extends Fragment {
             public void onClick(View v) {
                 EditText resetEmail = new EditText(getActivity());
 
-                new MaterialAlertDialogBuilder(requireActivity(), R.style.DialogTheme)
+                new MaterialAlertDialogBuilder(requireActivity(), R.style.AlertDialogTheme)
                         .setTitle("Reset Password?")
                         .setMessage("Inserisci la tua Email per ricevere il link di reset.")
                         .setView(resetEmail)
@@ -221,16 +221,6 @@ public class LoginFragment extends Fragment {
             }
         });
 
-        
-        /*CircleImageView profileImage = view.findViewById(R.id.image_profile);
-        StorageReference profileRef = FirebaseStorage.getInstance().getReference()
-                .child("UserImage/" + mAuth.getCurrentUser().getUid() + "/profile.jpg");
-        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).into(profileImage);
-            }
-        });*/
     }
 
     @Override
@@ -302,12 +292,15 @@ public class LoginFragment extends Fragment {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 // Google Sign In was successful, authenticate with Firebase
+                Log.d(TAG, "entrato nel try");
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
                 firebaseAuthWithGoogle(account.getIdToken());
+                Log.d(TAG, "fine try");
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e);
+                Log.d(TAG,"error " + e);
             }
         }
     }

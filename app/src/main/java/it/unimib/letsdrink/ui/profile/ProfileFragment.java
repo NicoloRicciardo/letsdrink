@@ -3,6 +3,7 @@ package it.unimib.letsdrink.ui.profile;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -25,6 +26,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -149,16 +151,25 @@ public class ProfileFragment extends Fragment {
 
                         @Override
                         public void onDeleteClick(int position, View v) {
-
-                            db.deleteCustomDrink(listOfCustomDrink.get(position), new FirebaseDBCustomDrink.DataStatus() {
-                                @Override
-                                public void dataIsLoaded(List<Cocktail> listOfCustomDrinkCocktail) {
-                                    customDrinkAdapter.setListOfCocktails(listOfCustomDrinkCocktail);
-                                    recyclerView.getRecycledViewPool().clear();
-                                    customDrinkAdapter.notifyDataSetChanged();
-                                    Navigation.findNavController(getView()).navigate(R.id.action_profileFragment_self);
-                                }
-                            });
+                            new MaterialAlertDialogBuilder(requireActivity(), R.style.AlertDialogTheme)
+                                    .setTitle("Eliminare il drink")
+                                    .setMessage("Sei sicuro di voler eliminare il tuo drink?/nÈ un'azione irreversibile.")
+                                    .setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            db.deleteCustomDrink(listOfCustomDrink.get(position), new FirebaseDBCustomDrink.DataStatus() {
+                                                @Override
+                                                public void dataIsLoaded(List<Cocktail> listOfCustomDrinkCocktail) {
+                                                    customDrinkAdapter.setListOfCocktails(listOfCustomDrinkCocktail);
+                                                    recyclerView.getRecycledViewPool().clear();
+                                                    customDrinkAdapter.notifyDataSetChanged();
+                                                    Navigation.findNavController(getView()).navigate(R.id.action_profileFragment_self);
+                                                }
+                                            });
+                                        }
+                                    })
+                                    .setNegativeButton("Esci", null)
+                                    .show();
                         }
                     });
                 }

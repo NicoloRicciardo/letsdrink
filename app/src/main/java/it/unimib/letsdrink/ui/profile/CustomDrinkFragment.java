@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -36,6 +37,7 @@ import com.google.firebase.storage.UploadTask;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import it.unimib.letsdrink.R;
 import it.unimib.letsdrink.domain.Cocktail;
@@ -104,10 +106,9 @@ public class CustomDrinkFragment extends Fragment {
         mNameCustomDrink = view.findViewById(R.id.edit_text_custom_drink_name);
         mMethodCustomDrink = view.findViewById(R.id.edit_text_custom_drink_method);
 
-        //TODO settare cambio immagine
-        mCustomDrink.setImageUrl("");
-
         mCustomDrinkImage = view.findViewById(R.id.image_custom_drink_added_from_user);
+
+        setDefaultCustomDrinkImage();
 
         mSetDrinkPhoto = view.findViewById(R.id.image_custom_drink_camera);
         mSetDrinkPhoto.setOnClickListener(new View.OnClickListener() {
@@ -236,6 +237,63 @@ public class CustomDrinkFragment extends Fragment {
                 Toast.makeText(getContext(), "Immagine NON caricata", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void setDefaultCustomDrinkImage() {
+        Random random = new Random();
+        int ranNum = random.nextInt(8);
+        switch(ranNum) {
+            case 0:
+                //blue
+                mCustomDrink.setImageUrl("https://firebasestorage.googleapis.com/v0/b/let-s-" +
+                        "drink-5630b.appspot.com/o/UserImage%2FDefaultImage%2Fdefault_custom" +
+                        "_drink_blue.png?alt=media&token=628fbc6e-6331-4b0d-9e1e-a1beee2a53eb");
+                break;
+            case 1:
+                //light_blue
+                mCustomDrink.setImageUrl("https://firebasestorage.googleapis.com/v0/b/let-s-" +
+                        "drink-5630b.appspot.com/o/UserImage%2FDefaultImage%2Fdefault" +
+                        "_custom_drink_lightblue.png?alt=media&token=cacdd010" +
+                        "-5e2e-4534-8879-2903e5c4d80d");
+                break;
+            case 2:
+                //dark_blue
+                mCustomDrink.setImageUrl("https://firebasestorage.googleapis.com/v0/b/let-s" +
+                        "-drink-5630b.appspot.com/o/UserImage%2FDefaultImage%2Fdefault_custom" +
+                        "_drink_darkblue.png?alt=media&token=0aae353f-4f5e-4552-9154-f728d2750acd");
+                break;
+            case 3:
+                //purple
+                mCustomDrink.setImageUrl("https://firebasestorage.googleapis.com/v0/b/let-s" +
+                        "-drink-5630b.appspot.com/o/UserImage%2FDefaultImage%2Fdefault_custom" +
+                        "_drink_purple.png?alt=media&token=d5ea1ca6-8281-4f7a-a1f1-38ca9ec86731");
+                break;
+            case 4:
+                //light_purple
+                mCustomDrink.setImageUrl("https://firebasestorage.googleapis.com/v0/b/let-s" +
+                        "-drink-5630b.appspot.com/o/UserImage%2FDefaultImage%2Fdefault" +
+                        "_custom_drink_lightpurple.png?alt=media&token=076a6879" +
+                        "-5b42-4c38-a57b-1a0d1f9422f2");
+                break;
+            case 5:
+                //red
+                mCustomDrink.setImageUrl("https://firebasestorage.googleapis.com/v0/b/let-s" +
+                        "-drink-5630b.appspot.com/o/UserImage%2FDefaultImage%2Fdefault_custom" +
+                        "_drink_red.png?alt=media&token=abe5e5ca-a5cb-4419-bea0-7fc9c5c7dcd4");
+                break;
+            case 6:
+                //green
+                mCustomDrink.setImageUrl("https://firebasestorage.googleapis.com/v0/b/let-s" +
+                        "-drink-5630b.appspot.com/o/UserImage%2FDefaultImage%2Fdefault_custom" +
+                        "_drink_green.png?alt=media&token=814f471c-b60e-4a23-87d3-ebcad56f7c97");
+                break;
+            case 7:
+                //grey
+                mCustomDrink.setImageUrl("https://firebasestorage.googleapis.com/v0/b/let-s" +
+                        "-drink-5630b.appspot.com/o/UserImage%2FDefaultImage%2Fdefault_custom" +
+                        "_drink_grey.png?alt=media&token=cb201cb6-6558-4bac-bbbc-eafedea611d2");
+                break;
+        }
     }
 
 }

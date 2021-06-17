@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -27,7 +28,7 @@ import it.unimib.letsdrink.ui.profile.CustomDrinkDetailFragment;
 import it.unimib.letsdrink.ui.profile.FirebaseDBCustomDrink;
 
 public class FavoritesFragment extends Fragment {
-    private TextView mNoFav;
+    private TextView mNoFav, mNotLogged;
     private CocktailAdapter mFavoriteCocktailAdapter;
 
     public static FavoritesFragment newInstance() {
@@ -46,45 +47,52 @@ public class FavoritesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mNoFav = view.findViewById(R.id.text_favorites_none);
+        mNotLogged = view.findViewById(R.id.text_favorites_not_logged);
         RecyclerView recyclerView = view.findViewById(R.id.favorites_recycler);
 
-        FirebaseDBFavorites db = new FirebaseDBFavorites(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        //TODO crashava altrimenti senza questo if
+        if(firebaseUser != null) {
+            FirebaseDBFavorites db = new FirebaseDBFavorites(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-        db.readCocktails(new FirebaseDBFavorites.DataStatus() {
-            @Override
-            public void dataIsLoaded(List<Cocktail> listOfFavorites) {
-                if(listOfFavorites.size() == 0) {
-                    mNoFav.setVisibility(View.VISIBLE);
-                } else {
-                    recyclerView.setVisibility(View.VISIBLE);
-                    mFavoriteCocktailAdapter = new CocktailAdapter(listOfFavorites, getContext());
-                    recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-                    recyclerView.setAdapter(mFavoriteCocktailAdapter);
+            db.readCocktails(new FirebaseDBFavorites.DataStatus() {
+                @Override
+                public void dataIsLoaded(List<Cocktail> listOfFavorites) {
+                    if(listOfFavorites.size() == 0) {
+                        mNoFav.setVisibility(View.VISIBLE);
+                    } else {
+                        recyclerView.setVisibility(View.VISIBLE);
+                        mFavoriteCocktailAdapter = new CocktailAdapter(listOfFavorites, getContext());
+                        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+                        recyclerView.setAdapter(mFavoriteCocktailAdapter);
 
-                    mFavoriteCocktailAdapter.setOnItemClickListener(new CocktailAdapter.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(int position, View v) {
-                            Fragment cocktailDetail = CustomDrinkDetailFragment.newInstance(listOfFavorites.get(position).getName(), listOfFavorites.get(position).getMethod(),
-                                    listOfFavorites.get(position).getIngredients(), listOfFavorites.get(position).getImageUrl());
-                            Navigation.findNavController(getView()).navigate(R.id.action_navigation_favorites_to_cocktailDetailFragment);
-                        }
+                        mFavoriteCocktailAdapter.setOnItemClickListener(new CocktailAdapter.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(int position, View v) {
+                                Fragment cocktailDetail = CustomDrinkDetailFragment.newInstance(listOfFavorites.get(position).getName(), listOfFavorites.get(position).getMethod(),
+                                        listOfFavorites.get(position).getIngredients(), listOfFavorites.get(position).getImageUrl());
+                                Navigation.findNavController(getView()).navigate(R.id.action_navigation_favorites_to_cocktailDetailFragment);
+                            }
 
-                        @Override
-                        public void onSaveClick(int position, View v) {
-                            db.deleteFavoriteCocktail(listOfFavorites.get(position), new FirebaseDBFavorites.DataStatus() {
-                                @Override
-                                public void dataIsLoaded(List<Cocktail> listOfFavoritesCocktail) {
-                                    mFavoriteCocktailAdapter.setListOfCocktails(listOfFavoritesCocktail);
-                                    recyclerView.getRecycledViewPool().clear();
-                                    mFavoriteCocktailAdapter.notifyDataSetChanged();
-                                    Navigation.findNavController(getView()).navigate(R.id.action_navigation_favorites_self);
-                                }
-                            });
-                        }
-                    });
+                            @Override
+                            public void onSaveClick(int position, View v) {
+                                db.deleteFavoriteCocktail(listOfFavorites.get(position), new FirebaseDBFavorites.DataStatus() {
+                                    @Override
+                                    public void dataIsLoaded(List<Cocktail> listOfFavoritesCocktail) {
+                                        mFavoriteCocktailAdapter.setListOfCocktails(listOfFavoritesCocktail);
+                                        recyclerView.getRecycledViewPool().clear();
+                                        mFavoriteCocktailAdapter.notifyDataSetChanged();
+                                        Navigation.findNavController(getView()).navigate(R.id.action_navigation_favorites_self);
+                                    }
+                                });
+                            }
+                        });
+                    }
+
                 }
-
-            }
-        });
+            });
+        } else {
+            mNotLogged.setVisibility(View.VISIBLE);
+        }
     }
 }

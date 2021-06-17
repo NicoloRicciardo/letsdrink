@@ -60,15 +60,13 @@ public class CustomDrinkDetailFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_custom_drink_detail, container, false);
         ActionBar actionBar= ((AppCompatActivity) requireActivity()).getSupportActionBar();
-        actionBar.setTitle("");
+        actionBar.setTitle(name);
         setHasOptionsMenu(true);
 
-        TextView txtName = root.findViewById(R.id.cocktail_custom_drink_detail_name);
         TextView txtIngredients = root.findViewById(R.id.cocktail_custom_drink_detail_ingredients);
         TextView txtMethod = root.findViewById((R.id.cocktail_custom_drink_detail_method));
         ImageView img = root.findViewById(R.id.cocktail_custom_drink_detail_image);
 
-        txtName.setText(name);
         txtIngredients.setText(ingredienti);
         txtMethod.setText(method);
         Glide.with(getContext()).load(imageUrl).into(img);

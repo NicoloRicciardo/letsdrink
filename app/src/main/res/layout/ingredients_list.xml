@@ -18,7 +18,7 @@
         android:textColorHint="@color/light_gray"
         android:textAlignment="viewStart"
         android:textColor="@color/white"
-        android:maxLength="20"
+        android:maxLength="35"
         android:singleLine="true"
         android:background="@drawable/bg_edit_text"
         android:layout_marginStart="30dp"

@@ -18,5 +18,6 @@
     <color name="background_black">#151515</color>
     <color name="bar_black">#272727</color>
     <color name="light_gray">#BCBDBD</color>
+    <color name="gray">#989898</color>
 
 </resources>

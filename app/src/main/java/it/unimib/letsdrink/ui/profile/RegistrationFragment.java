@@ -12,14 +12,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -131,7 +135,7 @@ public class RegistrationFragment extends Fragment {
                 user.setAge(Objects.requireNonNull(mAge.getText()).toString().trim());
                 user.setEmail(Objects.requireNonNull(mEmail.getText()).toString().trim());
 
-                if(controlRegistrationFields()) {
+                if (controlRegistrationFields()) {
                     signUpNormal();
                 }
             }
@@ -140,24 +144,6 @@ public class RegistrationFragment extends Fragment {
         mButtonGoToLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Fragment fr = new LoginFragment();
-                FragmentChangeListener fc = (FragmentChangeListener)getActivity();
-                assert fc != null;
-                fc.replaceFragment(fr);*/
-
-                /*Fragment fragment = new LoginFragment();
-                FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.fragment_registration, fragment);
-                ft.commit();*/
-
-                /*FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.navigation_profile, new LoginFragment()).addToBackStack("accreg").commit();*/
-
-                /*LoginFragment loginFragment = new LoginFragment();
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.container, loginFragment);
-                fragmentTransaction.commit();*/
-
                 Navigation.findNavController(getView()).navigate(R.id.action_registrationFragment_to_navigation_profile);
             }
         });
@@ -218,7 +204,7 @@ public class RegistrationFragment extends Fragment {
         if (mPassword != null && Objects.requireNonNull(mPassword.getText()).toString().trim().length() < 6) {
             password = false;
             mLayoutPassword.setError(getText(R.string.error_password_min));
-        } else if (mPassword != null && !(Objects.requireNonNull(mPassword.getText()).toString().trim().isEmpty())){
+        } else if (mPassword != null && !(Objects.requireNonNull(mPassword.getText()).toString().trim().isEmpty())) {
             password = true;
             mLayoutPassword.setError(null);
         } else {
@@ -227,7 +213,7 @@ public class RegistrationFragment extends Fragment {
         }
 
         if (mConfirmPassword != null && !(Objects.requireNonNull(mConfirmPassword.getText()).toString().trim().isEmpty())) {
-            if(mConfirmPassword.getText().toString().trim().equals(Objects.requireNonNull(mPassword.getText()).toString().trim())) {
+            if (mConfirmPassword.getText().toString().trim().equals(Objects.requireNonNull(mPassword.getText()).toString().trim())) {
                 confirmPassword = true;
                 mLayoutConfirmPassword.setError(null);
             } //TODO settare errore
@@ -240,7 +226,7 @@ public class RegistrationFragment extends Fragment {
 
     private void signUpNormal() {
         mAuth.createUserWithEmailAndPassword(Objects
-                .requireNonNull(mEmail.getText()).toString().trim(),
+                        .requireNonNull(mEmail.getText()).toString().trim(),
                 Objects.requireNonNull(mPassword.getText()).toString().trim())
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
@@ -251,6 +237,9 @@ public class RegistrationFragment extends Fragment {
                             storeData();
                             goOnProfile();
                         } else {
+                            if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                                Toast.makeText(getContext(), "Email già in uso!", Toast.LENGTH_SHORT).show();
+                            }
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                         }
@@ -264,7 +253,7 @@ public class RegistrationFragment extends Fragment {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null) {
+        if (currentUser != null) {
             goOnProfile();
         }
     }
@@ -313,7 +302,7 @@ public class RegistrationFragment extends Fragment {
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }*/
 
-    private void goOnProfile(){
+    private void goOnProfile() {
         /*FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fragment_registration, new ProfileFragment()).commit();*/
         Navigation.findNavController(getView())

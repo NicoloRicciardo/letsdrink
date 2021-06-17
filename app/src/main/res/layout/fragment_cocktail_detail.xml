@@ -5,61 +5,72 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/black"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/cocktail_detail_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:textColor="@color/white"
-            android:layout_marginTop="16dp"
-            android:gravity="center"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <ImageView
             android:id="@+id/cocktail_detail_image"
-            android:layout_width="222dp"
-            android:layout_height="270dp"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
             android:layout_alignParentStart="true"
-            android:layout_margin="0dp"
-            android:layout_marginTop="16dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:scaleType="fitCenter"
+            android:layout_marginTop="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cocktail_detail_name"
-            tools:ignore="ContentDescription" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/value_description_image" />
+
+        <TextView
+            android:id="@+id/cocktail_detail_ingredients_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/value_ingredients"
+            android:textColor="@color/lipstick_fuchsia"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/cocktail_detail_image"
+            app:layout_constraintStart_toStartOf="@id/cocktail_detail_image"
+            app:layout_constraintTop_toBottomOf="@id/cocktail_detail_image" />
 
         <TextView
             android:id="@+id/cocktail_detail_ingredients"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginStart="16dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:textSize="16sp"
             android:textColor="@color/white"
-            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="@+id/cocktail_detail_ingredients_title"
+            app:layout_constraintStart_toStartOf="@id/cocktail_detail_ingredients_title"
+            app:layout_constraintTop_toBottomOf="@+id/cocktail_detail_ingredients_title" />
+
+        <TextView
+            android:id="@+id/cocktail_detail_method_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cocktail_detail_image" />
+            android:textColor="@color/lipstick_fuchsia"
+            android:textSize="20sp"
+            android:text="@string/value_method"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/cocktail_detail_ingredients"
+            app:layout_constraintStart_toStartOf="@id/cocktail_detail_ingredients_title"
+            app:layout_constraintEnd_toEndOf="@id/cocktail_detail_ingredients_title" />
 
         <TextView
             android:id="@+id/cocktail_detail_method"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:gravity="center_vertical"
-            android:paddingBottom="16dp"
+            android:layout_marginTop="1dp"
+            android:textSize="16sp"
+            android:paddingBottom="30dp"
             android:textColor="@color/white"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cocktail_detail_ingredients" />
+            app:layout_constraintEnd_toEndOf="@+id/cocktail_detail_method_title"
+            app:layout_constraintStart_toStartOf="@id/cocktail_detail_method_title"
+            app:layout_constraintTop_toBottomOf="@+id/cocktail_detail_method_title" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

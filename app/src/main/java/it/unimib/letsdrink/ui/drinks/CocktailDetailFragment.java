@@ -55,14 +55,12 @@ public class CocktailDetailFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_cocktail_detail, container, false);
         ActionBar actionBar= ((AppCompatActivity) requireActivity()).getSupportActionBar();
-        actionBar.setTitle("");
+        actionBar.setTitle(name);
         setHasOptionsMenu(true);
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        TextView txtName = root.findViewById(R.id.cocktail_detail_name);
         TextView txtIngredients = root.findViewById(R.id.cocktail_detail_ingredients);
         TextView txtMethod = root.findViewById((R.id.cocktail_detail_method));
         ImageView img = root.findViewById(R.id.cocktail_detail_image);
-        txtName.setText(name);
         txtIngredients.setText(ingredienti);
         txtMethod.setText(method);
         Glide.with(getContext()).load(imageUrl).into(img);
