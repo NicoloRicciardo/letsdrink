@@ -28,7 +28,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "193135347413-cjgilkrnscgsdsn9n9j92sq6of8kr3av.apps.googleusercontent.com",
+              "client_id": "193135347413-7bq2o51nhcb6h4n3qnrqvk7mmcsb29ap.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
@@ -57,7 +57,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "193135347413-cjgilkrnscgsdsn9n9j92sq6of8kr3av.apps.googleusercontent.com",
+              "client_id": "193135347413-7bq2o51nhcb6h4n3qnrqvk7mmcsb29ap.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
@@ -73,6 +73,30 @@
       },
       "oauth_client": [
         {
+          "client_id": "193135347413-9g6ijgmqsogv302v2hh427s82qgct4a8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "it.unimib.letsdrink",
+            "certificate_hash": "bbdc0dfbcf1b73b6e72d806407cc08b2b2a837fc"
+          }
+        },
+        {
+          "client_id": "193135347413-g0mfh3258d1cv1oh0i1vhnr7snnnknpn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "it.unimib.letsdrink",
+            "certificate_hash": "81751abc008fe8c62f39c82b32ebefba464a0c00"
+          }
+        },
+        {
+          "client_id": "193135347413-s18qcdl53rldk9jjm5fr6pav456lavm3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "it.unimib.letsdrink",
+            "certificate_hash": "912951f8422874d2af6499b31de4fe67f57b3938"
+          }
+        },
+        {
           "client_id": "193135347413-cjgilkrnscgsdsn9n9j92sq6of8kr3av.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -86,7 +110,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "193135347413-cjgilkrnscgsdsn9n9j92sq6of8kr3av.apps.googleusercontent.com",
+              "client_id": "193135347413-7bq2o51nhcb6h4n3qnrqvk7mmcsb29ap.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

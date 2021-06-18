@@ -46,6 +46,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -54,6 +55,8 @@ import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -78,6 +81,7 @@ public class LoginFragment extends Fragment {
     private static final String PREFS_NAME = "PrefsFile";
 
     private FirebaseAuth mAuth;
+    private FirebaseFirestore mFirestore;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -123,7 +127,7 @@ public class LoginFragment extends Fragment {
         mPrefs = this.getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
 
         mAuth = FirebaseAuth.getInstance();
-        FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
+        mFirestore = FirebaseFirestore.getInstance();
 
         SharedPreferences sp = this.getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         if(sp.contains("pref_email")) {
@@ -314,8 +318,9 @@ public class LoginFragment extends Fragment {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
-                            /*FirebaseUser user = mAuth.getCurrentUser();
-                            goOnProfile();*/
+                            storeData();
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            goOnProfile();
                             /*FirebaseUser user = Objects.requireNonNull(task.getResult()).getUser();*/
                         } else {
                             // If sign in fails, display a message to the user.
@@ -325,6 +330,26 @@ public class LoginFragment extends Fragment {
                         }
                     }
                 });
+    }
+
+    private void storeData() {
+        /*user.setUserID(mAuth.getCurrentUser().getUid());*/
+        DocumentReference documentReference = mFirestore.collection("Utenti").document(mAuth.getCurrentUser().getUid());
+
+        String email = mAuth.getCurrentUser().getEmail();
+
+        Map<String, Object> userDB = new HashMap<>();
+        userDB.put("userName", email.substring(0,email.indexOf("@")));
+        userDB.put("age", "18");
+        userDB.put("email", email);
+        //TODO aggiungere arraylist dei custom drinks (vuoto)
+
+        documentReference.set(userDB).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d(TAG, "profilo creato su firestore");
+            }
+        });
     }
 
     private void goOnProfile(){
