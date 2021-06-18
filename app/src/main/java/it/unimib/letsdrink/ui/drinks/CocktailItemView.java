@@ -42,7 +42,6 @@ public class CocktailItemView extends RecyclerView.ViewHolder {
     private Context context;
     private ImageButton imgBtn;
     private FirebaseUser currentUser;
-    //List<Cocktail> listOfFavoritesCocktails;
     FirebaseDBFavorites db;
     int color = 0;
 
@@ -55,8 +54,10 @@ public class CocktailItemView extends RecyclerView.ViewHolder {
         imgBtn = itemView.findViewById(R.id.love_cocktail_card);
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        String id = currentUser.getUid();
-        db = new FirebaseDBFavorites(id);
+        if(currentUser != null) {
+            String id = currentUser.getUid();
+            db = new FirebaseDBFavorites(id);
+        }
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,18 +107,20 @@ public class CocktailItemView extends RecyclerView.ViewHolder {
     void bind(Cocktail cocktail) {
         name.setText(cocktail.getName());
         Glide.with(context).load(cocktail.getImageUrl()).into(image);
-        db.readCocktails(new FirebaseDBFavorites.DataStatus() {
-            @Override
-            public void dataIsLoaded(List<Cocktail> cocktailList) {
-                for(int i = 0; i < cocktailList.size(); i++){
-                    if(cocktailList.get(i).getName().equals(cocktail.getName())){
-                        imgBtn.setImageResource(R.drawable.ic_favorites_black_24dp);
-                        imgBtn.setColorFilter(Color.RED);
-                        color = 1;
+        if(currentUser != null) {
+            db.readCocktails(new FirebaseDBFavorites.DataStatus() {
+                @Override
+                public void dataIsLoaded(List<Cocktail> cocktailList) {
+                    for (int i = 0; i < cocktailList.size(); i++) {
+                        if (cocktailList.get(i).getName().equals(cocktail.getName())) {
+                            imgBtn.setImageResource(R.drawable.ic_favorites_black_24dp);
+                            imgBtn.setColorFilter(Color.RED);
+                            color = 1;
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
 
 
     }
