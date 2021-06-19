@@ -10,36 +10,27 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-
-import java.util.List;
-
 import it.unimib.letsdrink.R;
-import it.unimib.letsdrink.domain.Cocktail;
-import it.unimib.letsdrink.ui.drinks.FirebaseDBCocktails;
-import it.unimib.letsdrink.ui.drinks.CocktailDetailFragment;
-
+import it.unimib.letsdrink.firebaseDB.FirebaseDBCocktails;
+import it.unimib.letsdrink.ui.home.CocktailDetailFragment;
 
 public class ShakerFragment extends Fragment implements SensorEventListener {
     private SensorManager sensorManager;
     private Sensor acelerometerSensor;
     private boolean isAceletometerSensorAvaiable, isNotFirstTime = false;
-    private float currentX, currentY, currentZ, lastX, lastY, lastZ, xDifference, yDifference, zDifference;
-    private float shakeThreshold = 5f;
+    private float lastX;
+    private float lastY;
+    private float lastZ;
     private int random;
-    private FirebaseDBCocktails db;
-
 
     /*all' onCreateView istanziamo il sensor manager per accedere ai sensori
     a noi interessa l'acelerometro e appena lo riceviamo lo settiamo a disponibile
     facciamo l'inflate del file xml dello shaker*/
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
 
         sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
 
@@ -51,9 +42,7 @@ public class ShakerFragment extends Fragment implements SensorEventListener {
             isAceletometerSensorAvaiable = false;
         }
 
-        View root = inflater.inflate(R.layout.fragment_shaker, container, false);
-
-        return root;
+        return inflater.inflate(R.layout.fragment_shaker, container, false);
     }
 
 
@@ -67,37 +56,34 @@ public class ShakerFragment extends Fragment implements SensorEventListener {
         Log.d("attivo evento 2", event.values[1] + "m/s2 su asse y");
         Log.d("attivo evento 3", event.values[2] + "m/s2 su asse z");
 
-        currentX = event.values[0];
-        currentY = event.values[1];
-        currentZ = event.values[2];
+        float currentX = event.values[0];
+        float currentY = event.values[1];
+        float currentZ = event.values[2];
 
         if (isNotFirstTime) {
 
-            xDifference = Math.abs(lastX - currentX);
-            yDifference = Math.abs(lastY - currentY);
-            zDifference = Math.abs(lastZ - currentZ);
+            float xDifference = Math.abs(lastX - currentX);
+            float yDifference = Math.abs(lastY - currentY);
+            float zDifference = Math.abs(lastZ - currentZ);
 
             Log.d("prova", String.valueOf(xDifference));
 
+            float shakeThreshold = 5f;
             if ((xDifference > shakeThreshold && yDifference > shakeThreshold) ||
                     (xDifference > shakeThreshold && zDifference > shakeThreshold) ||
                     (yDifference > shakeThreshold && zDifference > shakeThreshold)) {
 
                 Log.d("shaker attivo", "stai shakerando");
 
-                db = new FirebaseDBCocktails();
-                db.readCocktails(new FirebaseDBCocktails.DataStatus() {
-                    @Override
-                    public void dataIsLoaded(List<Cocktail> listOfCocktails) {
-                        random = (int) (Math.random() * listOfCocktails.size());
-                        Log.d("random", listOfCocktails.get(random).getName());
+                FirebaseDBCocktails db = new FirebaseDBCocktails();
+                db.readCocktails(listOfCocktails -> {
+                    random = (int) (Math.random() * listOfCocktails.size());
+                    Log.d("random", listOfCocktails.get(random).getName());
 
-                        Fragment cocktailDetail = CocktailDetailFragment.newInstance(listOfCocktails.get(random).getName(), listOfCocktails.get(random).getMethod(),
-                                listOfCocktails.get(random).getIngredients(), listOfCocktails.get(random).getImageUrl());
-                        //Navigation.findNavController(getView()).navigate(R.id.action_navigation_shaker_to_cocktailDetailFragment);
-                        Navigation.findNavController(requireView()).navigate(R.id.action_navigation_shaker_to_cocktailDetailFragment2);
+                    Fragment cocktailDetail = CocktailDetailFragment.newInstance(listOfCocktails.get(random).getName(), listOfCocktails.get(random).getMethod(),
+                            listOfCocktails.get(random).getIngredients(), listOfCocktails.get(random).getImageUrl());
+                    Navigation.findNavController(requireView()).navigate(R.id.action_navigation_shaker_to_cocktailDetailFragment2);
 
-                    }
                 });
 
                 if (isAceletometerSensorAvaiable) {
@@ -116,7 +102,6 @@ public class ShakerFragment extends Fragment implements SensorEventListener {
         Log.d("prova", String.valueOf(isNotFirstTime));
     }
 
-    //credo si possa anche togliere
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 

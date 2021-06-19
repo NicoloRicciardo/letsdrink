@@ -79,17 +79,7 @@
     <string name="value_method">Procedimento</string>
     <string name="value_description_image">Immagine drink</string>
 
-    <!--Default custom drinks images
-    <string name="default_custom_drink_name_blue">https://firebasestorage.googleapis.com/v0/b/let-s-drink-5630b.appspot.com/o/UserImage%2FDefaultImage%2Fdefault_custom_drink_blue.png?alt=media&token=628fbc6e-6331-4b0d-9e1e-a1beee2a53eb</string>
-    <string name="default_custom_drink_name_light_blue"></string>
-    <string name="default_custom_drink_name_purple"></string>
-    <string name="default_custom_drink_name_red"></string>
-    <string name="default_custom_drink_name_dark_blue"></string>
-    <string name="default_custom_drink_name_fuchsia"></string>
-    <string name="default_custom_drink_name_grey"></string>
-    <string name="default_custom_drink_name_light_purple"></string>-->
-
-    <string name="ricerca_cocktail">Cerca Cocktail...</string>
+    <string name="ricerca_cocktail">Cerca Cocktail…</string>
     <string name="shaker_string">Scuoti il telefono e ottieni un cocktail</string>
     <string name="cerca_il_cocktail_per_ingredienti">Cerca il cocktail per ingredienti</string>
     <string name="ananas">Ananas</string>
@@ -102,6 +92,7 @@
     <string name="rum">Rum</string>
     <string name="soda_filter">Soda</string>
     <string name="vodka_filter">Vodka</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="value_description_icon">icona</string>
+    <string name="no_preferiti">Non hai ancora salvato dei preferiti!</string>
+    <string name="no_accesso">Non hai ancora effettuato l\'accesso!</string>
 </resources>

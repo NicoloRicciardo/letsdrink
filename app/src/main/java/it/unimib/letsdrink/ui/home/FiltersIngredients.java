@@ -1,26 +1,22 @@
-package it.unimib.letsdrink.ui.drinks;
+package it.unimib.letsdrink.ui.home;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.switchmaterial.SwitchMaterial;
-
 import java.util.HashSet;
 import java.util.Set;
-
 import it.unimib.letsdrink.R;
+import it.unimib.letsdrink.interfaces.FilterInterface;
 
 public class FiltersIngredients extends DialogFragment {
 
@@ -62,31 +58,23 @@ public class FiltersIngredients extends DialogFragment {
 
         return new MaterialAlertDialogBuilder(requireActivity(), R.style.DialogTheme)
                 .setView(v)
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        filtri[0] = sAnanas.isChecked();
-                        filtri[1] = sArancia.isChecked();
-                        filtri[2] = sCognac.isChecked();
-                        filtri[3] = sGin.isChecked();
-                        filtri[4] = sLime.isChecked();
-                        filtri[5] = sMenta.isChecked();
-                        filtri[6] = sPesca.isChecked();
-                        filtri[7] = sRum.isChecked();
-                        filtri[8] = sSoda.isChecked();
-                        filtri[9] = sVodka.isChecked();
-                        setFiltri(filtri);
-                        saveToogle();
-                        dialog.dismiss();
-                        filter.okButtonClick(getFiltri());
-                    }
+                .setPositiveButton("Ok", (dialog, which) -> {
+                    filtri[0] = sAnanas.isChecked();
+                    filtri[1] = sArancia.isChecked();
+                    filtri[2] = sCognac.isChecked();
+                    filtri[3] = sGin.isChecked();
+                    filtri[4] = sLime.isChecked();
+                    filtri[5] = sMenta.isChecked();
+                    filtri[6] = sPesca.isChecked();
+                    filtri[7] = sRum.isChecked();
+                    filtri[8] = sSoda.isChecked();
+                    filtri[9] = sVodka.isChecked();
+                    setFiltri(filtri);
+                    saveToogle();
+                    dialog.dismiss();
+                    filter.okButtonClick(getFiltri());
                 })
-                .setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
+                .setNegativeButton("Annulla", (dialog, which) -> dialog.dismiss())
                 .setBackground(new ColorDrawable(Color.TRANSPARENT))
                 .create();
     }

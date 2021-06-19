@@ -1,20 +1,18 @@
-package it.unimib.letsdrink.ui.drinks;
+package it.unimib.letsdrink.adapters;
 
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.List;
-
 import it.unimib.letsdrink.domain.Category;
+import it.unimib.letsdrink.ui.categories.CategoryItemView;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryItemView> {
-    private List<Category> listOfCategories;
+    private final List<Category> listOfCategories;
     private OnItemClickListener listener;
-    private Context context;
+    private final Context context;
 
     public CategoryAdapter (List<Category> listOfCategories, Context context) {
         this.listOfCategories = listOfCategories;

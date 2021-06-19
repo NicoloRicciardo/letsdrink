@@ -1,121 +1,103 @@
-package it.unimib.letsdrink.ui.drinks;
+package it.unimib.letsdrink.ui.home;
 
-
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
-
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
 import it.unimib.letsdrink.R;
 import it.unimib.letsdrink.domain.Cocktail;
-import it.unimib.letsdrink.ui.favorites.FirebaseDBFavorites;
+import it.unimib.letsdrink.adapters.CocktailAdapter;
+import it.unimib.letsdrink.interfaces.FilterInterface;
+import it.unimib.letsdrink.firebaseDB.FirebaseDBCocktails;
+import it.unimib.letsdrink.firebaseDB.FirebaseDBFavorites;
 
 public class CocktailsFragment extends Fragment implements FilterInterface {
 
-    private FirebaseDBCocktails db;
-    private View root;
     private CocktailAdapter cocktailAdapter;
     private RecyclerView recyclerView;
-    private TextView text;
     private List<Cocktail> cocktailList, cocktailsListFiltered;
-    private boolean filtri, listValueDrinks[];
+    private boolean filtri;
+    private boolean[] listValueDrinks;
     private FirebaseDBFavorites dbFav;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.fragment_cocktails, container, false);
+        View root = inflater.inflate(R.layout.fragment_cocktails, container, false);
         recyclerView = root.findViewById(R.id.cocktails_recycler);
-        text = root.findViewById(R.id.textNotFound);
 
         listValueDrinks = new boolean[10];
         cocktailsListFiltered = new ArrayList<>();
 
-        db = new FirebaseDBCocktails();
+        FirebaseDBCocktails db = new FirebaseDBCocktails();
 
-        db.readCocktails(new FirebaseDBCocktails.DataStatus() {
-            @Override
-            public void dataIsLoaded(List<Cocktail> listOfCocktails) {
-                cocktailList = listOfCocktails;
+        db.readCocktails(listOfCocktails -> {
+            cocktailList = listOfCocktails;
 
-                cocktailAdapter = new CocktailAdapter(cocktailList, getContext());
-                recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-                recyclerView.setAdapter(cocktailAdapter);
+            cocktailAdapter = new CocktailAdapter(cocktailList, getContext());
+            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+            recyclerView.setAdapter(cocktailAdapter);
 
-                SharedPreferences sharedPref = getActivity().getSharedPreferences("Filtri", Context.MODE_PRIVATE);
-                boolean drinksFiltrati = sharedPref.getBoolean("FiltriBoolean", false);
-                if (drinksFiltrati) {
-                    Set<String> checkedCheckboxSet = sharedPref.getStringSet("Filtri_selezionati", null);
-                    String[] nomiFiltri = {"Ananas", "Arancia", "Cognac", "Gin", "Lime", "Menta", "Pesca", "Rum", "Soda", "Vodka"};
-                    if (checkedCheckboxSet != null) {
-                        for (int i = 0; i < listValueDrinks.length; i++) {
-                            if (checkedCheckboxSet.contains(nomiFiltri[i]))
-                                listValueDrinks[i] = true;
+            SharedPreferences sharedPref = getActivity().getSharedPreferences("Filtri", Context.MODE_PRIVATE);
+            boolean drinksFiltrati = sharedPref.getBoolean("FiltriBoolean", false);
+            if (drinksFiltrati) {
+                Set<String> checkedCheckboxSet = sharedPref.getStringSet("Filtri_selezionati", null);
+                String[] nomiFiltri = {"Ananas", "Arancia", "Cognac", "Gin", "Lime", "Menta", "Pesca", "Rum", "Soda", "Vodka"};
+                if (checkedCheckboxSet != null) {
+                    for (int i = 0; i < listValueDrinks.length; i++) {
+                        if (checkedCheckboxSet.contains(nomiFiltri[i]))
+                            listValueDrinks[i] = true;
 
-                        }
-                        drinkFilterArray(listValueDrinks);
-                        cocktailAdapter.setListOfCocktails(cocktailsListFiltered);
-                        recyclerView.getRecycledViewPool().clear();
-                        cocktailAdapter.notifyDataSetChanged();
                     }
-                } else {
-                    cocktailAdapter.setListOfCocktails(cocktailList);
+                    drinkFilterArray(listValueDrinks);
+                    cocktailAdapter.setListOfCocktails(cocktailsListFiltered);
                     recyclerView.getRecycledViewPool().clear();
                     cocktailAdapter.notifyDataSetChanged();
                 }
-
-                cocktailAdapter.setOnItemClickListener(new CocktailAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(int position, View v) {
-                        List<Cocktail> cocktails = cocktailAdapter.getListOfCocktails();
-                        Fragment cocktailDetail = CocktailDetailFragment.newInstance(cocktails.get(position).getName(), cocktails.get(position).getMethod(),
-                                cocktails.get(position).getIngredients(), cocktails.get(position).getImageUrl());
-                        Navigation.findNavController(getView()).navigate(R.id.action_navigation_drinks_to_cocktailDetailFragment);
-
-                    }
-
-                    @Override
-                    public void onSaveClick(int position, View v) {
-                        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-                        if(firebaseUser != null){
-                            dbFav = new FirebaseDBFavorites(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                            List<Cocktail> cocktails = cocktailAdapter.getListOfCocktails();
-                            dbFav.addFavoriteCocktail(cocktails.get(position), new FirebaseDBFavorites.DataStatus() {
-                                @Override
-                                public void dataIsLoaded(List<Cocktail> cocktailList) {
-                                    //idk
-                                }
-                            });
-                        }
-                    }
-                });
+            } else {
+                cocktailAdapter.setListOfCocktails(cocktailList);
+                recyclerView.getRecycledViewPool().clear();
+                cocktailAdapter.notifyDataSetChanged();
             }
+
+            cocktailAdapter.setOnItemClickListener(new CocktailAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(int position, View v) {
+                    List<Cocktail> cocktails = cocktailAdapter.getListOfCocktails();
+                    Fragment cocktailDetail = CocktailDetailFragment.newInstance(cocktails.get(position).getName(), cocktails.get(position).getMethod(),
+                            cocktails.get(position).getIngredients(), cocktails.get(position).getImageUrl());
+                    Navigation.findNavController(getView()).navigate(R.id.action_navigation_drinks_to_cocktailDetailFragment);
+
+                }
+
+                @Override
+                public void onSaveClick(int position, View v) {
+                    FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                    if(firebaseUser != null){
+                        dbFav = new FirebaseDBFavorites(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        List<Cocktail> cocktails = cocktailAdapter.getListOfCocktails();
+                        dbFav.addFavoriteCocktail(cocktails.get(position), cocktailList -> {
+                        });
+                    }
+                }
+            });
         });
         setHasOptionsMenu(true);
         return root;
@@ -127,6 +109,7 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
         inflater.inflate(R.menu.top_menu, menu);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -148,7 +131,6 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
                         }
                         return false;
                     }
-
 
                 });
                 break;

@@ -1,13 +1,9 @@
 package it.unimib.letsdrink.domain;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.widget.ImageView;
-
 import java.util.ArrayList;
 
 /*classe relativa al cocktail generico, composto da:
-procedeimento (method), nome (name), immagine (ImageUrl) e ingredienti (ingredeints)*/
+procedimento (method), nome (name), immagine (ImageUrl) e ingredienti (ingredients)*/
 public class Cocktail {
     private String method;
     private String name;

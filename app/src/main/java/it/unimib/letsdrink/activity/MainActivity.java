@@ -1,20 +1,12 @@
 package it.unimib.letsdrink.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import it.unimib.letsdrink.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,9 +25,6 @@ public class MainActivity extends AppCompatActivity {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
-        //navController.setGraph(R.navigation.mobile_navigation);
-
-        /*AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);*/
     }
 
     @Override

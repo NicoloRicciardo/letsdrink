@@ -1,24 +1,23 @@
-package it.unimib.letsdrink.ui.drinks;
+package it.unimib.letsdrink.adapters;
 
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
 import it.unimib.letsdrink.domain.Cocktail;
+import it.unimib.letsdrink.ui.home.CocktailItemView;
 
 public class CocktailAdapter extends RecyclerView.Adapter<CocktailItemView> implements Filterable {
-    private List<Cocktail> listOfCocktails, listOfAllCocktails;
+    private List<Cocktail> listOfCocktails;
+    private final List<Cocktail> listOfAllCocktails;
     private CocktailAdapter.OnItemClickListener listener;
-    private Context context;
+    private final Context context;
     boolean noCocktailsFiltered;
 
     public CocktailAdapter(List<Cocktail> listOfCocktails, Context context) {

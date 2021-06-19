@@ -2,6 +2,7 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view_custom_drinks"
     android:layout_width="match_parent"
     android:layout_height="200dp"
@@ -24,7 +25,8 @@
                 android:layout_width="match_parent"
                 android:layout_weight="1.0"
                 android:scaleType="centerCrop"
-                android:contentDescription="TODO" />
+                android:contentDescription="@string/value_description_image"
+                tools:ignore="InefficientWeight" />
 
             <TextView
                 android:id="@+id/text_custom_drink"
@@ -41,7 +43,8 @@
             android:layout_height="54dp"
             android:background="@null"
             android:src="@drawable/ic_delete_24"
-            android:layout_gravity="end" />
+            android:layout_gravity="end"
+            android:contentDescription="@string/value_description_icon" />
 
     </FrameLayout>
 

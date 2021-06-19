@@ -1,34 +1,24 @@
-package it.unimib.letsdrink.ui.drinks;
+package it.unimib.letsdrink.ui.home;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-
 import com.bumptech.glide.Glide;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
 import java.util.ArrayList;
-
 import it.unimib.letsdrink.R;
 
 public class CocktailDetailFragment extends Fragment {
-    private static String name, method, imageUrl, ingredienti;
+    private static String name, method, imageUrl;
+    private static StringBuilder ingredienti;
     private static ArrayList<String> ingredients;
-    private FirebaseUser currentUser;
 
 
     public CocktailDetailFragment() {
@@ -40,11 +30,10 @@ public class CocktailDetailFragment extends Fragment {
         CocktailDetailFragment.method = method;
         CocktailDetailFragment.imageUrl = imageUrl;
         CocktailDetailFragment.ingredients = ingredients;
-        CocktailDetailFragment.ingredienti = "";
+        CocktailDetailFragment.ingredienti = new StringBuilder();
 
         for (int i = 0; i < ingredients.size(); i++)
-            ingredienti += CocktailDetailFragment.ingredients.get(i) + "\n";
-
+            ingredienti.append(CocktailDetailFragment.ingredients.get(i)).append("\n");
 
         return fragment;
 
@@ -57,7 +46,6 @@ public class CocktailDetailFragment extends Fragment {
         ActionBar actionBar= ((AppCompatActivity) requireActivity()).getSupportActionBar();
         actionBar.setTitle(name);
         setHasOptionsMenu(true);
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
         TextView txtIngredients = root.findViewById(R.id.cocktail_detail_ingredients);
         TextView txtMethod = root.findViewById((R.id.cocktail_detail_method));
         ImageView img = root.findViewById(R.id.cocktail_detail_image);
@@ -67,6 +55,5 @@ public class CocktailDetailFragment extends Fragment {
 
         return root;
     }
-
 
 }

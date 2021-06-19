@@ -1,91 +1,61 @@
 package it.unimib.letsdrink.ui.profile;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.navigation.Navigation;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
-
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.shobhitpuri.custombuttons.GoogleSignInButton;
-import com.squareup.picasso.Picasso;
-
-import org.jetbrains.annotations.NotNull;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 import it.unimib.letsdrink.R;
 
 public class LoginFragment extends Fragment {
 
     private static final String TAG = "LoginFragment";
-
     private static final int RC_SIGN_IN = 9001;
     private GoogleSignInClient mGoogleSignInClient;
     GoogleSignInButton googleSignInButton;
-
     private TextInputEditText mEmail;
     private TextInputEditText mPassword;
-
     private TextInputLayout mLayoutEmail;
     private TextInputLayout mLayoutPassword;
-
     private CheckBox mRememberMe;
     private SharedPreferences mPrefs;
     private static final String PREFS_NAME = "PrefsFile";
-
     private FirebaseAuth mAuth;
     private FirebaseFirestore mFirestore;
 
-    public LoginFragment() {
-        // Required empty public constructor
-    }
+    public LoginFragment() { }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -95,7 +65,6 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
         createRequest();
 
@@ -132,11 +101,11 @@ public class LoginFragment extends Fragment {
         SharedPreferences sp = this.getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         if(sp.contains("pref_email")) {
             String u = sp.getString("pref_email", "not found");
-            mEmail.setText(u.toString());
+            mEmail.setText(u);
         }
         if(sp.contains("pref_password")) {
             String a = sp.getString("pref_password", "not found");
-            mPassword.setText(a.toString());
+            mPassword.setText(a);
         }
         if(sp.contains("pref_check")) {
             boolean b = sp.getBoolean("pref_check", false);
@@ -144,86 +113,59 @@ public class LoginFragment extends Fragment {
         }
 
         Button buttonForgotPassword = view.findViewById(R.id.button_login_forgot_password);
-        buttonForgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditText resetEmail = new EditText(getActivity());
+        buttonForgotPassword.setOnClickListener(v -> {
+            EditText resetEmail = new EditText(getActivity());
 
-                new MaterialAlertDialogBuilder(requireActivity(), R.style.AlertDialogTheme)
-                        .setTitle("Reset Password?")
-                        .setMessage("Inserisci la tua Email per ricevere il link di reset.")
-                        .setView(resetEmail)
-                        .setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                //extract the email and send reset link
+            new MaterialAlertDialogBuilder(requireActivity(), R.style.AlertDialogTheme)
+                    .setTitle("Reset Password?")
+                    .setMessage("Inserisci la tua Email per ricevere il link di reset.")
+                    .setView(resetEmail)
+                    .setPositiveButton("Conferma", (dialog, which) -> {
+                        //extract the email and send reset link
 
-                                if(!resetEmail.getText().toString().isEmpty()) {
-                                    mAuth.sendPasswordResetEmail(resetEmail.getText().toString().trim())
-                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void unused) {
-                                                    Toast.makeText(getContext(), "Reset link sent to your Email.", Toast.LENGTH_SHORT).show();
-                                                }
-                                            })
-                                            .addOnFailureListener(new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    Toast.makeText(getContext(), "Error! Reset link not sent.", Toast.LENGTH_SHORT).show();
-                                                    Log.d(TAG, "errore" + e);
-                                                }
-                                            });
-                                }else{
-                                    Toast.makeText(getContext(), "Error! Empty", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        })
-                        .setNegativeButton("Esci", null)
-                        .show();
-            }
+                        if(!resetEmail.getText().toString().isEmpty()) {
+                            mAuth.sendPasswordResetEmail(resetEmail.getText().toString().trim())
+                                    .addOnSuccessListener(unused -> Toast.makeText(getContext(), "Reset link sent to your Email.", Toast.LENGTH_SHORT).show())
+                                    .addOnFailureListener(e -> {
+                                        Toast.makeText(getContext(), "Error! Reset link not sent.", Toast.LENGTH_SHORT).show();
+                                        Log.d(TAG, "errore" + e);
+                                    });
+                        }else{
+                            Toast.makeText(getContext(), "Error! Empty", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .setNegativeButton("Esci", null)
+                    .show();
         });
 
         Button buttonLogin = view.findViewById(R.id.button_login_access);
-        buttonLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (controlLoginFields()) {
-                    if(mRememberMe.isChecked()) {
-                        boolean isChecked = mRememberMe.isChecked();
-                        SharedPreferences.Editor editor = mPrefs.edit();
-                        editor.putString("pref_email", mEmail.getText().toString());
-                        editor.putString("pref_password", mPassword.getText().toString());
-                        editor.putBoolean("pref_check", isChecked);
-                        editor.apply();
-                    } else {
-                        mPrefs.edit().clear().apply();
-                    }
-                   signInNormal();
+        buttonLogin.setOnClickListener(v -> {
+            if (controlLoginFields()) {
+                if(mRememberMe.isChecked()) {
+                    boolean isChecked = mRememberMe.isChecked();
+                    SharedPreferences.Editor editor = mPrefs.edit();
+                    editor.putString("pref_email", mEmail.getText().toString());
+                    editor.putString("pref_password", mPassword.getText().toString());
+                    editor.putBoolean("pref_check", isChecked);
+                    editor.apply();
+                } else {
+                    mPrefs.edit().clear().apply();
                 }
-                //mEmail.getText().clear();
-                //mPassword.getText().clear();
+               signInNormal();
             }
         });
 
         googleSignInButton = view.findViewById(R.id.button_login_google);
-        googleSignInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v.getId() == R.id.button_login_google) {
-                    Log.d(TAG, "Cliccato Google");
-                    signIn();
-                }
+        googleSignInButton.setOnClickListener(v -> {
+            if (v.getId() == R.id.button_login_google) {
+                Log.d(TAG, "Cliccato Google");
+                signIn();
             }
         });
 
         Button buttonGoToRegistration = view.findViewById(R.id.button_login_sign_up);
-        buttonGoToRegistration.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(getView())
-                        .navigate(R.id.action_navigation_profile_to_registrationFragment);
-            }
-        });
+        buttonGoToRegistration.setOnClickListener(v -> Navigation.findNavController(getView())
+                .navigate(R.id.action_navigation_profile_to_registrationFragment));
 
     }
 
@@ -265,18 +207,15 @@ public class LoginFragment extends Fragment {
     private void signInNormal() {
         FirebaseAuth.getInstance().signInWithEmailAndPassword(Objects.requireNonNull(mEmail
                 .getText()).toString().trim(), Objects.requireNonNull(mPassword.getText())
-                .toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Toast.makeText(getContext(), "Accesso effettuato.", Toast.LENGTH_SHORT).show();
-                            Navigation.findNavController(getView()).navigate(R.id.action_navigation_profile_to_profileFragment);
-                            Log.d(TAG, "loggedUserWithEmail:success");
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "loggedUserWithEmail:failure", task.getException());
-                        }
+                .toString().trim()).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Toast.makeText(getContext(), "Accesso effettuato.", Toast.LENGTH_SHORT).show();
+                        Navigation.findNavController(getView()).navigate(R.id.action_navigation_profile_to_profileFragment);
+                        Log.d(TAG, "loggedUserWithEmail:success");
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "loggedUserWithEmail:failure", task.getException());
                     }
                 });
     }
@@ -312,28 +251,23 @@ public class LoginFragment extends Fragment {
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener((Activity) requireContext(), new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCredential:success");
-                            storeData();
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            goOnProfile();
-                            /*FirebaseUser user = Objects.requireNonNull(task.getResult()).getUser();*/
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Snackbar.make(requireView(), "Autenticazione fallita", Snackbar.LENGTH_LONG)
-                                    .show();
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
-                        }
+                .addOnCompleteListener((Activity) requireContext(), task -> {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "signInWithCredential:success");
+                        storeData();
+                        goOnProfile();
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Snackbar.make(requireView(), "Autenticazione fallita", Snackbar.LENGTH_LONG)
+                                .show();
+                        Log.w(TAG, "signInWithCredential:failure", task.getException());
                     }
                 });
     }
 
     private void storeData() {
-        /*user.setUserID(mAuth.getCurrentUser().getUid());*/
+
         DocumentReference documentReference = mFirestore.collection("Utenti").document(mAuth.getCurrentUser().getUid());
 
         String email = mAuth.getCurrentUser().getEmail();
@@ -342,14 +276,8 @@ public class LoginFragment extends Fragment {
         userDB.put("userName", email.substring(0,email.indexOf("@")));
         userDB.put("age", "18");
         userDB.put("email", email);
-        //TODO aggiungere arraylist dei custom drinks (vuoto)
 
-        documentReference.set(userDB).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Log.d(TAG, "profilo creato su firestore");
-            }
-        });
+        documentReference.set(userDB).addOnSuccessListener(aVoid -> Log.d(TAG, "profilo creato su firestore"));
     }
 
     private void goOnProfile(){

@@ -26,16 +26,6 @@
         <item name="colorPrimary">@color/white</item>
     </style>
 
-    <!--<style name="NegativeButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
-        <item name="android:textColor">#ffffff</item>
-    </style>
-
-    <style name="PositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
-        <item name="android:textColor">#ffffff</item>
-    </style>-->
-
-    <!--<style name="Theme.LetsDrinkProfilo" parent="Theme.MaterialComponents.DayNight.NoActionBar"/>-->
-
     <style name="AlertDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
         <item name="colorSurface">#212121</item>
         <item name="materialAlertDialogTitleTextStyle">@style/TitleTextStyle</item>

@@ -1,24 +1,18 @@
-package it.unimib.letsdrink.ui.profile;
+package it.unimib.letsdrink.adapters;
 
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-
 import it.unimib.letsdrink.domain.Cocktail;
+import it.unimib.letsdrink.ui.profile.CustomDrinkItemView;
 
 public class CustomDrinkAdapter extends RecyclerView.Adapter<CustomDrinkItemView> {
     private List<Cocktail> listOfCocktails;
     private CustomDrinkAdapter.OnItemClickListener listener;
-    private Context context;
+    private final Context context;
 
     public CustomDrinkAdapter(List<Cocktail> listOfCocktails, Context context) {
         this.listOfCocktails = listOfCocktails;
@@ -54,10 +48,6 @@ public class CustomDrinkAdapter extends RecyclerView.Adapter<CustomDrinkItemView
 
     public void setListOfCocktails(List <Cocktail> listOfCocktails) {
         this.listOfCocktails = listOfCocktails;
-    }
-
-    public List<Cocktail> getListOfCocktails() {
-        return listOfCocktails;
     }
 
 }

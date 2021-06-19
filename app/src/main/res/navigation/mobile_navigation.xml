@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_drinks"
-        android:name="it.unimib.letsdrink.ui.drinks.CocktailsFragment"
+        android:name="it.unimib.letsdrink.ui.home.CocktailsFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_cocktails">
         <action
@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/navigation_categories"
-        android:name="it.unimib.letsdrink.ui.drinks.CategoriesFragment"
+        android:name="it.unimib.letsdrink.ui.categories.CategoriesFragment"
         android:label="@string/title_categories"
         tools:layout="@layout/fragment_categories">
         <action
@@ -70,11 +70,11 @@
     </fragment>
     <fragment
         android:id="@+id/cocktailDetailFragment"
-        android:name="it.unimib.letsdrink.ui.drinks.CocktailDetailFragment"
+        android:name="it.unimib.letsdrink.ui.home.CocktailDetailFragment"
         />
     <fragment
         android:id="@+id/cocktailsCategoryFragment"
-        android:name="it.unimib.letsdrink.ui.drinks.CocktailsCategoryFragment"
+        android:name="it.unimib.letsdrink.ui.categories.CocktailsCategoryFragment"
          >
         <action
             android:id="@+id/action_cocktailsCategoryFragment_to_cocktailDetailFragment"
@@ -127,7 +127,7 @@
     </fragment>
     <dialog
         android:id="@+id/filtersIngredients"
-        android:name="it.unimib.letsdrink.ui.drinks.FiltersIngredients"
+        android:name="it.unimib.letsdrink.ui.home.FiltersIngredients"
         android:label="FiltersIngredients" />
     <fragment
         android:id="@+id/settingsFragment"
