@@ -28,7 +28,7 @@ public class CustomDrinkItemView extends RecyclerView.ViewHolder{
 
         itemView.setOnClickListener(v -> {
             if (listener != null) {
-                int position = getAdapterPosition();
+                int position = getAbsoluteAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
                     listener.onItemClick(position, v);
                 }
@@ -37,7 +37,7 @@ public class CustomDrinkItemView extends RecyclerView.ViewHolder{
 
         delete.setOnClickListener(v -> {
             if (listener != null) {
-                int position = getAdapterPosition();
+                int position = getAbsoluteAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
                     listener.onDeleteClick(position, v);
                 }

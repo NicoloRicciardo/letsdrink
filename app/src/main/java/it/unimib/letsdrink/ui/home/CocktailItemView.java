@@ -45,7 +45,7 @@ public class CocktailItemView extends RecyclerView.ViewHolder {
 
         itemView.setOnClickListener(v -> {
             if (listener != null) {
-                int position = getAdapterPosition();
+                int position = getAbsoluteAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
                     listener.onItemClick(position, v);
                 }
@@ -55,7 +55,7 @@ public class CocktailItemView extends RecyclerView.ViewHolder {
         imgBtn.setOnClickListener(view -> {
             if (currentUser != null) {
                 if (listener != null) {
-                    int position = getAdapterPosition();
+                    int position = getAbsoluteAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
                         listener.onSaveClick(position, view);
                         if (color == 0) {

@@ -18,7 +18,6 @@ import it.unimib.letsdrink.R;
 import it.unimib.letsdrink.adapters.CocktailAdapter;
 import it.unimib.letsdrink.firebaseDB.FirebaseDBFavorites;
 import it.unimib.letsdrink.ui.home.CocktailDetailFragment;
-import it.unimib.letsdrink.ui.profile.CustomDrinkDetailFragment;
 
 public class FavoritesFragment extends Fragment {
     private TextView mNoFav;

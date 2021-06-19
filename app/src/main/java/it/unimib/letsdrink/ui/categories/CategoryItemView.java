@@ -26,7 +26,7 @@ public class CategoryItemView extends RecyclerView.ViewHolder {
 
         itemView.setOnClickListener(v -> {
             if (listener != null) {
-                int position = getAdapterPosition();
+                int position = getAbsoluteAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
                     listener.onItemClick(position, v);
                 }
