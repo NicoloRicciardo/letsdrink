@@ -17,6 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import it.unimib.letsdrink.R;
 import it.unimib.letsdrink.adapters.CocktailAdapter;
 import it.unimib.letsdrink.firebaseDB.FirebaseDBFavorites;
+import it.unimib.letsdrink.ui.home.CocktailDetailFragment;
 import it.unimib.letsdrink.ui.profile.CustomDrinkDetailFragment;
 
 public class FavoritesFragment extends Fragment {
@@ -53,7 +54,7 @@ public class FavoritesFragment extends Fragment {
                     mFavoriteCocktailAdapter.setOnItemClickListener(new CocktailAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(int position, View v) {
-                            Fragment cocktailDetail = CustomDrinkDetailFragment.newInstance(listOfFavorites.get(position).getName(), listOfFavorites.get(position).getMethod(),
+                            Fragment cocktailDetail = CocktailDetailFragment.newInstance(listOfFavorites.get(position).getName(), listOfFavorites.get(position).getMethod(),
                                     listOfFavorites.get(position).getIngredients(), listOfFavorites.get(position).getImageUrl());
                             Navigation.findNavController(getView()).navigate(R.id.action_navigation_favorites_to_cocktailDetailFragment);
                         }
