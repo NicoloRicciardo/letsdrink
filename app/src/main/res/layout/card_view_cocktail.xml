@@ -8,7 +8,7 @@
     android:layout_margin="5dp"
     card_view:cardCornerRadius="8dp"
     card_view:cardElevation="2dp"
-    android:backgroundTint="@color/bar_black">
+    android:backgroundTint="#3C3F41">
 
     <FrameLayout
         android:layout_width="match_parent"

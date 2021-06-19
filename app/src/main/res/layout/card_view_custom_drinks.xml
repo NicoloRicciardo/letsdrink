@@ -8,7 +8,8 @@
     android:layout_height="200dp"
     android:layout_margin="5dp"
     card_view:cardElevation="2dp"
-    card_view:cardCornerRadius="8dp">
+    card_view:cardCornerRadius="8dp"
+    android:backgroundTint="#3C3F41">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -32,6 +33,7 @@
                 android:id="@+id/text_custom_drink"
                 android:layout_marginStart="4dp"
                 android:layout_marginBottom="4dp"
+                android:textColor="@color/light_gray"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"/>
 
