@@ -3,8 +3,10 @@ package it.unimib.letsdrink.firebaseDB;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import it.unimib.letsdrink.domain.Cocktail;
 
 public class FirebaseDBFavorites {
@@ -25,17 +27,12 @@ public class FirebaseDBFavorites {
     public void addFavoriteCocktail(Cocktail cocktail, final FirebaseDBFavorites.DataStatus dataStatus) {
 
         collezione.document(id).collection("favoritesCocktails").whereEqualTo("name", cocktail.getName()).get().addOnCompleteListener(task -> {
-            boolean previoslyAdded = false;
             if (task.isSuccessful()) {
-                for (DocumentSnapshot ignored : task.getResult()) {
-                    previoslyAdded = true;
-                }
-                if (!previoslyAdded) {
-                    collezione.document(id).collection("favoritesCocktails").add(cocktail);
-                    listOfCocktails.add(cocktail);
-                } else {
-                    deleteFavoriteCocktail(cocktail, dataStatus);
-                }
+                collezione.document(id).collection("favoritesCocktails").add(cocktail);
+                listOfCocktails.add(cocktail);
+            }
+            else{
+                deleteFavoriteCocktail(cocktail, dataStatus);
             }
         });
     }
