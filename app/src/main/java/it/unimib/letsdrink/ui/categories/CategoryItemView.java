@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide;
 import it.unimib.letsdrink.R;
 import it.unimib.letsdrink.adapters.CategoryAdapter;
 import it.unimib.letsdrink.domain.Category;
-
+//classe che rappresenta la cardview
 public class CategoryItemView extends RecyclerView.ViewHolder {
 
     private final TextView name;
@@ -24,6 +24,10 @@ public class CategoryItemView extends RecyclerView.ViewHolder {
         name = itemView.findViewById(R.id.text_category);
         image = itemView.findViewById(R.id.image_category);
 
+        /*al click della card vediamo se ha asssociato un listener,
+         se sì prendiamo la posizione nel recyclerView e verifichiamo che esista la posizione, se il tutto va a buon fine,
+         viene chiamato il metodo onItemClick dell'interfaccia del categoryadapter OnItemClickListener che sarà poi implementato
+          nel fragment delle categorie (che ora è sostituito da una lambda)*/
         itemView.setOnClickListener(v -> {
             if (listener != null) {
                 int position = getAbsoluteAdapterPosition();
@@ -33,6 +37,7 @@ public class CategoryItemView extends RecyclerView.ViewHolder {
             }
         });
     }
+    //metodo che associa i dati ai componenti xml della cardview
     public void bind(Category category){
         name.setText(category.getName());
         Glide.with(context).load(category.getImageUrl()).into(image);

@@ -18,6 +18,7 @@ import java.util.Set;
 import it.unimib.letsdrink.R;
 import it.unimib.letsdrink.interfaces.FilterInterface;
 
+//dialog per impostazione filtri per ingrediente
 public class FiltersIngredients extends DialogFragment {
 
     private boolean[] filtri;
@@ -55,7 +56,7 @@ public class FiltersIngredients extends DialogFragment {
         Context c = getContext();
         assert c != null;
 
-
+        //creazione della dialog
         return new MaterialAlertDialogBuilder(requireActivity(), R.style.DialogTheme)
                 .setView(v)
                 .setPositiveButton("Ok", (dialog, which) -> {
@@ -79,10 +80,13 @@ public class FiltersIngredients extends DialogFragment {
                 .create();
     }
 
-
+    //salvataggio dei filtri selezionati
     private void saveToogle() {
-        SharedPreferences sharedPref = this.getActivity().getSharedPreferences("Filtri", Context.MODE_PRIVATE);
+        //creazione di sharedPreferences
+        SharedPreferences sharedPref = this.requireActivity().getSharedPreferences("Filtri", Context.MODE_PRIVATE);
+        //creazione dell'editor dello sharedPreference
         SharedPreferences.Editor editor = sharedPref.edit();
+        //caricamento di hashset di stringhe relative ai filtri selezionati
         Set<String> checkedCheckboxSet = new HashSet<>();
         if (sAnanas.isChecked()) {
             checkedCheckboxSet.add("Ananas");
@@ -115,13 +119,14 @@ public class FiltersIngredients extends DialogFragment {
             checkedCheckboxSet.add("Vodka");
         }
 
+        //aggiungiamo l'hashset allo sharedPreference tramite l'editor
         editor.putStringSet("Filtri_selezionati", checkedCheckboxSet);
         editor.apply();
     }
 
-
+    //leggiamo i filtri precedentemente salvati
     private void loadToogle() {
-        SharedPreferences sharedPref = this.getActivity().getSharedPreferences("Filtri", Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = this.requireActivity().getSharedPreferences("Filtri", Context.MODE_PRIVATE);
         Set<String> checkedCheckboxSet = sharedPref.getStringSet("Filtri_selezionati", null);
         if (checkedCheckboxSet != null) {
             if (checkedCheckboxSet.contains("Ananas")) {

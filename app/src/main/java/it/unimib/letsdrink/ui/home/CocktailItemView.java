@@ -3,7 +3,6 @@ package it.unimib.letsdrink.ui.home;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -19,6 +18,7 @@ import it.unimib.letsdrink.domain.Cocktail;
 import it.unimib.letsdrink.adapters.CocktailAdapter;
 import it.unimib.letsdrink.firebaseDB.FirebaseDBFavorites;
 
+//classe che rappresenta la cardview di un cocktail
 public class CocktailItemView extends RecyclerView.ViewHolder {
 
     private final TextView name;
@@ -43,6 +43,7 @@ public class CocktailItemView extends RecyclerView.ViewHolder {
             db = new FirebaseDBFavorites(id);
         }
 
+        //click sulla card
         itemView.setOnClickListener(v -> {
             if (listener != null) {
                 int position = getAbsoluteAdapterPosition();
@@ -52,6 +53,7 @@ public class CocktailItemView extends RecyclerView.ViewHolder {
             }
         });
 
+        //click sul cuore
         imgBtn.setOnClickListener(view -> {
             if (currentUser != null) {
                 if (listener != null) {
@@ -69,7 +71,7 @@ public class CocktailItemView extends RecyclerView.ViewHolder {
                         }
                     }
                 }
-            } else {
+            } else { // se non sei loggato appare la dialog che ti esorta a farlo
                 new MaterialAlertDialogBuilder(context, R.style.DialogTheme)
                         .setTitle("Errore")
                         .setMessage("Devi prima loggarti!")
@@ -81,10 +83,12 @@ public class CocktailItemView extends RecyclerView.ViewHolder {
 
     }
 
+    //associazione dei dati alla cardview
     public void bind(Cocktail cocktail) {
         name.setText(cocktail.getName());
         Glide.with(context).load(cocktail.getImageUrl()).into(image);
         if(currentUser != null) {
+            //colorazione del cuore della card del cocktail presente nei preferiti
             db.readCocktails(cocktailList -> {
                 for (int i = 0; i < cocktailList.size(); i++) {
                     if (cocktailList.get(i).getName().equals(cocktail.getName())) {

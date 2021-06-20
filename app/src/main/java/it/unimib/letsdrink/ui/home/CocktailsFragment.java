@@ -29,6 +29,7 @@ import it.unimib.letsdrink.interfaces.FilterInterface;
 import it.unimib.letsdrink.firebaseDB.FirebaseDBCocktails;
 import it.unimib.letsdrink.firebaseDB.FirebaseDBFavorites;
 
+//classe per la rappresentazione dei cocktails
 public class CocktailsFragment extends Fragment implements FilterInterface {
 
     private CocktailAdapter cocktailAdapter;
@@ -55,8 +56,10 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
             recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
             recyclerView.setAdapter(cocktailAdapter);
 
-            SharedPreferences sharedPref = getActivity().getSharedPreferences("Filtri", Context.MODE_PRIVATE);
+            //otteniamo lo shared preference salvato in precedenza
+            SharedPreferences sharedPref = requireActivity().getSharedPreferences("Filtri", Context.MODE_PRIVATE);
             boolean drinksFiltrati = sharedPref.getBoolean("FiltriBoolean", false);
+            //se c'è almeno un filtro di una ricerca passata, mostra i drink filtrati
             if (drinksFiltrati) {
                 Set<String> checkedCheckboxSet = sharedPref.getStringSet("Filtri_selezionati", null);
                 String[] nomiFiltri = {"Ananas", "Arancia", "Cognac", "Gin", "Lime", "Menta", "Pesca", "Rum", "Soda", "Vodka"};
@@ -71,6 +74,7 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
                     recyclerView.getRecycledViewPool().clear();
                     cocktailAdapter.notifyDataSetChanged();
                 }
+                //altrimenti mostra tutti i cocktails
             } else {
                 cocktailAdapter.setListOfCocktails(cocktailList);
                 recyclerView.getRecycledViewPool().clear();
@@ -79,11 +83,13 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
 
             cocktailAdapter.setOnItemClickListener(new CocktailAdapter.OnItemClickListener() {
                 @Override
+                //al click del singolo cocktail verremo mandati al fragment del cocktailDetail
                 public void onItemClick(int position, View v) {
+                    //usiamo questa lista perchè potrebbe essere più piccola in quanto filtrata
                     List<Cocktail> cocktails = cocktailAdapter.getListOfCocktails();
                     Fragment cocktailDetail = CocktailDetailFragment.newInstance(cocktails.get(position).getName(), cocktails.get(position).getMethod(),
                             cocktails.get(position).getIngredients(), cocktails.get(position).getImageUrl());
-                    Navigation.findNavController(getView()).navigate(R.id.action_navigation_drinks_to_cocktailDetailFragment);
+                    Navigation.findNavController(requireView()).navigate(R.id.action_navigation_drinks_to_cocktailDetailFragment);
 
                 }
 
@@ -99,30 +105,36 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
                 }
             });
         });
+        //abilita l'aggiunta di elementi alla toolbar(abbiamo altro oltre la freccia e il titolo)
         setHasOptionsMenu(true);
         return root;
     }
 
+    //associa l'xml alla toolbar
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.top_menu, menu);
     }
 
+    //gestione dei click delle icone nella toolbar(ricerca per nome e filtraggio)
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         switch (id) {
+            //se clicchiamo la lente effettuiamo la ricerca per nome
             case R.id.search_item:
                 SearchView searchView = (SearchView) item.getActionView();
                 searchView.setQueryHint("Cerca un cocktail");
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    //se premi invio, non fa niente
                     @Override
                     public boolean onQueryTextSubmit(String query) {
                         return false;
                     }
 
+                    //ad ogni lettera scritta il filtraggio viene effettuato
                     @Override
                     public boolean onQueryTextChange(String newText) {
                         cocktailAdapter.getFilter().filter(newText);
@@ -131,29 +143,34 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
 
                 });
                 break;
+                //se clicchiamo l'immagine dei filtri avremo la dialog dei filtri
             case R.id.filter_item:
                 FiltersIngredients filterDialog = FiltersIngredients.newInstance(this);
-                Navigation.findNavController(getView()).navigate(R.id.action_navigation_drinks_to_filtersIngredients);
+                //aggiornamento del fragment al cambiamento dei filtri
+                Navigation.findNavController(requireView()).navigate(R.id.action_navigation_drinks_to_filtersIngredients);
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
 
+    //al click dell"ok" nella dialog verranno restituiti i cocktail filtrati
     @Override
     public void okButtonClick(boolean[] modeDrinks) {
         filtri = false;
         drinkFilterArray(modeDrinks);
         saveFiltri();
+        //se non ci sono filtri impostati
         if (!filtri) {
+            //se mettiamo e togliamo dei filtri bisogna notificare l'adapter
             cocktailAdapter.setListOfCocktails(cocktailList);
             recyclerView.getRecycledViewPool().clear();
             cocktailAdapter.notifyDataSetChanged();
-        } else {
+        } else {//se abbiamo messo i filtri ma non si trova nessun cocktail, stampa un messaggio
             if (cocktailsListFiltered.size() == 0) {
                 Toast.makeText(requireContext(), "Nessun cocktail trovato con questi ingredienti ", Toast.LENGTH_LONG).show();
 
-            } else {
+            } else {//abbiamo dei cocktail filtrati e li mostriamo
                 cocktailAdapter.setListOfCocktails(cocktailsListFiltered);
                 recyclerView.getRecycledViewPool().clear();
                 cocktailAdapter.notifyDataSetChanged();
@@ -162,6 +179,7 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
 
     }
 
+    //se il cocktail contiene l''ingrediente inserito nei filtri verrà aggiunto al arraylist di cocktail filtrati
     private void drinkFilterArray(boolean[] modeDrinks) {
         for (int cont = 0; cont < cocktailList.size(); cont++) {
             final Cocktail cocktail = cocktailList.get(cont);
@@ -189,8 +207,9 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
         }
     }
 
+    //salviamo tramite sharedPreferences i filtri selezionati
     private void saveFiltri() {
-        SharedPreferences sharedPref = getActivity().getSharedPreferences("Filtri", Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = requireActivity().getSharedPreferences("Filtri", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean("FiltriBoolean", filtri);
         editor.apply();

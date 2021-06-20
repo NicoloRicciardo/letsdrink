@@ -3,6 +3,7 @@ package it.unimib.letsdrink.domain;
 import com.google.firebase.firestore.DocumentReference;
 import java.util.ArrayList;
 
+//rappresentazione di una categoria
 public class Category {
     private String name;
     private String imageUrl;

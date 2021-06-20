@@ -9,6 +9,7 @@ import java.util.List;
 import it.unimib.letsdrink.domain.Cocktail;
 import it.unimib.letsdrink.ui.profile.CustomDrinkItemView;
 
+//Adapter per il recyclerView delle cardview di CustomDrink
 public class CustomDrinkAdapter extends RecyclerView.Adapter<CustomDrinkItemView> {
     private List<Cocktail> listOfCocktails;
     private CustomDrinkAdapter.OnItemClickListener listener;

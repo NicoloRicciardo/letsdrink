@@ -20,6 +20,7 @@ import it.unimib.letsdrink.firebaseDB.FirebaseDBCocktails;
 import it.unimib.letsdrink.firebaseDB.FirebaseDBFavorites;
 import it.unimib.letsdrink.ui.home.CocktailDetailFragment;
 
+//fragment relativo ai cocktail di una categoria
 public class CocktailsCategoryFragment extends Fragment {
 
     private static String name, imageUrl;
@@ -44,12 +45,15 @@ public class CocktailsCategoryFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_cocktails, container, false);
         RecyclerView recyclerView = root.findViewById(R.id.cocktails_recycler);
         ActionBar actionBar= ((AppCompatActivity) requireActivity()).getSupportActionBar();
+        assert actionBar != null;
         actionBar.setTitle(CocktailsCategoryFragment.name);
-        setHasOptionsMenu(true);
+        //ottieniamo il bundle salvato da CategoriesFragment
         Bundle bundle = this.getArguments();
+        assert bundle != null;
+        //otteniamo la stringa salvata nel bundle
         String categoryName = bundle.getString("name");
-
-        new FirebaseDBCocktails().readCocktailsCategory(categoryName, listOfCocktails -> {
+        FirebaseDBCocktails firebaseCocktails = new FirebaseDBCocktails();
+        firebaseCocktails.readCocktailsCategory(categoryName, listOfCocktails -> {
             CocktailAdapter cocktailAdapter = new CocktailAdapter(listOfCocktails, getContext());
             recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
             recyclerView.setAdapter(cocktailAdapter);
@@ -59,15 +63,19 @@ public class CocktailsCategoryFragment extends Fragment {
                 public void onItemClick(int position, View v) {
                     Fragment cocktailDetail = CocktailDetailFragment.newInstance(listOfCocktails.get(position).getName(), listOfCocktails.get(position).getMethod(),
                             listOfCocktails.get(position).getIngredients(), listOfCocktails.get(position).getImageUrl());
-                    Navigation.findNavController(getView()).navigate(R.id.action_cocktailsCategoryFragment_to_cocktailDetailFragment);
+                    Navigation.findNavController(requireView()).navigate(R.id.action_cocktailsCategoryFragment_to_cocktailDetailFragment);
 
                 }
 
+                //al click dell'icona del cuore
                 @Override
                 public void onSaveClick(int position, View v) {
+                    //otteniamo l'utente da firebaseAuth
                     FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                     if(firebaseUser != null){
+                        //viene create l'istanza della classe per le operazioni tra i preferiti di firebase FirebaseDBFavorites
                         dbFav = new FirebaseDBFavorites(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        //aggiunge o rimuove(in caso sia già presente) il cocktail alla lista, cambiando il colore dell'icona del cuore
                         dbFav.addFavoriteCocktail(listOfCocktails.get(position), cocktailList -> {
                         });
                     }

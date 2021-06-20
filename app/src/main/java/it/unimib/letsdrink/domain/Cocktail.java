@@ -2,8 +2,7 @@ package it.unimib.letsdrink.domain;
 
 import java.util.ArrayList;
 
-/*classe relativa al cocktail generico, composto da:
-procedimento (method), nome (name), immagine (ImageUrl) e ingredienti (ingredients)*/
+//rappresentazione di un Cocktail
 public class Cocktail {
     private String method;
     private String name;

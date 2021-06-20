@@ -2,6 +2,7 @@ package it.unimib.letsdrink.domain;
 
 import java.util.ArrayList;
 
+//rappresentazione di uno User
 public class User {
     private String userName;
     private String age;
@@ -12,13 +13,6 @@ public class User {
     public User() {
     }
 
-    /*public User(String userName, String age, String email, String userID, ArrayList<Cocktail> custom_drinks) {
-        this.userName = userName;
-        this.age = age;
-        this.email = email;
-        this.userID = userID;
-        this.customDrinks = custom_drinks;
-    }*/
 
     public String getUserName() {
         return userName;

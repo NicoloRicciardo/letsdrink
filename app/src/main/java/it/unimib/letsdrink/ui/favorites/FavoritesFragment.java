@@ -19,16 +19,19 @@ import it.unimib.letsdrink.adapters.CocktailAdapter;
 import it.unimib.letsdrink.firebaseDB.FirebaseDBFavorites;
 import it.unimib.letsdrink.ui.home.CocktailDetailFragment;
 
+//fragment dei cocktail preferiti
 public class FavoritesFragment extends Fragment {
     private TextView mNoFav;
     private CocktailAdapter mFavoriteCocktailAdapter;
 
+    //chiamato per creare la gerarchia di viste associata al fragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_favorites, container, false);
     }
 
+    //chiamato quando la vista è già stata creata
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -41,6 +44,7 @@ public class FavoritesFragment extends Fragment {
         if(firebaseUser != null) {
             FirebaseDBFavorites db = new FirebaseDBFavorites(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
+            //visualizzazione a schermo dei cocktail preferiti nel caso siano presenti (altrimenti verrà visualizzato un messaggio)
             db.readCocktails(listOfFavorites -> {
                 if(listOfFavorites.size() == 0) {
                     mNoFav.setVisibility(View.VISIBLE);
@@ -55,16 +59,19 @@ public class FavoritesFragment extends Fragment {
                         public void onItemClick(int position, View v) {
                             Fragment cocktailDetail = CocktailDetailFragment.newInstance(listOfFavorites.get(position).getName(), listOfFavorites.get(position).getMethod(),
                                     listOfFavorites.get(position).getIngredients(), listOfFavorites.get(position).getImageUrl());
-                            Navigation.findNavController(getView()).navigate(R.id.action_navigation_favorites_to_cocktailDetailFragment);
+                            Navigation.findNavController(requireView()).navigate(R.id.action_navigation_favorites_to_cocktailDetailFragment);
                         }
 
                         @Override
                         public void onSaveClick(int position, View v) {
                             db.deleteFavoriteCocktail(listOfFavorites.get(position), listOfFavoritesCocktail -> {
+                                //modifichiamo la lista di cocktail dell'adapter (1 in meno se eliminato)
                                 mFavoriteCocktailAdapter.setListOfCocktails(listOfFavoritesCocktail);
+                                //puliamo la recyclerView
                                 recyclerView.getRecycledViewPool().clear();
                                 mFavoriteCocktailAdapter.notifyDataSetChanged();
-                                Navigation.findNavController(getView()).navigate(R.id.action_navigation_favorites_self);
+                                //refresh della pagina
+                                Navigation.findNavController(requireView()).navigate(R.id.action_navigation_favorites_self);
                             });
                         }
                     });

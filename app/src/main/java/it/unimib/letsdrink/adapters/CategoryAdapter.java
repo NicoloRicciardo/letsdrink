@@ -12,7 +12,7 @@ import it.unimib.letsdrink.ui.categories.CategoryItemView;
 //Adapter per il RecyclerView di cardview di categorie
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryItemView> {
     private final List<Category> listOfCategories;
-    private OnItemClickListener listener;
+    private CategoryAdapter.OnItemClickListener listener;
     private final Context context;
 
     public CategoryAdapter (List<Category> listOfCategories, Context context) {
@@ -25,7 +25,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryItemView> {
         void onItemClick(int position, View v);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
+    public void setOnItemClickListener(CategoryAdapter.OnItemClickListener listener) {
         this.listener = listener;
     }
 

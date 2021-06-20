@@ -6,15 +6,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
 import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
+
+
 import it.unimib.letsdrink.R;
 
+//fragment del singolo cocktail
 public class CocktailDetailFragment extends Fragment {
     private static String name, method, imageUrl;
     private static StringBuilder ingredienti;
@@ -43,15 +49,15 @@ public class CocktailDetailFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_cocktail_detail, container, false);
-        ActionBar actionBar= ((AppCompatActivity) requireActivity()).getSupportActionBar();
+        ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+        assert actionBar != null;
         actionBar.setTitle(name);
-        setHasOptionsMenu(true);
         TextView txtIngredients = root.findViewById(R.id.cocktail_detail_ingredients);
         TextView txtMethod = root.findViewById((R.id.cocktail_detail_method));
         ImageView img = root.findViewById(R.id.cocktail_detail_image);
         txtIngredients.setText(ingredienti);
         txtMethod.setText(method);
-        Glide.with(getContext()).load(imageUrl).into(img);
+        Glide.with(requireContext()).load(imageUrl).into(img);
 
         return root;
     }
