@@ -70,7 +70,6 @@ public class CocktailItemView extends RecyclerView.ViewHolder {
                     }
                 }
             } else {
-                Log.d("CocktailItemView", "loggati");
                 new MaterialAlertDialogBuilder(context, R.style.DialogTheme)
                         .setTitle("Errore")
                         .setMessage("Devi prima loggarti!")

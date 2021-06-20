@@ -126,9 +126,6 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
                     @Override
                     public boolean onQueryTextChange(String newText) {
                         cocktailAdapter.getFilter().filter(newText);
-                        if (cocktailAdapter.getNoCocktailsFiltered()) {
-                            Toast.makeText(getContext(), "Nessun cocktail trovato", Toast.LENGTH_SHORT).show();
-                        }
                         return false;
                     }
 

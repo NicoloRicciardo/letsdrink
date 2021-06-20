@@ -129,7 +129,8 @@ public class RegistrationFragment extends Fragment {
             mLayoutAge.setError(getText(R.string.error_age));
         }
 
-        if (mEmail != null && !(Objects.requireNonNull(mEmail.getText()).toString().trim().isEmpty())) {
+        if (mEmail != null && !(Objects.requireNonNull(mEmail.getText()).toString().trim().isEmpty())
+                && mEmail.getText().toString().contains("@")) {
             email = true;
             mLayoutEmail.setError(null);
         } else {

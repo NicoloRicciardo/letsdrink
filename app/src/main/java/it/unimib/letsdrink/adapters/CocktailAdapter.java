@@ -18,14 +18,12 @@ public class CocktailAdapter extends RecyclerView.Adapter<CocktailItemView> impl
     private final List<Cocktail> listOfAllCocktails;
     private CocktailAdapter.OnItemClickListener listener;
     private final Context context;
-    boolean noCocktailsFiltered;
 
     public CocktailAdapter(List<Cocktail> listOfCocktails, Context context) {
         this.listOfCocktails = listOfCocktails;
         this.context = context;
         listOfAllCocktails = new ArrayList<>();
         listOfAllCocktails.addAll(listOfCocktails);
-        noCocktailsFiltered = false;
     }
 
     public interface OnItemClickListener {
@@ -37,9 +35,6 @@ public class CocktailAdapter extends RecyclerView.Adapter<CocktailItemView> impl
         this.listener = listener;
     }
 
-    public boolean getNoCocktailsFiltered(){
-        return noCocktailsFiltered;
-    }
 
     @Override
     public Filter getFilter() {
@@ -70,8 +65,6 @@ public class CocktailAdapter extends RecyclerView.Adapter<CocktailItemView> impl
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
             listOfCocktails.clear();
             listOfCocktails.addAll((Collection<? extends Cocktail>) filterResults.values);
-            if(listOfCocktails.size() == 0)
-                noCocktailsFiltered = true;
             notifyDataSetChanged();
         }
     };
