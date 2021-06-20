@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
     NavController navController;
 
+    //Metodo che implementa la gestione della bottom navigation view tramite navController e che imposta il layout
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
     }
 
+    //Metodo che implementa la gestione della navigazione all'indietro tra fragment
     @Override
     public boolean onSupportNavigateUp() {
 

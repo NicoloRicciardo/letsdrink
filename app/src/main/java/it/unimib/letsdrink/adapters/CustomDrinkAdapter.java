@@ -19,6 +19,7 @@ public class CustomDrinkAdapter extends RecyclerView.Adapter<CustomDrinkItemView
         this.context = context;
     }
 
+    //L'interfaccia per il click sulle cardview e il click sull'icona del cestino
     public interface OnItemClickListener {
         void onItemClick(int position, View v);
         void onDeleteClick(int position, View v);
@@ -28,17 +29,20 @@ public class CustomDrinkAdapter extends RecyclerView.Adapter<CustomDrinkItemView
         this.listener = listener;
     }
 
+    //Metodo che crea per ogni cardview di Customdrink un CustomDrinkItemView (ossia un ViewHolder)
     @NonNull
     @Override
     public CustomDrinkItemView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new CustomDrinkItemView(parent, listener, context);
     }
 
+    //Metodo che associa a ogni ViewHolder il proprio Customdrink
     @Override
     public void onBindViewHolder(@NonNull CustomDrinkItemView holder, int position) {
         holder.bind(listOfCocktails.get(position));
     }
 
+    //Metodo che restituisce la dimensione della lista di Customdrinks da associare ai viewholder
     @Override
     public int getItemCount() {
         if (listOfCocktails != null)
