@@ -223,13 +223,12 @@ public class LoginFragment extends Fragment {
                 .getText()).toString().trim(), Objects.requireNonNull(mPassword.getText())
                 .toString().trim()).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                //il login ha successo
-                Toast.makeText(getContext(), "Accesso effettuato.", Toast.LENGTH_SHORT).show();
                 //schermata cambiata sul profilo
                 Navigation.findNavController(requireView()).navigate(R.id.action_navigation_profile_to_profileFragment);
             } else {
                 //il login non ha successe, viene mostrato un messaggio di errore
-                Toast.makeText(getContext(), "Accesso NON effettuato.", Toast.LENGTH_SHORT).show();
+                mLayoutEmail.setError(getText(R.string.error_email));
+                mLayoutPassword.setError(getText(R.string.error_password));
             }
         });
     }

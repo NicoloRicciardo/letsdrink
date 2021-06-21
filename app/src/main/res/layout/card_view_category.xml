@@ -11,6 +11,7 @@
     android:backgroundTint="#3C3F41">
 
     <LinearLayout
+        android:id="@+id/layout_card_view_category"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical">

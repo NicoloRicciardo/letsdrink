@@ -9,15 +9,18 @@
     android:background="@color/background_black">
 
     <ScrollView
+        android:id="@+id/scrollView_login"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:ignore="UselessParent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <LinearLayout
+                android:id="@+id/linear_layout_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="35dp"
@@ -29,6 +32,7 @@
                 android:layout_marginLeft="30dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraint_inner_login"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
@@ -118,6 +122,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraint_second_inner_login"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp">
@@ -186,10 +191,12 @@
                     android:layout_marginTop="18dp"/>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraint_third_inner_login"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
                     <LinearLayout
+                        android:id="@+id/linear_layout_second_login"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"

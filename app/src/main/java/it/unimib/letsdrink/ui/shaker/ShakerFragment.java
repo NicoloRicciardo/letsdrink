@@ -6,7 +6,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +39,6 @@ public class ShakerFragment extends Fragment implements SensorEventListener {
             acelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
             isAceletometerSensorAvaiable = true;
         } else {
-            Log.d("fragment shaker", "l'acelerometro non funzia");
             isAceletometerSensorAvaiable = false;
         }
 
@@ -104,7 +102,7 @@ public class ShakerFragment extends Fragment implements SensorEventListener {
 
     }
 
-   /* quando il fragment è nella fase onResume del suo ciclo di vita, bisogna registrare il sensore
+    /*quando il fragment è nella fase onResume del suo ciclo di vita, bisogna registrare il sensore
     al proprio listener in modo tale che sia nuovamente disponibile alla prossima chiamata*/
     @Override
     public void onResume() {
@@ -116,7 +114,7 @@ public class ShakerFragment extends Fragment implements SensorEventListener {
     }
 
     /* quando il fragment è nella fase onPause del suo ciclo di vita, bisogna rilasciare il sensore
-   al proprio listener in modo tale che non sprechi batteria inutilmente visto che rimarrebbe inutilizato
+    al proprio listener in modo tale che non sprechi batteria inutilmente visto che rimarrebbe inutilizzato
     essendo il fragment appunto in onPause*/
     @Override
     public void onPause() {

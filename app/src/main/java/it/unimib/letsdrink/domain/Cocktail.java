@@ -8,6 +8,7 @@ public class Cocktail {
     private String name;
     private String imageUrl;
     private ArrayList<String> ingredients;
+    private boolean favorite;
 
     public Cocktail(String method, String name, String imageUrl, ArrayList<String> ingredients) {
         this.method = method;

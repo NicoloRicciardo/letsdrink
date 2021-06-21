@@ -11,11 +11,13 @@
     android:backgroundTint="#3C3F41">
 
     <FrameLayout
+        android:id="@+id/frame_layout_card_view_cocktail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
 
         <LinearLayout
+            android:id="@+id/linear_layout_card_view_cocktail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">

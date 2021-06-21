@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:elevation="8dp">
 
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
         android:layout_width="0dp"
@@ -35,10 +34,5 @@
         android:layout_marginBottom="?actionBarSize"
         app:navGraph="@navigation/mobile_navigation"
         />
-
-    <View
-        android:id="@+id/view_main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

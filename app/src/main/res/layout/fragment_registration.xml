@@ -9,15 +9,18 @@
     android:background="@color/background_black">
 
         <ScrollView
+            android:id="@+id/scrollView_registration"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:ignore="UselessParent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraint_registration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <LinearLayout
+                    android:id="@+id/linear_layout_registration"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="35dp"
@@ -29,6 +32,7 @@
                     android:layout_marginLeft="30dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraint_second_registration"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
@@ -208,6 +212,7 @@
                         android:layout_marginTop="60dp" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraint_third_registration"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 

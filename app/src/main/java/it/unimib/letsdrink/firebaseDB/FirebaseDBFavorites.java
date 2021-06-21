@@ -3,6 +3,7 @@ package it.unimib.letsdrink.firebaseDB;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,11 +35,17 @@ public class FirebaseDBFavorites {
          e di questo effettuiamo una query sulla sub-collezione favoritesCocktails i quali drink hanno il nome passato*/
         collezione.document(id).collection("favoritesCocktails").whereEqualTo("name", cocktail.getName()).get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                collezione.document(id).collection("favoritesCocktails").add(cocktail);
-                listOfCocktails.add(cocktail);
-            }
-            else{
-                deleteFavoriteCocktail(cocktail, dataStatus);
+                boolean isPreviouslyAdded = false;
+                //scorre il risultato della query
+                for (DocumentSnapshot ignored : Objects.requireNonNull(task.getResult())) {
+                    isPreviouslyAdded = true;
+                }
+                if(!isPreviouslyAdded) {
+                    collezione.document(id).collection("favoritesCocktails").add(cocktail);
+                    listOfCocktails.add(cocktail);
+                } else{
+                    deleteFavoriteCocktail(cocktail, dataStatus);
+                }
             }
         });
     }
