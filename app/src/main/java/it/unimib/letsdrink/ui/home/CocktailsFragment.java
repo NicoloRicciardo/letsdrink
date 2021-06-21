@@ -29,7 +29,7 @@ import it.unimib.letsdrink.interfaces.FilterInterface;
 import it.unimib.letsdrink.firebaseDB.FirebaseDBCocktails;
 import it.unimib.letsdrink.firebaseDB.FirebaseDBFavorites;
 
-//classe per la rappresentazione dei cocktails
+//fragment dei cocktails
 public class CocktailsFragment extends Fragment implements FilterInterface {
 
     private CocktailAdapter cocktailAdapter;
@@ -146,7 +146,7 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
                 //se clicchiamo l'immagine dei filtri avremo la dialog dei filtri
             case R.id.filter_item:
                 FiltersIngredients filterDialog = FiltersIngredients.newInstance(this);
-                //aggiornamento del fragment al cambiamento dei filtri
+                //visualizzazione della dialog relativa ai filtri
                 Navigation.findNavController(requireView()).navigate(R.id.action_navigation_drinks_to_filtersIngredients);
                 break;
         }
@@ -179,13 +179,21 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
 
     }
 
-    //se il cocktail contiene l''ingrediente inserito nei filtri verrà aggiunto al arraylist di cocktail filtrati
+    //se il cocktail contiene l'ingrediente inserito nei filtri verrà aggiunto al arraylist di cocktail filtrati
     private void drinkFilterArray(boolean[] modeDrinks) {
+        //scorrimento arraylist di tutti i cocktail
         for (int cont = 0; cont < cocktailList.size(); cont++) {
+            //otteniamo il cocktail nella posizione i-esima
             final Cocktail cocktail = cocktailList.get(cont);
+            //prendiamo ingredienti di quel cocktail
             ArrayList<String> ingredients = cocktailList.get(cont).getIngredients();
+            //scorrimento dell'array di booleani (quali switch sono selezionati)
             for (int k = 0; k < modeDrinks.length; k++) {
+                //scorrimento dell'arraylist di ingredienti
                 for (int i = 0; i < ingredients.size(); i++) {
+                    /*si mette la condizione k == n in quanto l'array di booleani modeDrinks potrebbe essere
+                     più piccolo o semplicemente avere elementi in posizioni diverse rispetto a quelle degli
+                      ingredienti e quindi potrebbe rendere vera la condizione quando in realtà non lo è*/
                     if ((k == 0 && modeDrinks[k] && ingredients.get(i).contains("Ananas")) ||
                             (k == 1 && modeDrinks[k] && ingredients.get(i).contains("Arancia")) ||
                             (k == 2 && modeDrinks[k] && ingredients.get(i).contains("Cognac")) ||
