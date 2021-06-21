@@ -12,6 +12,7 @@ import it.unimib.letsdrink.R;
 import it.unimib.letsdrink.adapters.CustomDrinkAdapter;
 import it.unimib.letsdrink.domain.Cocktail;
 
+//classe che rappresenta la cardview di un custom drink
 public class CustomDrinkItemView extends RecyclerView.ViewHolder{
 
     private final TextView name;
@@ -26,6 +27,7 @@ public class CustomDrinkItemView extends RecyclerView.ViewHolder{
         image = itemView.findViewById(R.id.image_custom_drink);
         ImageButton delete = itemView.findViewById(R.id.delete_custom_drink_card);
 
+        //click sulla cardview
         itemView.setOnClickListener(v -> {
             if (listener != null) {
                 int position = getAbsoluteAdapterPosition();
@@ -35,6 +37,7 @@ public class CustomDrinkItemView extends RecyclerView.ViewHolder{
             }
         });
 
+        //click sul cestino
         delete.setOnClickListener(v -> {
             if (listener != null) {
                 int position = getAbsoluteAdapterPosition();
@@ -46,6 +49,7 @@ public class CustomDrinkItemView extends RecyclerView.ViewHolder{
 
     }
 
+    //associazione dei dati alla cardview
     public void bind(Cocktail cocktail){
         name.setText(cocktail.getName());
         Glide.with(context).load(cocktail.getImageUrl()).into(image);

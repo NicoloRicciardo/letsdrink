@@ -15,7 +15,6 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
@@ -24,30 +23,15 @@ import java.util.Objects;
 import it.unimib.letsdrink.R;
 import it.unimib.letsdrink.domain.User;
 
+//fragment della registrazione
 public class RegistrationFragment extends Fragment {
 
     private static final String TAG = "RegistrationFragment";
-    private TextInputEditText mUserName;
-    private TextInputEditText mAge;
-    private TextInputEditText mEmail;
-    private TextInputEditText mPassword;
-    private TextInputEditText mConfirmPassword;
-    private TextInputLayout mLayoutUserName;
-    private TextInputLayout mLayoutAge;
-    private TextInputLayout mLayoutEmail;
-    private TextInputLayout mLayoutPassword;
-    private TextInputLayout mLayoutConfirmPassword;
+    private TextInputEditText mUserName, mAge, mEmail, mPassword, mConfirmPassword;
+    private TextInputLayout mLayoutUserName, mLayoutAge, mLayoutEmail, mLayoutPassword, mLayoutConfirmPassword;
     private FirebaseAuth mAuth;
     private FirebaseFirestore mFirestore;
     User user = new User();
-
-    public RegistrationFragment() {
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,21 +62,26 @@ public class RegistrationFragment extends Fragment {
         Button mButtonRegistration = view.findViewById(R.id.button_registration);
         Button mButtonGoToLogin = view.findViewById(R.id.button_registration_sign_in);
 
+        //al click del bottone di "registrati", setta i parametri dello user inseriti dall'utente nelle edittext
         mButtonRegistration.setOnClickListener(v -> {
             user.setUserName(Objects.requireNonNull(mUserName.getText()).toString().trim());
             user.setAge(Objects.requireNonNull(mAge.getText()).toString().trim());
             user.setEmail(Objects.requireNonNull(mEmail.getText()).toString().trim());
 
+            //se i campi sono inseriti correttamente
             if (controlRegistrationFields()) {
+                //permette di fare la registrazione
                 signUpNormal();
             }
         });
 
-        mButtonGoToLogin.setOnClickListener(v -> Navigation.findNavController(getView()).navigate(R.id.action_registrationFragment_to_navigation_profile));
+        //manda alla schermata del profilo
+        mButtonGoToLogin.setOnClickListener(v -> Navigation.findNavController(requireView()).navigate(R.id.action_registrationFragment_to_navigation_profile));
     }
 
+    //metodo che permette di salvare i dati su firestore
     private void storeData() {
-        user.setUserID(mAuth.getCurrentUser().getUid());
+        user.setUserID(Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
         DocumentReference documentReference = mFirestore.collection("Utenti").document(user.getUserID());
 
         Map<String, Object> userDB = new HashMap<>();
@@ -103,7 +92,7 @@ public class RegistrationFragment extends Fragment {
         documentReference.set(userDB).addOnSuccessListener(aVoid -> Log.d(TAG, "profilo creato su firestore"));
     }
 
-    // controlla che le text field non sia vuota
+    //controlla che le textview non siano vuote
     private boolean controlRegistrationFields() {
         boolean userName;
         boolean email;
@@ -153,7 +142,7 @@ public class RegistrationFragment extends Fragment {
             if (mConfirmPassword.getText().toString().trim().equals(Objects.requireNonNull(mPassword.getText()).toString().trim())) {
                 confirmPassword = true;
                 mLayoutConfirmPassword.setError(null);
-            } //TODO settare errore
+            }
         } else {
             mLayoutConfirmPassword.setError(getText(R.string.error_password));
         }
@@ -161,38 +150,28 @@ public class RegistrationFragment extends Fragment {
         return userName && email && age && password && confirmPassword;
     }
 
+    //metodo che permette di fare la registrazione
     private void signUpNormal() {
         mAuth.createUserWithEmailAndPassword(Objects
                         .requireNonNull(mEmail.getText()).toString().trim(),
                 Objects.requireNonNull(mPassword.getText()).toString().trim())
-                .addOnCompleteListener(getActivity(), task -> {
+                .addOnCompleteListener(requireActivity(), task -> {
                     if (task.isSuccessful()) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d(TAG, "createUserWithEmail:success");
+                        // la registrazione ha successo
                         storeData();
                         goOnProfile();
                     } else {
                         if (task.getException() instanceof FirebaseAuthUserCollisionException) {
                             Toast.makeText(getContext(), "Email già in uso!", Toast.LENGTH_SHORT).show();
                         }
-                        // If sign in fails, display a message to the user.
-                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                        // la registrazione NON ha successo
                     }
                 });
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            goOnProfile();
-        }
-    }
-
+    //metodo che manda sul profilo
     private void goOnProfile() {
-        Navigation.findNavController(getView())
+        Navigation.findNavController(requireView())
                 .navigate(R.id.action_registrationFragment_to_profileFragment);
     }
 }

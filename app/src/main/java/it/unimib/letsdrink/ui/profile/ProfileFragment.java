@@ -26,16 +26,19 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import it.unimib.letsdrink.R;
 import it.unimib.letsdrink.adapters.CustomDrinkAdapter;
 import it.unimib.letsdrink.domain.User;
 import it.unimib.letsdrink.firebaseDB.FirebaseDBCustomDrink;
 
+//fragment del profilo
 public class ProfileFragment extends Fragment {
 
-    private TextView mUserNameCustom;
-    private TextView mPlaceholder, mYourDrinks;
+    private TextView mUserNameCustom, mPlaceholder, mYourDrinks;
     private CircleImageView mUserImage;
     User user = new User();
     private FirebaseAuth mAuth;
@@ -49,24 +52,29 @@ public class ProfileFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
 
         ActionBar actionBar= ((AppCompatActivity) requireActivity()).getSupportActionBar();
+        assert actionBar != null;
         actionBar.setTitle("Profilo");
+        //non mette la freccia per tornare indietro
         actionBar.setDisplayHomeAsUpEnabled(false);
         setHasOptionsMenu(true);
 
         return root;
     }
 
+    //crea una toolbar con l'icona dell'ingranaggio (preso da xml)
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.profile_menu, menu);
     }
 
+    //gestisce il click dell'icona nella toolbar
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.settings_item) {
-            Navigation.findNavController(getView())
+            //manda al fragment delle impostazioni
+            Navigation.findNavController(requireView())
                     .navigate(R.id.action_profileFragment_to_tempSettingsFragment);
         }
         return super.onOptionsItemSelected(item);
@@ -81,20 +89,24 @@ public class ProfileFragment extends Fragment {
         mStorageReference = FirebaseStorage.getInstance().getReference();
 
         mPlaceholder = view.findViewById(R.id.text_profile_not_logged_in);
+        //textview mostrata nel caso in cui l'utente non abbia creato alcun drink
         mPlaceholder.setText(R.string.value_no_custom_drinks);
         mYourDrinks = view.findViewById(R.id.text_profile_your_drinks);
         mUserImage = view.findViewById(R.id.image_profile);
+        //setta l'immagine (se é stata cambiata) altrimenti mette quella di default
         setUserImage();
 
         mUserNameCustom = view.findViewById(R.id.text_profile_user_name);
         RecyclerView recyclerView = view.findViewById(R.id.profile_recycler);
 
-        FirebaseDBCustomDrink db = new FirebaseDBCustomDrink(mAuth.getCurrentUser().getUid());
+        FirebaseDBCustomDrink db = new FirebaseDBCustomDrink(Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
 
         db.readCocktails(listOfCustomDrink -> {
+            //se l'utente non ha creato alcun drink
             if(listOfCustomDrink.size() == 0) {
                 mPlaceholder.setVisibility(View.VISIBLE);
                 mYourDrinks.setVisibility(View.INVISIBLE);
+                //se l'utente ha creato almeno un drink
             } else {
                 mYourDrinks.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.VISIBLE);
@@ -108,19 +120,24 @@ public class ProfileFragment extends Fragment {
                         Fragment cocktailDetail = CustomDrinkDetailFragment.newInstance(listOfCustomDrink.get(position).getName(), listOfCustomDrink.get(position).getMethod(),
                                 listOfCustomDrink.get(position).getIngredients(), listOfCustomDrink.get(position).getImageUrl());
 
-                        Navigation.findNavController(getView()).navigate(R.id.action_profileFragment_to_customDrinkDetailFragment);
+                        //visualizzazione del detail fragment del custom drink
+                        Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_customDrinkDetailFragment);
                     }
 
+                    //al click del cestino
                     @Override
                     public void onDeleteClick(int position, View v) {
+                        //viene mostrata una alert dialog che chiede la conferma dell'eliminazione del custom drink
                         new MaterialAlertDialogBuilder(requireActivity(), R.style.AlertDialogTheme)
                                 .setTitle("Eliminare il drink")
-                                .setMessage("Sei sicuro di voler eliminare il tuo drink?/nÈ un'azione irreversibile.")
+                                .setMessage("Sei sicuro di voler eliminare il tuo drink?"+"\n"+"È un'azione irreversibile.")
                                 .setPositiveButton("Conferma", (dialog, which) -> db.deleteCustomDrink(listOfCustomDrink.get(position), listOfCustomDrinkCocktail -> {
+                                    //viene riaggiornata la lista dei custom drink
                                     customDrinkAdapter.setListOfCocktails(listOfCustomDrinkCocktail);
                                     recyclerView.getRecycledViewPool().clear();
                                     customDrinkAdapter.notifyDataSetChanged();
-                                    Navigation.findNavController(getView()).navigate(R.id.action_profileFragment_self);
+                                    //refresh per vedere i drink effettivamente presenti nel profilo
+                                    Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_self);
                                 }))
                                 .setNegativeButton("Esci", null)
                                 .show();
@@ -130,6 +147,7 @@ public class ProfileFragment extends Fragment {
 
         });
 
+        //setta la textview del nome utente accedento a firestore e prendendo lo username inserito dall'utente
         user.setUserID(mAuth.getUid());
         DocumentReference documentReference = mFirestore.collection("Utenti").document(user.getUserID());
         documentReference.get().addOnSuccessListener(documentSnapshot -> {
@@ -138,17 +156,22 @@ public class ProfileFragment extends Fragment {
             }
         }).addOnFailureListener(e -> Log.d("ProfileFragment", "OnFailure mUserName"));
 
+        //setta la textview della email presente su FirebaseAuth
         TextView mEmailCustom = view.findViewById(R.id.text_profile_email);
         mEmailCustom.setText(mAuth.getCurrentUser().getEmail());
 
+        //bottone che permette di andare nel fragment di creazione del CustomDrink
         FloatingActionButton mAddDrinks = view.findViewById(R.id.floating_action_button_profile_add_drink);
-        mAddDrinks.setOnClickListener(v -> Navigation.findNavController(getView()).navigate(R.id.action_profileFragment_to_customDrinkFragment));
+        mAddDrinks.setOnClickListener(v -> Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_customDrinkFragment));
 
     }
 
+    //setta l'immagine dell'utente all'interno del fragment
     private void setUserImage() {
+        //prende il riferimento nello storage dello userImage
         StorageReference fileRef = mStorageReference
-                .child("UserImage/" + mAuth.getCurrentUser().getUid() + "/profile.jpg");
+                .child("UserImage/" + Objects.requireNonNull(mAuth.getCurrentUser()).getUid() + "/profile.jpg");
+        //carica l'immagine nella circle imageView
         fileRef.getDownloadUrl().addOnSuccessListener(uri -> Picasso.get().load(uri).into(mUserImage));
     }
 

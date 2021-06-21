@@ -26,10 +26,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 import it.unimib.letsdrink.R;
 import it.unimib.letsdrink.domain.Cocktail;
 
+//fragment per la creazione dei custom drink
 public class CustomDrinkFragment extends Fragment {
 
     private LinearLayout mLayoutIngredientsList;
@@ -44,17 +46,12 @@ public class CustomDrinkFragment extends Fragment {
     public CustomDrinkFragment() { }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         ActionBar actionBar= ((AppCompatActivity) requireActivity()).getSupportActionBar();
+        assert actionBar != null;
         actionBar.setTitle("Cocktail personalizzato");
-        setHasOptionsMenu(true);
 
         return inflater.inflate(R.layout.fragment_custom_drink, container, false);
     }
@@ -63,7 +60,7 @@ public class CustomDrinkFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String currentUser = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         collezione = db.collection("Utenti");
@@ -78,28 +75,35 @@ public class CustomDrinkFragment extends Fragment {
 
         mCustomDrinkImage = view.findViewById(R.id.image_custom_drink_added_from_user);
 
+        //setta l'immagine di default del custom drink (su firebase)
         setDefaultCustomDrinkImage();
 
         ImageView mSetDrinkPhoto = view.findViewById(R.id.image_custom_drink_camera);
         mSetDrinkPhoto.setOnClickListener(v -> {
+            //intent implicito che serve per aprire la galleria del telefono
             Intent openGalleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(openGalleryIntent, 1000);
         });
 
+        //al click del simbolo "+" aggiunge gli ingredienti
         mAddIngredient.setOnClickListener(v -> addView());
 
         FloatingActionButton mCreateCustomDrink = view.findViewById(R.id.floating_action_button_custom_drink_add);
         mCreateCustomDrink.setOnClickListener(v -> {
 
             if(controlParameters()) {
+                //inserisce i dati all'interno dell'oggetto mCustomDrink che fa riferimento alla classe Cocktail
                 mCustomDrink.setIngredients(mIngredientsCustomDrink);
                 mCustomDrink.setName(mNameCustomDrink.getText().toString());
                 mCustomDrink.setMethod(mMethodCustomDrink.getText().toString());
 
+                //inserisce il custom drink all'interno della sub-collection dentro il documento Utente (dello specifico current user)
                 collezione.document(currentUser).collection("customDrink").add(mCustomDrink);
 
-                Navigation.findNavController(getView())
+                //una volta creato riporta l'utente sulla pagina del profilo
+                Navigation.findNavController(requireView())
                         .navigate(R.id.action_customDrinkFragment_to_profileFragment);
+                //se i parametri non sono corretti allora verrá visualizzato un messaggio di errore
             } else {
                 Toast.makeText(getContext(), "Inserisci tutti i campi richiesti", Toast.LENGTH_SHORT).show();
             }
@@ -107,15 +111,18 @@ public class CustomDrinkFragment extends Fragment {
 
     }
 
+    //controllo parametri di inserimento del custom drink
     private boolean controlParameters() {
         mIngredientsCustomDrink.clear();
         boolean result = true;
 
+        //controllo della lista degli ingredienti
         for(int i = 0; i < mLayoutIngredientsList.getChildCount(); i++){
 
             View ingredientsListView = mLayoutIngredientsList.getChildAt(i);
             EditText ingredientInsert = ingredientsListView.findViewById(R.id.edit_text_ingredient_list);
 
+            //i campi non devono essere nulli
             if(!ingredientInsert.getText().toString().equals("")) {
                 mIngredientsCustomDrink.add(ingredientInsert.getText().toString());
             } else {
@@ -124,14 +131,17 @@ public class CustomDrinkFragment extends Fragment {
             }
         }
 
+        //se non hai mai cliccato sul "+" per inserire gli ingredienti: ERRORE
         if(mIngredientsCustomDrink.size() == 0){
             result = false;
         }
 
+        //i campi non devono essere nulli
         if(mNameCustomDrink.getText().toString().equals("")) {
             result = false;
         }
 
+        //i campi non devono essere nulli
         if(mMethodCustomDrink.getText().toString().equals("")) {
             result = false;
         }
@@ -139,6 +149,7 @@ public class CustomDrinkFragment extends Fragment {
         return result;
     }
 
+    //permette di inserire il layout per inserire un nuovo ingrediente
     private void addView() {
 
         @SuppressLint("InflateParams")
@@ -152,33 +163,43 @@ public class CustomDrinkFragment extends Fragment {
 
     }
 
+    //permette di rimuovere il layout di un nuovo ingrediente
     private void removeView(View view) {
         mLayoutIngredientsList.removeView(view);
     }
 
+    //gestice l'intent della galleria
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 1000) {
             if(resultCode == Activity.RESULT_OK) {
+                assert data != null;
+                //sovrascrive l'immagine di default rossa nella pagina con la foto inserita dall'utente
                 Uri imageUri = data.getData();
                 mCustomDrinkImage.setImageURI(imageUri);
 
+                //carica l'immagine inserita su firebase
                 uploadDrinkImageToFirebase(imageUri);
             }
         }
     }
 
+    //carica l'immagine inserita su firebase
     private void uploadDrinkImageToFirebase(Uri imageUri) {
+        //entra nella cartella corretta su firebase storage e inserisce l'immagine dandole il nome del custom drink scelto dall'utente
         StorageReference fileRef = mStorageReference
-                .child("UserImage/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/"
+                .child("UserImage/" + Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid() + "/"
                         + mNameCustomDrink.getText().toString()+".jpg");
+        //permette di avere un feedback nel caso l'immagine sia stata caricata correttamente o no
         fileRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
             Toast.makeText(getContext(), "Immagine caricata", Toast.LENGTH_SHORT).show();
+            //setta l'url dell'oggetto custom drink
             fileRef.getDownloadUrl().addOnSuccessListener(uri -> mCustomDrink.setImageUrl(uri.toString()));
         }).addOnFailureListener(e -> Toast.makeText(getContext(), "Immagine NON caricata", Toast.LENGTH_SHORT).show());
     }
 
+    //metodo che setta l'immagine di default al custom drink (se non viene inserita alcuna immagine dall'utente)
     private void setDefaultCustomDrinkImage() {
         Random random = new Random();
         int ranNum = random.nextInt(8);

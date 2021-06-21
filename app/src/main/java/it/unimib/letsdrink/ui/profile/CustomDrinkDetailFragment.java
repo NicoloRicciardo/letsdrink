@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import it.unimib.letsdrink.R;
 
+//fragment del singolo custom drink
 public class CustomDrinkDetailFragment extends Fragment {
     private static String name, method, imageUrl;
     private static StringBuilder ingredienti;
@@ -43,6 +44,7 @@ public class CustomDrinkDetailFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_custom_drink_detail, container, false);
         ActionBar actionBar= ((AppCompatActivity) requireActivity()).getSupportActionBar();
+        assert actionBar != null;
         actionBar.setTitle(name);
         setHasOptionsMenu(true);
 
@@ -52,7 +54,7 @@ public class CustomDrinkDetailFragment extends Fragment {
 
         txtIngredients.setText(ingredienti);
         txtMethod.setText(method);
-        Glide.with(getContext()).load(imageUrl).into(img);
+        Glide.with(requireContext()).load(imageUrl).into(img);
 
         return root;
     }

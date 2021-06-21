@@ -41,6 +41,7 @@
     <string name="value_no_custom_drinks">Non hai ancora creato nessun drink…\nCosa aspetti?</string>
     <string name="value_no_custom_drinks_placeholder">placeholder</string>
     <string name="image_description_create_custom_drink">Aggiungi un tuo drink</string>
+    <!--<string name="alert_delete_custom_drink">Sei sicuro di voler eliminare il tuo drink?/nÈ un\'azione irreversibile.</string>-->
 
     <!--Settings-->
     <string name="settings_category_your_profile">Il tuo profilo</string>

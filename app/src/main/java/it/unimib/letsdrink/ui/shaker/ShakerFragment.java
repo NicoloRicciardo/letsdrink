@@ -17,7 +17,9 @@ import it.unimib.letsdrink.R;
 import it.unimib.letsdrink.firebaseDB.FirebaseDBCocktails;
 import it.unimib.letsdrink.ui.home.CocktailDetailFragment;
 
+//fragment dello shaker
 public class ShakerFragment extends Fragment implements SensorEventListener {
+
     private SensorManager sensorManager;
     private Sensor acelerometerSensor;
     private boolean isAceletometerSensorAvaiable, isNotFirstTime = false;
@@ -27,12 +29,12 @@ public class ShakerFragment extends Fragment implements SensorEventListener {
     private int random;
 
     /*all' onCreateView istanziamo il sensor manager per accedere ai sensori
-    a noi interessa l'acelerometro e appena lo riceviamo lo settiamo a disponibile
+    a noi interessa l'accelerometro e appena lo riceviamo lo settiamo a disponibile
     facciamo l'inflate del file xml dello shaker*/
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
+        sensorManager = (SensorManager) requireActivity().getSystemService(Context.SENSOR_SERVICE);
 
         if (sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null) {
             acelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -52,33 +54,26 @@ public class ShakerFragment extends Fragment implements SensorEventListener {
      di almeno 5 unità ci sposteremo nel fragment relativo al singolo cocktail randomico*/
     @Override
     public void onSensorChanged(SensorEvent event) {
-        Log.d("attivo evento 1", event.values[0] + "m/s2 su asse x");
-        Log.d("attivo evento 2", event.values[1] + "m/s2 su asse y");
-        Log.d("attivo evento 3", event.values[2] + "m/s2 su asse z");
 
         float currentX = event.values[0];
         float currentY = event.values[1];
         float currentZ = event.values[2];
 
+        //la prima volta non vengono effettuate le differenze delle posizioni
         if (isNotFirstTime) {
 
             float xDifference = Math.abs(lastX - currentX);
             float yDifference = Math.abs(lastY - currentY);
             float zDifference = Math.abs(lastZ - currentZ);
 
-            Log.d("prova", String.valueOf(xDifference));
-
             float shakeThreshold = 5f;
             if ((xDifference > shakeThreshold && yDifference > shakeThreshold) ||
                     (xDifference > shakeThreshold && zDifference > shakeThreshold) ||
                     (yDifference > shakeThreshold && zDifference > shakeThreshold)) {
 
-                Log.d("shaker attivo", "stai shakerando");
-
                 FirebaseDBCocktails db = new FirebaseDBCocktails();
                 db.readCocktails(listOfCocktails -> {
                     random = (int) (Math.random() * listOfCocktails.size());
-                    Log.d("random", listOfCocktails.get(random).getName());
 
                     Fragment cocktailDetail = CocktailDetailFragment.newInstance(listOfCocktails.get(random).getName(), listOfCocktails.get(random).getMethod(),
                             listOfCocktails.get(random).getIngredients(), listOfCocktails.get(random).getImageUrl());
@@ -86,6 +81,8 @@ public class ShakerFragment extends Fragment implements SensorEventListener {
 
                 });
 
+                //questo if serve per evitare una volta mostrato il cocktail, scuotendo il telefono cerchi un altro cocktail
+                //e tenti di passare al coktailDetailFragment con un'altra action. Si toglie la registrazione del listener all'evento
                 if (isAceletometerSensorAvaiable) {
                     sensorManager.unregisterListener(this);
                 }
@@ -94,12 +91,12 @@ public class ShakerFragment extends Fragment implements SensorEventListener {
 
         }
 
+        //salva le posizioni correnti
         lastX = currentX;
         lastY = currentY;
         lastZ = currentZ;
 
         isNotFirstTime = true;
-        Log.d("prova", String.valueOf(isNotFirstTime));
     }
 
     @Override
