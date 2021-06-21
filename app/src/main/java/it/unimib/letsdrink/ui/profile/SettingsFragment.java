@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +33,6 @@ import it.unimib.letsdrink.R;
 //fragment delle impostazioni
 public class SettingsFragment extends Fragment {
 
-    private static final String TAG = "TempSettingsFragment";
     private FirebaseAuth mAuth;
     private FirebaseUser firebaseUser;
     private DocumentReference documentReference;
@@ -46,7 +44,7 @@ public class SettingsFragment extends Fragment {
 
         ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
         assert actionBar != null;
-        actionBar.setTitle("Impostazioni");
+        actionBar.setTitle(R.string.title_setting);
 
         return inflater.inflate(R.layout.fragment_settings, container, false);
     }
@@ -76,9 +74,9 @@ public class SettingsFragment extends Fragment {
             EditText resetUsername = new EditText(getActivity());
             //mostra alert dialog
             new MaterialAlertDialogBuilder(requireActivity(), R.style.AlertDialogTheme)
-                    .setTitle("Modifica Username")
+                    .setTitle(R.string.title_change_username)
                     .setView(resetUsername)
-                    .setPositiveButton("Conferma", (dialog, which) -> {
+                    .setPositiveButton(R.string.button_confirm, (dialog, which) -> {
                         //se l'edittext non é vuota
                         if (!resetUsername.getText().toString().isEmpty()) {
                             //cambia lo username su firestore
@@ -87,10 +85,10 @@ public class SettingsFragment extends Fragment {
                             documentReference.update(edited);
                             //altrimenti mostra un messaggio di errore
                         } else {
-                            Toast.makeText(getContext(), "Error! Empty", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), R.string.toast_error_empty, Toast.LENGTH_SHORT).show();
                         }
                     })
-                    .setNegativeButton("Esci", null)
+                    .setNegativeButton(R.string.button_exit, null)
                     .show();
         });
 
@@ -100,23 +98,21 @@ public class SettingsFragment extends Fragment {
             EditText resetPassword = new EditText(getActivity());
             //mostra alert dialog
             new MaterialAlertDialogBuilder(requireActivity(), R.style.AlertDialogTheme)
-                    .setTitle("Modifica Password")
+                    .setTitle(R.string.title_change_password)
                     .setView(resetPassword)
-                    .setPositiveButton("Conferma", (dialog, which) -> {
+                    .setPositiveButton(R.string.button_confirm, (dialog, which) -> {
                         //se l'edittext non é vuota
                         if (!resetPassword.getText().toString().isEmpty()) {
                             //cambia la password su firebaseAuth
                             firebaseUser.updatePassword(resetPassword.getText().toString()).addOnSuccessListener(unused ->
-                                    Toast.makeText(getContext(), "Password cambiata", Toast.LENGTH_SHORT).show()).addOnFailureListener(e -> {
-                                Toast.makeText(getContext(), "Password NON cambiata", Toast.LENGTH_SHORT).show();
-                                Log.d(TAG, "eccezione: " + e);
-                            });
+                                    Toast.makeText(getContext(), R.string.toast_changed_password, Toast.LENGTH_SHORT).show())
+                                    .addOnFailureListener(e -> Toast.makeText(getContext(), R.string.toast_NOT_changed_password, Toast.LENGTH_SHORT).show());
                             //altrimenti mostra un messaggio di errore
                         } else {
-                            Toast.makeText(getContext(), "Error! Empty", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), R.string.toast_error_empty, Toast.LENGTH_SHORT).show();
                         }
                     })
-                    .setNegativeButton("Esci", null)
+                    .setNegativeButton(R.string.button_exit, null)
                     .show();
         });
 
@@ -124,55 +120,61 @@ public class SettingsFragment extends Fragment {
         Button btnAboutUs = view.findViewById(R.id.button_settings_about);
         btnAboutUs.setOnClickListener(v -> new MaterialAlertDialogBuilder(requireActivity(), R.style.AlertDialogTheme)
                 //mostra una dialog con la descrizione dell'app
-                .setTitle("About us")
-                .setMessage("L'applicazione mostra i cocktail")
-                .setPositiveButton("OK", null)
+                .setTitle(R.string.title_about)
+                .setMessage(R.string.message_about)
+                .setPositiveButton(R.string.button_ok, null)
                 .show());
 
         //click sul bottone privacy
         Button btnPrivacy = view.findViewById(R.id.button_settings_privacy);
         btnPrivacy.setOnClickListener(v -> new MaterialAlertDialogBuilder(requireActivity(), R.style.AlertDialogTheme)
                 //mostra una dialog con le policy della privacy
-                .setTitle("Privacy Policy")
-                .setMessage("Informazioni sulla raccolta e diffusione dei dati")
-                .setPositiveButton("OK", null)
+                .setTitle(R.string.title_privacy)
+                .setMessage(R.string.message_privacy)
+                .setPositiveButton(R.string.button_ok, null)
                 .show());
 
         //click sul bottone logout
         Button btnLogout = view.findViewById(R.id.button_settings_logout);
         //richiede la conferma di logout
         btnLogout.setOnClickListener(v -> new MaterialAlertDialogBuilder(requireActivity(), R.style.AlertDialogTheme)
-                .setTitle("Effettuare il logout")
-                .setMessage("Sei sicuro di voler effettuare il logout?")
-                .setPositiveButton("Conferma", (dialog, which) -> {
+                .setTitle(R.string.title_logout)
+                .setMessage(R.string.message_logout)
+                .setPositiveButton(R.string.button_confirm, (dialog, which) -> {
                     //effettua il logout e riporta al login
                     mAuth.signOut();
                     goOnLogin();
                 })
-                .setNegativeButton("Esci", null)
+                .setNegativeButton(R.string.button_exit, null)
                 .show());
 
         //bottone per rimuovere un account
         Button btnRemove = view.findViewById(R.id.button_settings_delete_account);
         //richiede la conferma dell'eliminazione
         btnRemove.setOnClickListener(v -> new MaterialAlertDialogBuilder(requireActivity(), R.style.AlertDialogTheme)
-                .setTitle("Elimina Account")
-                .setMessage("Sei sicuro di voler eliminare il tuo account?")
-                .setPositiveButton("Conferma", (dialog, which) -> {
+                .setTitle(R.string.title_delete_account)
+                .setMessage(R.string.message_delete_account)
+                .setPositiveButton(R.string.button_confirm, (dialog, which) -> {
                     //elimina i dati da FirebaseAuth e da Firestore
                     CollectionReference collezione = FirebaseFirestore.getInstance().collection("Utenti");
                     collezione.document(firebaseUser.getUid()).delete();
                     Objects.requireNonNull(mAuth.getCurrentUser()).delete();
-                    goOnLogin();
+                    goOnHome();
                 })
-                .setNegativeButton("Esci", null)
+                .setNegativeButton(R.string.button_exit, null)
                 .show());
     }
 
-    //metodo che manda al login
+    //metodo che manda al login (quando fai logout)
     private void goOnLogin() {
         Navigation.findNavController(requireView())
-                .navigate(R.id.action_tempSettingsFragment_to_navigation_profile);
+                .navigate(R.id.action_settingsFragment_to_navigation_profile);
+    }
+
+    //metodo che manda alla home (quando elimini l'account)
+    private void goOnHome() {
+        Navigation.findNavController(requireView())
+                .navigate(R.id.action_settingsFragment_to_navigation_drinks);
     }
 
     //metodo che gestisce il cambio immagine
@@ -194,8 +196,6 @@ public class SettingsFragment extends Fragment {
         //carica l'immagine su firebase storage
         StorageReference fileRef = storageReference.child("UserImage/" + Objects.requireNonNull(mAuth.getCurrentUser()).getUid() + "/profile.jpg");
         fileRef.putFile(imageUri).addOnSuccessListener(taskSnapshot ->
-                Toast.makeText(getContext(), "Immagine creata", Toast.LENGTH_SHORT).show()).addOnFailureListener(e -> {
-            Toast.makeText(getContext(), "Immagine NON creata", Toast.LENGTH_SHORT).show();
-        });
+                Toast.makeText(getContext(), R.string.toast_changed_user_image, Toast.LENGTH_SHORT).show()).addOnFailureListener(e -> Toast.makeText(getContext(), R.string.toast_NOT_changed_user_image, Toast.LENGTH_SHORT).show());
     }
 }

@@ -51,7 +51,7 @@ public class CustomDrinkFragment extends Fragment {
 
         ActionBar actionBar= ((AppCompatActivity) requireActivity()).getSupportActionBar();
         assert actionBar != null;
-        actionBar.setTitle("Cocktail personalizzato");
+        actionBar.setTitle(R.string.title_custom_drink);
 
         return inflater.inflate(R.layout.fragment_custom_drink, container, false);
     }
@@ -105,7 +105,7 @@ public class CustomDrinkFragment extends Fragment {
                         .navigate(R.id.action_customDrinkFragment_to_profileFragment);
                 //se i parametri non sono corretti allora verrá visualizzato un messaggio di errore
             } else {
-                Toast.makeText(getContext(), "Inserisci tutti i campi richiesti", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.toast_insert_all_data, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -193,10 +193,10 @@ public class CustomDrinkFragment extends Fragment {
                         + mNameCustomDrink.getText().toString()+".jpg");
         //permette di avere un feedback nel caso l'immagine sia stata caricata correttamente o no
         fileRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
-            Toast.makeText(getContext(), "Immagine caricata", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.toast_changed_user_image, Toast.LENGTH_SHORT).show();
             //setta l'url dell'oggetto custom drink
             fileRef.getDownloadUrl().addOnSuccessListener(uri -> mCustomDrink.setImageUrl(uri.toString()));
-        }).addOnFailureListener(e -> Toast.makeText(getContext(), "Immagine NON caricata", Toast.LENGTH_SHORT).show());
+        }).addOnFailureListener(e -> Toast.makeText(getContext(), R.string.toast_NOT_changed_user_image, Toast.LENGTH_SHORT).show());
     }
 
     //metodo che setta l'immagine di default al custom drink (se non viene inserita alcuna immagine dall'utente)

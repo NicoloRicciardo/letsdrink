@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Let\'s Drink!</string>
+
+    <!--Titles-->
     <string name="title_home">Home</string>
     <string name="title_categories">Categorie</string>
     <string name="title_shaker">Shaker</string>
@@ -8,6 +10,34 @@
     <string name="title_search">Cerca</string>
     <string name="title_setting">Impostazioni</string>
     <string name="title_filter">Filtri</string>
+    <string name="title_custom_drink">Cocktail personalizzato</string>
+    <string name="title_login">Login</string>
+    <string name="title_registration">Registrazione</string>
+
+    <!--Cocktail-->
+    <string name="ricerca_cocktail">Cerca Cocktail…</string>
+    <string name="cerca_il_cocktail_per_ingredienti">Cerca il cocktail per ingredienti</string>
+    <string name="ananas">Ananas</string>
+    <string name="arancia_filter">Arancia</string>
+    <string name="cognac_filter">Cognac</string>
+    <string name="gin_filter">Gin</string>
+    <string name="lime">Lime</string>
+    <string name="menta">Menta</string>
+    <string name="pesca_filter">Pesca</string>
+    <string name="rum">Rum</string>
+    <string name="soda_filter">Soda</string>
+    <string name="vodka_filter">Vodka</string>
+    <string name="value_description_icon">icona</string>
+    <string name="no_preferiti">Non hai ancora salvato dei preferiti!</string>
+    <string name="no_accesso">Non hai ancora effettuato l\'accesso!</string>
+
+    <!--Detail cocktail-->
+    <string name="value_ingredients">Ingredienti</string>
+    <string name="value_method">Procedimento</string>
+    <string name="value_description_image">Immagine drink</string>
+
+    <!--Shaker-->
+    <string name="shaker_string">Scuoti il telefono e ottieni un cocktail</string>
 
     <!--Login and Registration-->
     <string name="lets_drink_logo">logo</string>
@@ -41,7 +71,6 @@
     <string name="value_no_custom_drinks">Non hai ancora creato nessun drink…\nCosa aspetti?</string>
     <string name="value_no_custom_drinks_placeholder">placeholder</string>
     <string name="image_description_create_custom_drink">Aggiungi un tuo drink</string>
-    <!--<string name="alert_delete_custom_drink">Sei sicuro di voler eliminare il tuo drink?/nÈ un\'azione irreversibile.</string>-->
 
     <!--Settings-->
     <string name="settings_category_your_profile">Il tuo profilo</string>
@@ -75,25 +104,40 @@
     <string name="value_custom_drink_method">Inserisci il procedimento…</string>
     <string name="image_description_custom_drink_done">Finito il drink</string>
 
-    <!--Detail image-->
-    <string name="value_ingredients">Ingredienti</string>
-    <string name="value_method">Procedimento</string>
-    <string name="value_description_image">Immagine drink</string>
+    <!--Material Alert Dialog-->
+    <string name="button_confirm">Conferma</string>
+    <string name="button_exit">Esci</string>
+    <string name="button_ok">OK</string>
+    <string name="button_dismiss">Annulla</string>
+    <string name="title_reset_password">Reset Password?</string>
+    <string name="message_reset_password">Inserisci la tua Email per ricevere il link di reset.</string>
+    <string name="title_delete_custom_drink">Eliminare il drink?</string>
+    <string name="message_delete_custom_drink">Sei sicuro di voler eliminare il tuo drink?\nÈ un\'azione irreversibile.</string>
+    <string name="title_change_username">Modifica Username</string>
+    <string name="title_change_password">Modifica Password</string>
+    <string name="title_about">About Let\'s Drink!</string>
+    <string name="message_about">L\'applicazione mostra dei cocktail presenti su un database. L\'utente loggato puó creare dei cocktail personalizzati.</string>
+    <string name="title_privacy">Privacy Policy</string>
+    <string name="message_privacy">Informazioni sulla raccolta e diffusione dei dati.</string>
+    <string name="title_logout">Effettuare il Logout</string>
+    <string name="message_logout">Sei sicuro di voler effettuare il logout?</string>
+    <string name="title_delete_account">Elimina Account</string>
+    <string name="message_delete_account">Sei sicuro di voler eliminare il tuo account?</string>
+    <string name="title_add_fav_not_logged">Errore</string>
+    <string name="message_add_fav_not_logged">Devi prima effettuare l\'accesso!</string>
 
-    <string name="ricerca_cocktail">Cerca Cocktail…</string>
-    <string name="shaker_string">Scuoti il telefono e ottieni un cocktail</string>
-    <string name="cerca_il_cocktail_per_ingredienti">Cerca il cocktail per ingredienti</string>
-    <string name="ananas">Ananas</string>
-    <string name="arancia_filter">Arancia</string>
-    <string name="cognac_filter">Cognac</string>
-    <string name="gin_filter">Gin</string>
-    <string name="lime">Lime</string>
-    <string name="menta">Menta</string>
-    <string name="pesca_filter">Pesca</string>
-    <string name="rum">Rum</string>
-    <string name="soda_filter">Soda</string>
-    <string name="vodka_filter">Vodka</string>
-    <string name="value_description_icon">icona</string>
-    <string name="no_preferiti">Non hai ancora salvato dei preferiti!</string>
-    <string name="no_accesso">Non hai ancora effettuato l\'accesso!</string>
+    <!--Toast-->
+    <string name="toast_error_empty">Errore! Inserire il valore richiesto!</string>
+    <string name="toast_changed_password">Password cambiata.</string>
+    <string name="toast_NOT_changed_password">Errore, password NON cambiata.\nRiprova.</string>
+    <string name="toast_changed_user_image">Immagine caricata.</string>
+    <string name="toast_NOT_changed_user_image">Errore, immagine NON caricata.\nRiprova.</string>
+    <string name="toast_used_email">Email già in uso!</string>
+    <string name="toast_reset_password">Email inviata.</string>
+    <string name="toast_NOT_reset_password">Errore, email non inviata.</string>
+    <string name="toast_sign_up_with_google">Accesso con Google effettuato.</string>
+    <string name="toast_NOT_sign_up_with_google">Accesso con Google fallito.</string>
+    <string name="toast_google_failed_auth">Autenticazione fallita.</string>
+    <string name="toast_insert_all_data">Inserisci tutti i campi richiesti.</string>
+
 </resources>

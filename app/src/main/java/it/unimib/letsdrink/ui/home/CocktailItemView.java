@@ -73,9 +73,9 @@ public class CocktailItemView extends RecyclerView.ViewHolder {
                 }
             } else { // se non sei loggato appare la dialog che ti esorta a farlo
                 new MaterialAlertDialogBuilder(context, R.style.DialogTheme)
-                        .setTitle("Errore")
-                        .setMessage("Devi prima loggarti!")
-                        .setPositiveButton("OK", null)
+                        .setTitle(R.string.title_add_fav_not_logged)
+                        .setMessage(R.string.message_add_fav_not_logged)
+                        .setPositiveButton(R.string.button_ok, null)
                         .setBackground(new ColorDrawable(Color.TRANSPARENT))
                         .show();
             }

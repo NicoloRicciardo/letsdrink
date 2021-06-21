@@ -59,7 +59,7 @@ public class FiltersIngredients extends DialogFragment {
         //creazione della dialog
         return new MaterialAlertDialogBuilder(requireActivity(), R.style.DialogTheme)
                 .setView(v)
-                .setPositiveButton("Ok", (dialog, which) -> {
+                .setPositiveButton(R.string.button_ok, (dialog, which) -> {
                     filtri[0] = sAnanas.isChecked();
                     filtri[1] = sArancia.isChecked();
                     filtri[2] = sCognac.isChecked();
@@ -75,7 +75,7 @@ public class FiltersIngredients extends DialogFragment {
                     dialog.dismiss();
                     filter.okButtonClick(getFiltri());
                 })
-                .setNegativeButton("Annulla", (dialog, which) -> dialog.dismiss())
+                .setNegativeButton(R.string.button_dismiss, (dialog, which) -> dialog.dismiss())
                 .setBackground(new ColorDrawable(Color.TRANSPARENT))
                 .create();
     }

@@ -68,10 +68,12 @@
             android:id="@+id/action_navigation_profile_to_profileFragment"
             app:destination="@id/profileFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/cocktailDetailFragment"
         android:name="it.unimib.letsdrink.ui.home.CocktailDetailFragment"
         />
+
     <fragment
         android:id="@+id/cocktailsCategoryFragment"
         android:name="it.unimib.letsdrink.ui.categories.CocktailsCategoryFragment"
@@ -83,10 +85,11 @@
             android:name="name"
             app:argType="string" />
     </fragment>
+
     <fragment
         android:id="@+id/registrationFragment"
         android:name="it.unimib.letsdrink.ui.profile.RegistrationFragment"
-        android:label="Registrazione"
+        android:label="@string/title_registration"
         tools:layout="@layout/fragment_registration">
         <action
             android:id="@+id/action_registrationFragment_to_navigation_profile"
@@ -95,10 +98,11 @@
             android:id="@+id/action_registrationFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/profileFragment"
         android:name="it.unimib.letsdrink.ui.profile.ProfileFragment"
-        android:label="Profilo"
+        android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" >
         <action
             android:id="@+id/action_profileFragment_to_customDrinkFragment"
@@ -107,32 +111,32 @@
             android:id="@+id/action_profileFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
         <action
-            android:id="@+id/action_profileFragment_to_tempSettingsFragment"
-            app:destination="@id/tempSettingsFragment" />
-        <action
             android:id="@+id/action_profileFragment_to_customDrinkDetailFragment"
             app:destination="@id/customDrinkDetailFragment" />
         <action
             android:id="@+id/action_profileFragment_self"
             app:destination="@id/profileFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/customDrinkFragment"
         android:name="it.unimib.letsdrink.ui.profile.CustomDrinkFragment"
-        android:label="Cocktail personalizzato"
+        android:label="@string/title_custom_drink"
         tools:layout="@layout/fragment_custom_drink" >
         <action
             android:id="@+id/action_customDrinkFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
     </fragment>
+
     <dialog
         android:id="@+id/filtersIngredients"
         android:name="it.unimib.letsdrink.ui.home.FiltersIngredients"
         android:label="FiltersIngredients" />
+
     <fragment
         android:id="@+id/settingsFragment"
         android:name="it.unimib.letsdrink.ui.profile.SettingsFragment"
-        android:label="fragment_settings"
+        android:label="@string/title_setting"
         tools:layout="@layout/fragment_settings" >
         <action
             android:id="@+id/action_settingsFragment_to_profileFragment"
@@ -140,16 +144,11 @@
         <action
             android:id="@+id/action_settingsFragment_to_navigation_profile"
             app:destination="@id/navigation_profile" />
-    </fragment>
-    <fragment
-        android:id="@+id/tempSettingsFragment"
-        android:name="it.unimib.letsdrink.ui.profile.SettingsFragment"
-        android:label="fragment_temp_settings"
-        tools:layout="@layout/fragment_settings" >
         <action
-            android:id="@+id/action_tempSettingsFragment_to_navigation_profile"
-            app:destination="@id/navigation_profile" />
+            android:id="@+id/action_settingsFragment_to_navigation_drinks"
+            app:destination="@id/navigation_drinks" />
     </fragment>
+
     <fragment
         android:id="@+id/customDrinkDetailFragment"
         android:name="it.unimib.letsdrink.ui.profile.CustomDrinkDetailFragment"

@@ -162,7 +162,7 @@ public class RegistrationFragment extends Fragment {
                         goOnProfile();
                     } else {
                         if (task.getException() instanceof FirebaseAuthUserCollisionException) {
-                            Toast.makeText(getContext(), "Email già in uso!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), R.string.toast_used_email, Toast.LENGTH_SHORT).show();
                         }
                         // la registrazione NON ha successo
                     }

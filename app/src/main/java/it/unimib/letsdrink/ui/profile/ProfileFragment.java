@@ -53,7 +53,7 @@ public class ProfileFragment extends Fragment {
 
         ActionBar actionBar= ((AppCompatActivity) requireActivity()).getSupportActionBar();
         assert actionBar != null;
-        actionBar.setTitle("Profilo");
+        actionBar.setTitle(R.string.title_profile);
         //non mette la freccia per tornare indietro
         actionBar.setDisplayHomeAsUpEnabled(false);
         setHasOptionsMenu(true);
@@ -75,7 +75,7 @@ public class ProfileFragment extends Fragment {
         if (id == R.id.settings_item) {
             //manda al fragment delle impostazioni
             Navigation.findNavController(requireView())
-                    .navigate(R.id.action_profileFragment_to_tempSettingsFragment);
+                    .navigate(R.id.action_profileFragment_to_settingsFragment);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -129,9 +129,9 @@ public class ProfileFragment extends Fragment {
                     public void onDeleteClick(int position, View v) {
                         //viene mostrata una alert dialog che chiede la conferma dell'eliminazione del custom drink
                         new MaterialAlertDialogBuilder(requireActivity(), R.style.AlertDialogTheme)
-                                .setTitle("Eliminare il drink")
-                                .setMessage("Sei sicuro di voler eliminare il tuo drink?"+"\n"+"È un'azione irreversibile.")
-                                .setPositiveButton("Conferma", (dialog, which) -> db.deleteCustomDrink(listOfCustomDrink.get(position), listOfCustomDrinkCocktail -> {
+                                .setTitle(R.string.title_delete_custom_drink)
+                                .setMessage(R.string.message_delete_custom_drink)
+                                .setPositiveButton(R.string.button_confirm, (dialog, which) -> db.deleteCustomDrink(listOfCustomDrink.get(position), listOfCustomDrinkCocktail -> {
                                     //viene riaggiornata la lista dei custom drink
                                     customDrinkAdapter.setListOfCocktails(listOfCustomDrinkCocktail);
                                     recyclerView.getRecycledViewPool().clear();
@@ -139,7 +139,7 @@ public class ProfileFragment extends Fragment {
                                     //refresh per vedere i drink effettivamente presenti nel profilo
                                     Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_self);
                                 }))
-                                .setNegativeButton("Esci", null)
+                                .setNegativeButton(R.string.button_exit, null)
                                 .show();
                     }
                 });

@@ -112,27 +112,24 @@ public class LoginFragment extends Fragment {
 
             //viene mostrata una alert dialog
             new MaterialAlertDialogBuilder(requireActivity(), R.style.AlertDialogTheme)
-                    .setTitle("Reset Password?")
-                    .setMessage("Inserisci la tua Email per ricevere il link di reset.")
+                    .setTitle(R.string.title_reset_password)
+                    .setMessage(R.string.message_reset_password)
                     .setView(resetEmail)
-                    .setPositiveButton("Conferma", (dialog, which) -> {
+                    .setPositiveButton(R.string.button_confirm, (dialog, which) -> {
                         //se il campo edittext non é vuoto
                         if (!resetEmail.getText().toString().isEmpty()) {
                             //estrae l'email dalla edittext e manda il link di reset (se l'email esiste su firebase)
                             mAuth.sendPasswordResetEmail(resetEmail.getText().toString().trim())
                                     //reset link inviato
-                                    .addOnSuccessListener(unused -> Toast.makeText(getContext(), "Reset link sent to your Email.", Toast.LENGTH_SHORT).show())
+                                    .addOnSuccessListener(unused -> Toast.makeText(getContext(), R.string.toast_reset_password, Toast.LENGTH_SHORT).show())
                                     //reset link non inviato
-                                    .addOnFailureListener(e -> {
-                                        Toast.makeText(getContext(), "Error! Reset link not sent.", Toast.LENGTH_SHORT).show();
-                                        Log.d(TAG, "errore" + e);
-                                    });
+                                    .addOnFailureListener(e -> Toast.makeText(getContext(), R.string.toast_NOT_reset_password, Toast.LENGTH_SHORT).show());
                             //se l'email é vuota mostra un messaggio di errore
                         } else {
-                            Toast.makeText(getContext(), "Error! Empty", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), R.string.toast_error_empty, Toast.LENGTH_SHORT).show();
                         }
                     })
-                    .setNegativeButton("Esci", null)
+                    .setNegativeButton(R.string.button_exit, null)
                     .show();
         });
 
@@ -162,7 +159,6 @@ public class LoginFragment extends Fragment {
         googleSignInButton = view.findViewById(R.id.button_login_google);
         googleSignInButton.setOnClickListener(v -> {
             if (v.getId() == R.id.button_login_google) {
-                Log.d(TAG, "Cliccato Google");
                 signIn();
             }
         });
@@ -251,10 +247,10 @@ public class LoginFragment extends Fragment {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 assert account != null;
                 firebaseAuthWithGoogle(account.getIdToken());
-                Toast.makeText(getContext(), "Accesso con Google effettuato.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.toast_sign_up_with_google, Toast.LENGTH_SHORT).show();
             } catch (ApiException e) {
                 //google sign in fallito
-                Toast.makeText(getContext(), "Accesso con Google fallito.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.toast_NOT_sign_up_with_google, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -271,7 +267,7 @@ public class LoginFragment extends Fragment {
                         goOnProfile();
                     } else {
                         //sign in fallisce, mostra un messaggio
-                        Toast.makeText(getContext(), "Autenticazione fallita", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.toast_google_failed_auth, Toast.LENGTH_SHORT).show();
                     }
                 });
     }
