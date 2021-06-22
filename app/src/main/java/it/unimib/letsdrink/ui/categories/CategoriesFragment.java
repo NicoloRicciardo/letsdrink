@@ -32,7 +32,7 @@ public class CategoriesFragment extends Fragment {
             //al click delle cardview
             categoryAdapter.setOnItemClickListener((position, v) -> {
                 //impostazione delle variabili statiche del cocktailsCategoryFragment
-                Fragment cocktailsCategoryFragment = CocktailsCategoryFragment.newInstance(listOfCategories.get(position).getName(), listOfCategories.get(position).getImageUrl(),
+                CocktailsCategoryFragment.newInstance(listOfCategories.get(position).getName(), listOfCategories.get(position).getImageUrl(),
                         listOfCategories.get(position).getDrinks());
                 Bundle bundle = new Bundle();
                 //salviamo nel bundle il nome della categoria cliccata

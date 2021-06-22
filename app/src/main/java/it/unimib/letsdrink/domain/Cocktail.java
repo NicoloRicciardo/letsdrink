@@ -1,9 +1,11 @@
 package it.unimib.letsdrink.domain;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 //rappresentazione di un Cocktail
 public class Cocktail {
+
     private String method;
     private String name;
     private String imageUrl;
@@ -49,6 +51,15 @@ public class Cocktail {
 
     public void setIngredients(ArrayList<String> ingredients) {
         this.ingredients = ingredients;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cocktail cocktail = (Cocktail) o;
+        return Objects.equals(name, cocktail.name) &&
+                Objects.equals(ingredients, cocktail.ingredients);
     }
 
 }

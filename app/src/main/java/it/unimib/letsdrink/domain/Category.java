@@ -2,6 +2,7 @@ package it.unimib.letsdrink.domain;
 
 import com.google.firebase.firestore.DocumentReference;
 import java.util.ArrayList;
+import java.util.Objects;
 
 //rappresentazione di una categoria
 public class Category {
@@ -33,6 +34,14 @@ public class Category {
 
     public ArrayList<DocumentReference> getDrinks() {
         return drinks;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Category category = (Category) o;
+        return Objects.equals(name, category.name);
     }
 
 }

@@ -57,7 +57,7 @@ public class FavoritesFragment extends Fragment {
                     mFavoriteCocktailAdapter.setOnItemClickListener(new CocktailAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(int position, View v) {
-                            Fragment cocktailDetail = CocktailDetailFragment.newInstance(listOfFavorites.get(position).getName(), listOfFavorites.get(position).getMethod(),
+                            CocktailDetailFragment.newInstance(listOfFavorites.get(position).getName(), listOfFavorites.get(position).getMethod(),
                                     listOfFavorites.get(position).getIngredients(), listOfFavorites.get(position).getImageUrl());
                             Navigation.findNavController(requireView()).navigate(R.id.action_navigation_favorites_to_cocktailDetailFragment);
                         }

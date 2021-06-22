@@ -31,13 +31,12 @@ public class CocktailsCategoryFragment extends Fragment {
     public CocktailsCategoryFragment() {
     }
 
-    public static CocktailsCategoryFragment newInstance(String name, String imageUrl, ArrayList<DocumentReference> drinks) {
-        CocktailsCategoryFragment cocktailsCategoryFragment = new CocktailsCategoryFragment();
+    public static void newInstance(String name, String imageUrl, ArrayList<DocumentReference> drinks) {
+        new CocktailsCategoryFragment();
         CocktailsCategoryFragment.name = name;
         CocktailsCategoryFragment.drinks = drinks;
         CocktailsCategoryFragment.imageUrl = imageUrl;
 
-        return cocktailsCategoryFragment;
     }
 
     @Override
@@ -61,7 +60,7 @@ public class CocktailsCategoryFragment extends Fragment {
             cocktailAdapter.setOnItemClickListener(new CocktailAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(int position, View v) {
-                    Fragment cocktailDetail = CocktailDetailFragment.newInstance(listOfCocktails.get(position).getName(), listOfCocktails.get(position).getMethod(),
+                    CocktailDetailFragment.newInstance(listOfCocktails.get(position).getName(), listOfCocktails.get(position).getMethod(),
                             listOfCocktails.get(position).getIngredients(), listOfCocktails.get(position).getImageUrl());
                     Navigation.findNavController(requireView()).navigate(R.id.action_cocktailsCategoryFragment_to_cocktailDetailFragment);
 

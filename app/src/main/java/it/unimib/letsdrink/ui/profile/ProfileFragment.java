@@ -117,7 +117,7 @@ public class ProfileFragment extends Fragment {
                 customDrinkAdapter.setOnItemClickListener(new CustomDrinkAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(int position, View v) {
-                        Fragment cocktailDetail = CustomDrinkDetailFragment.newInstance(listOfCustomDrink.get(position).getName(), listOfCustomDrink.get(position).getMethod(),
+                        CustomDrinkDetailFragment.newInstance(listOfCustomDrink.get(position).getName(), listOfCustomDrink.get(position).getMethod(),
                                 listOfCustomDrink.get(position).getIngredients(), listOfCustomDrink.get(position).getImageUrl());
 
                         //visualizzazione del detail fragment del custom drink

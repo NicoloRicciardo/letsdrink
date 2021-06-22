@@ -73,7 +73,7 @@ public class ShakerFragment extends Fragment implements SensorEventListener {
                 db.readCocktails(listOfCocktails -> {
                     random = (int) (Math.random() * listOfCocktails.size());
 
-                    Fragment cocktailDetail = CocktailDetailFragment.newInstance(listOfCocktails.get(random).getName(), listOfCocktails.get(random).getMethod(),
+                    CocktailDetailFragment.newInstance(listOfCocktails.get(random).getName(), listOfCocktails.get(random).getMethod(),
                             listOfCocktails.get(random).getIngredients(), listOfCocktails.get(random).getImageUrl());
                     Navigation.findNavController(requireView()).navigate(R.id.action_navigation_shaker_to_cocktailDetailFragment2);
 

@@ -3,12 +3,9 @@ package it.unimib.letsdrink.firebaseDB;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
 import it.unimib.letsdrink.domain.Cocktail;
 
 //classe per operazioni CRUD (Create Read Update Delete) sulla sub-collezione favoritesCocktails della collezione Utenti su Firebase
