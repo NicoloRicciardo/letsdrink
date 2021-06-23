@@ -24,8 +24,8 @@ public class CustomDrinkDetailFragment extends Fragment {
     public CustomDrinkDetailFragment() {
     }
 
-    public static CustomDrinkDetailFragment newInstance(String name, String method, ArrayList<String> ingredients, String imageUrl) {
-        CustomDrinkDetailFragment fragment = new CustomDrinkDetailFragment();
+    public static void newInstance(String name, String method, ArrayList<String> ingredients, String imageUrl) {
+        new CustomDrinkDetailFragment();
         CustomDrinkDetailFragment.name = name;
         CustomDrinkDetailFragment.method = method;
         CustomDrinkDetailFragment.imageUrl = imageUrl;
@@ -35,7 +35,6 @@ public class CustomDrinkDetailFragment extends Fragment {
         for (int i = 0; i < ingredients.size(); i++)
             ingredienti.append(CustomDrinkDetailFragment.ingredients.get(i)).append("\n");
 
-        return fragment;
     }
 
 

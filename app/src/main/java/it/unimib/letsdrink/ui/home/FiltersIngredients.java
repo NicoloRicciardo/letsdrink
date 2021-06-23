@@ -25,17 +25,11 @@ public class FiltersIngredients extends DialogFragment {
     private static FilterInterface filter;
     SwitchMaterial sAnanas, sArancia, sCognac, sGin, sLime, sMenta, sPesca, sRum, sSoda, sVodka;
 
-    public static FiltersIngredients newInstance(FilterInterface filter) {
-        FiltersIngredients fragment = new FiltersIngredients();
+    public static void newInstance(FilterInterface filter) {
+        new FiltersIngredients();
         FiltersIngredients.filter = filter;
-        return fragment;
     }
 
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @NonNull
     @Override

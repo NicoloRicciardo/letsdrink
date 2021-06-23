@@ -7,15 +7,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_black"
-    android:orientation="vertical"
     tools:context=".ui.shaker.ShakerFragment">
 
     <TextView
         android:id="@+id/text_shaker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
         android:text="@string/shaker_string"
         android:textAlignment="center"
         android:textColor="@color/white"
@@ -28,11 +25,10 @@
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/gif_image_view"
         android:layout_width="408dp"
-        android:layout_height="501dp"
+        android:layout_height="0dp"
         android:src="@drawable/shaker"
-        android:layout_marginTop="60dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/text_shaker"
+        app:layout_constraintStart_toStartOf="@id/text_shaker"
         app:layout_constraintTop_toBottomOf="@+id/text_shaker" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -30,8 +30,8 @@ public class CocktailDetailFragment extends Fragment {
     public CocktailDetailFragment() {
     }
 
-    public static CocktailDetailFragment newInstance(String name, String method, ArrayList<String> ingredients, String imageUrl) {
-        CocktailDetailFragment fragment = new CocktailDetailFragment();
+    public static void newInstance(String name, String method, ArrayList<String> ingredients, String imageUrl) {
+        new CocktailDetailFragment();
         CocktailDetailFragment.name = name;
         CocktailDetailFragment.method = method;
         CocktailDetailFragment.imageUrl = imageUrl;
@@ -40,8 +40,6 @@ public class CocktailDetailFragment extends Fragment {
 
         for (int i = 0; i < ingredients.size(); i++)
             ingredienti.append(CocktailDetailFragment.ingredients.get(i)).append("\n");
-
-        return fragment;
 
     }
 

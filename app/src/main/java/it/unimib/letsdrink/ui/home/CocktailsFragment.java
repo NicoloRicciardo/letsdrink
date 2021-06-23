@@ -87,7 +87,7 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
                 public void onItemClick(int position, View v) {
                     //usiamo questa lista perchè potrebbe essere più piccola in quanto filtrata
                     List<Cocktail> cocktails = cocktailAdapter.getListOfCocktails();
-                    Fragment cocktailDetail = CocktailDetailFragment.newInstance(cocktails.get(position).getName(), cocktails.get(position).getMethod(),
+                    CocktailDetailFragment.newInstance(cocktails.get(position).getName(), cocktails.get(position).getMethod(),
                             cocktails.get(position).getIngredients(), cocktails.get(position).getImageUrl());
                     Navigation.findNavController(requireView()).navigate(R.id.action_navigation_drinks_to_cocktailDetailFragment);
 
@@ -145,7 +145,7 @@ public class CocktailsFragment extends Fragment implements FilterInterface {
                 break;
                 //se clicchiamo l'immagine dei filtri avremo la dialog dei filtri
             case R.id.filter_item:
-                FiltersIngredients filterDialog = FiltersIngredients.newInstance(this);
+                FiltersIngredients.newInstance(this);
                 //visualizzazione della dialog relativa ai filtri
                 Navigation.findNavController(requireView()).navigate(R.id.action_navigation_drinks_to_filtersIngredients);
                 break;

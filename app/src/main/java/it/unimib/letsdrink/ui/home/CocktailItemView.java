@@ -95,8 +95,12 @@ public class CocktailItemView extends RecyclerView.ViewHolder {
                         imgBtn.setImageResource(R.drawable.ic_favorites_black_24dp);
                         imgBtn.setColorFilter(Color.RED);
                         color = 1;
+                        return;
                     }
                 }
+                imgBtn.setImageResource(R.drawable.ic_heart_black_line_24_dp);
+                imgBtn.setColorFilter(Color.WHITE);
+                color = 0;
             });
         }
     }
