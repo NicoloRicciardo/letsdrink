@@ -43,7 +43,6 @@ public class CustomDrinkFragment extends Fragment {
     private CollectionReference collezione;
     private StorageReference mStorageReference;
 
-    public CustomDrinkFragment() { }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

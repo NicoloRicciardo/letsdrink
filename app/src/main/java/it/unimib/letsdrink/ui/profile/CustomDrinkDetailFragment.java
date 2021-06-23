@@ -21,9 +21,6 @@ public class CustomDrinkDetailFragment extends Fragment {
     private static StringBuilder ingredienti;
     private static ArrayList<String> ingredients;
 
-    public CustomDrinkDetailFragment() {
-    }
-
     public static void newInstance(String name, String method, ArrayList<String> ingredients, String imageUrl) {
         new CustomDrinkDetailFragment();
         CustomDrinkDetailFragment.name = name;

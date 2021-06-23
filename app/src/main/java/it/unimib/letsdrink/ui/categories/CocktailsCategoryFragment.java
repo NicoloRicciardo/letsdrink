@@ -27,10 +27,6 @@ public class CocktailsCategoryFragment extends Fragment {
     private static ArrayList<DocumentReference> drinks;
     private FirebaseDBFavorites dbFav;
 
-
-    public CocktailsCategoryFragment() {
-    }
-
     public static void newInstance(String name, String imageUrl, ArrayList<DocumentReference> drinks) {
         new CocktailsCategoryFragment();
         CocktailsCategoryFragment.name = name;
