@@ -1,6 +1,6 @@
-LET'S DRINK APP
+<strong>LET'S DRINK APP</strong>
 
-Progetto del corso "Programmazione Dispositivi Mobili", Università degli Studi di Milano Bicocca.
+Progetto del corso <i>"Programmazione Dispositivi Mobili"</i>, Università degli Studi di Milano <b>Bicocca</b>.
 
 L'app permette di visualizzare un insieme drink, ognuno con la propria immagine, lista di ingredienti e procedimento.
 
