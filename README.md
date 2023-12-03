@@ -1,4 +1,4 @@
-<strong>LET'S DRINK APP</strong>
+# <strong>LET'S DRINK APP</strong>
 
 Progetto del corso <i>"Programmazione Dispositivi Mobili"</i>, Università degli Studi di Milano <b>Bicocca</b>.
 
