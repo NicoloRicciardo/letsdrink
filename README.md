@@ -8,9 +8,7 @@ Il bottom menù permette di navigare tra 5 diversi fragment:
 - Shaker: scuotendo un il telefono, viene visualizzato un drink casuale.
 - Preferiti: vengono visualizzati tutti i drink aggiunti ai preferiti (qualora si abbia effettuato l'accesso).
 - Profilo: permette di fare il login oppure di creare un account (anche tramite Google). Una volta creato, è possibile modificare la propria immagine e creare i propri drink "custom". È inoltre possibile visualizzare le impostazioni dell'app.
-
-
-
+<br><br>
 Contributors:
 - <a href="https://github.com/simonealgisi">Algisi Simone</a> 
 - <a href="https://github.com/Peg991933">Perego Matteo</a>
